@@ -13,7 +13,6 @@ rule "[bot/sniper.opy]: Ashe Behavior":
     @Team 2
     @Condition hasDisasterTag(getDisasterId(disasters.SNIPER))
 
-    eventPlayer.setDamageDealt(150)
     eventPlayer.startForcingName("Sniper")
 
     while true:
@@ -38,7 +37,6 @@ rule "[bot/sniper.opy]: Widow Behavior":
     @Team 2
     @Condition hasDisasterTag(getDisasterId(disasters.SNIPER))
 
-    eventPlayer.setDamageDealt(250)
     eventPlayer.startForcingName("Sniper")
 
     while true:
