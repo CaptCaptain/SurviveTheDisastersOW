@@ -11,7 +11,7 @@ settings "lobby.opy.json"
 
 #!define getPlayersInMatch() [player for player in getPlayers(Team.1) if player.isAlive() and player.hasSpawned()]
 
-#!define globalBotDamagePercentage min(100, (getNumberOfPlayers(Team.1) / 3) * (0.35 * WS_SETTING_GLOBAL_BOT_DAMAGE))
+#!define globalBotDamagePercentage min(1, (getNumberOfPlayers(Team.1) / 3)) * (0.35 * WS_SETTING_GLOBAL_BOT_DAMAGE)
 
 #!define WS_SETTING_MAX_ROUNDS \
 createWorkshopSetting(int[10:30], "Gameplay", "Max Rounds", 20, 2)
