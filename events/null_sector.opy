@@ -10,3 +10,4 @@ rule "[events/null_sector.opy] Disaster Initialization":
     for disasterIndex in range(0, dummyBotLimit - 1, 1):
         createDummy([Hero.BASTION, Hero.BAPTISTE, Hero.BAPTISTE, Hero.BAPTISTE, Hero.BAPTISTE], Team.2, -1, dummyBotSpawn(25), null)
         allocateDummyBotTag(disasters.NULL_SECTOR[disasterData.ID])
+        applyEntityFlag(allocatedDummyBot, botFlags.RESPAWNABLE_NO_LOS)
