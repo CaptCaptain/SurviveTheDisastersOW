@@ -1,0 +1,44 @@
+{
+	"main": {
+		"modeName": "Survive the Disasters! ѧѦѧѦѧ",
+		"description": "Survive a series of disasters ranging from natural to artificial hazards!\n• 6 player PvE experience.\n• Encounter classic hazards such as Black Hole, or Rising Lava!\n• Friendly competition with other players for the highest survival streaks!\n• Earn achievements for completing certain actions.\n...and more!\n\nJoin and learn with Workshop Creators at: https://workshop.codes/discord\n★ Favorite to always play on the latest version.\n‼ Do not save settings, they will become outdated soon."
+	},
+	"gamemodes": {
+		"general": {
+			"roleLimit": "off",
+			"tankPassiveHealthBonus": "disabled",
+			"gamemodeStartTrigger": "manual",
+			"heroLimit": "1PerTeam"
+		},
+		"tdm": {
+			"scoreToWin": 1,
+			"enabledMaps": [
+				"blackForest",
+				"blackForestWinter",
+				"castillo",
+				"malevento",
+				"route66",
+				"necropolis",
+				"hollywood",
+				"hollywoodHalloween",
+				"blizzWorld",
+				"blizzWorldWinter",
+				"chateauGuillard",
+				"chateauGuillardHalloween",
+				"ecopointAntarctica",
+				"ecopointAntarcticaWinter"
+			]
+		}
+	},
+	"lobby": {
+		"allowPlayersInQueue": true,
+		"returnToLobby": "never",
+		"mapRotation": "afterGame",
+		"spectatorSlots": 12,
+		"team1Slots": 6,
+		"team2Slots": 0
+	},
+	"workshop": {
+		"Restart Match": 2
+	}
+}
