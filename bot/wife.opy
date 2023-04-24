@@ -18,7 +18,7 @@ rule "[bot/wife.opy]: Apply Custom Health & Additional Behavior":
     eventPlayer.setPrimaryFireEnabled(false)
     #eventPlayer.stopScalingSize()
     eventPlayer.setUltCharge(0)
-    eventPlayer.setDamageDealt(300)
+    eventPlayer.setDamageDealt(400)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1.5)
 
     wait(0.5)
