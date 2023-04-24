@@ -74,6 +74,9 @@ enum disasters:
 
 enum bossDisasters:
     WITCH = [abilityIconString(Hero.ASHE, Button.ABILITY_2), "Witch", bossDisasterId.WITCH, 60, true, [], 1],
+    
+enum botFlags:
+    RESPAWNABLE_NO_LOS
 
 #!define getDisasterId(disaster) disaster[disasterData.ID]
 
@@ -158,10 +161,14 @@ allocatedDummyBot.BOT_DISASTER_TAG = tag
 
 #!define dummyBotLimit floor(WS_SETTING_MAX_BOTS / activeDisasterEntitySpawning)
 #!define dummyBotSpawnAny(range) random.choice(getPlayersInMatch()).getPosition() + vect(random.randint(-range, range), sorted(getPlayersInMatch(), lambda player: player.getPosition().y).last().getPosition().y, random.randint(-range, range))
+#!define dummyBotSpawnAnyHeight(range) vect(dummyBotSpawn(range).x, dummyBotSpawnAny(range).y, dummyBotSpawn(range).z)
 #!define dummyBotSpawn(range) nearestWalkablePosition(dummyBotSpawnAny(range))
 
 #!define waitForEntitySpawnFlag(disasterId) \
 waitUntil(activeDisasters.index(disasterId) == entitySpawningIndex, 9999)
+
+#!define applyEntityFlag(player, flag) \
+player.BOT_DISASTER_FLAGS.append(flag)
 
 #!define disasterPool [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.MYSTERY[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID]]
 
@@ -190,6 +197,7 @@ globalvar multipleDisastersMax = 1
 
 playervar activeDisasterPlayerEffects = []
 playervar BOT_DISASTER_TAG = ""
+playervar BOT_DISASTER_FLAGS = []
 
 #!include "events/moth.opy"
 #!include "events/wife.opy"

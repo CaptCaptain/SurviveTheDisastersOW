@@ -19,24 +19,27 @@
 
 rule "[bot/main.opy] Init":
     # Global Bot Damage
-    startDamageModification(getPlayers(Team.1), getPlayers(Team.2), (getNumberOfPlayers(Team.1) / 6) * (0.35 * WS_SETTING_GLOBAL_BOT_DAMAGE), DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
+    startDamageModification(getPlayers(Team.1), getPlayers(Team.2), globalBotDamagePercentage, DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
 
 rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
     @Event eachPlayer
     @Team 2
-    @Disabled
+    @Condition botFlags.RESPAWNABLE_NO_LOS in eventPlayer.BOT_DISASTER_FLAGS
+    @Condition all([not isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)])
 
-    waitUntil(all([not isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]), 3)
+    waitUntil(any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]), random.uniform(5, 15))
+    if any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]):
+        return
 
-    while all([not isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]):
-        waitUntil(any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]), 3)
-        if any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]):
-            break
-        eventPlayer.respawn()
-        wait(0.016)
-        eventPlayer.teleport(dummyBotSpawn(10))
+    eventPlayer.respawn()
 
-    wait(Math.INFINITY)
+    wait(0.25)
+
+    eventPlayer.teleport(dummyBotSpawnAnyHeight(15))
+
+    wait(5)
+
+    if RULE_CONDITION: goto RULE_START
 
 
 rule "[bot/main.opy] Prevent Bot Respawn Clumping":
