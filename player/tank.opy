@@ -26,3 +26,10 @@ rule "[player/tank.opy] Limit Tank Health to 300":
 
     waitUntil(eventPlayer.getCurrentHero() != evalOnce(eventPlayer.getCurrentHero()) or (eventPlayer.isInAlternateForm() and eventPlayer.getCurrentHero() == Hero.DVA), 9999)
     if RULE_CONDITION: goto RULE_START
+
+rule "[player/tank.opy] D.Va Alternate Form Large Health Fix":
+    @Event eachPlayer
+    @Hero dva
+    @Condition eventPlayer.isInAlternateForm()
+
+    clearCustomHealth()
