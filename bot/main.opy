@@ -44,6 +44,8 @@ rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
     eventPlayer.dummyBotLosSpawnPos = [spawn for spawn in dummyBotSpawnArray if eventPlayer.dummyBotLosSpawnPos.y > spawn - 1 and eventPlayer.dummyBotLosSpawnPos.y < spawn + 1]
     eventPlayer.dummyBotLosSpawnPos = random.choice(eventPlayer.dummyBotLosSpawnPos.exclude([spawn for spawn in eventPlayer.dummyBotLosSpawnPos if not isInLoS(getClosestPlayer(spawn, Team.1), spawn, BarrierLos.PASS_THROUGH_BARRIERS) or not getClosestPlayer(spawn, Team.1).isAlive]))
     eventPlayer.teleport(eventPlayer.dummyBotLosSpawnPos)
+    eventPlayer.setStatusEffect(null, Status.ROOTED, 1)
+    eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1)
 
     wait(5)
 
@@ -65,6 +67,7 @@ rule "[bot/main.opy] Track Player Positions":
     dummyBotSpawnArray.append([player.getPosition() for player in getAllPlayers()])
 
     if len(dummyBotSpawnArray) >= 1000:
+        dummyBotSpawnArray = []
         return
 
     wait(1)
