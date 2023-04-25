@@ -6,7 +6,7 @@ rule "[bot/wife.opy]: Behavior":
     @Team 2
     @Condition hasDisasterTag(getDisasterId(disasters.WIFELEAVER))
 
-    eventPlayer.startForcingName(random.choice(["Rizzweaver", "Lifeweaver", "Wifeleaver", "Peacemaker", ]))
+    eventPlayer.startForcingName(random.choice(["Rizzweaver", "Lifeweaver", "Wifeleaver", "Peacemaker", "Lifeleaver"]))
 
 rule "[bot/wife.opy]: Apply Custom Health & Additional Behavior":
     @Event eachPlayer
@@ -15,10 +15,10 @@ rule "[bot/wife.opy]: Apply Custom Health & Additional Behavior":
     @Condition hasDisasterTag(getDisasterId(disasters.WIFELEAVER))
 
     clearCustomHealth()
-    eventPlayer.setPrimaryFireEnabled(false)
+    eventPlayer.setSecondaryFireEnabled(false)
     #eventPlayer.stopScalingSize()
     eventPlayer.setUltCharge(0)
-    eventPlayer.setDamageDealt(300)
+    eventPlayer.setDamageDealt(400)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1.5)
 
     wait(0.5)
@@ -40,11 +40,11 @@ rule "[bot/wife.opy]: Apply Custom Health & Additional Behavior":
         waitUntil(eventPlayer.getNormalizedHealth() < 0.75, 3)
         wait(0.016)
 
-    eventPlayer.setPrimaryFireEnabled(true)
-    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
+    eventPlayer.setSecondaryFireEnabled(true)
+    eventPlayer.BOT_SECONDARY_FIRE_ENABLED = false
     eventPlayer.clearStatusEffect(Status.ROOTED)
     #eventPlayer.startScalingSize(1.5, false)
-    eventPlayer.setUltCharge(95)
+    eventPlayer.setUltCharge(90)
 
     getPlayersInRadius(eventPlayer.getEyePosition(), 15, Team.2, LosCheck.OFF).setStatusEffect(null, Status.UNKILLABLE, 0.064)
     wait(0.016)
@@ -66,18 +66,16 @@ rule "[bot/wife.opy]: Apply Custom Health & Additional Behavior":
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():
                     case true:
-                        eventPlayer.setWeapon(2)
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                        eventPlayer.BOT_SECONDARY_FIRE_ENABLED = false
+                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false if eventPlayer.getUltCharge() < 100 else true
+                        eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if eventPlayer.getUltCharge() < 100 else false
                         
-                        if eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 1:
-                            eventPlayer.setAbilityCooldown(Button.ABILITY_1, 1)
-                        EXECUTE_DEFENSE_ABILITY_1()
+                        if eventPlayer.getAbilityCooldown(Button.JUMP) > 1:
+                            eventPlayer.setAbilityCooldown(Button.JUMP, 1)
+                        eventPlayer.BOT_JUMP_ENABLED = true if eventPlayer.isOnGround() and eventPlayer.getNormalizedHealth() < 0.5 else false
+                        if eventPlayer.isInAir():
+                            eventPlayer.forceButtonPress(Button.JUMP)
                         EXECUTE_DEFENSE_ABILITY_2()
                         EXECUTE_ULTIMATE_ABILITY()
-                        if eventPlayer.getUltCharge() == 100:
-                            eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
-                        break
                 break
                 
         waitThrottle(Wait.IGNORE_CONDITION)

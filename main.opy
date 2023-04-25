@@ -11,6 +11,8 @@ settings "lobby.opy.json"
 
 #!define getPlayersInMatch() [player for player in getPlayers(Team.1) if player.isAlive() and player.hasSpawned()]
 
+#!define globalBotDamagePercentage min(1, (getNumberOfPlayers(Team.1) / 3)) * (0.35 * WS_SETTING_GLOBAL_BOT_DAMAGE)
+
 #!define WS_SETTING_MAX_ROUNDS \
 createWorkshopSetting(int[10:30], "Gameplay", "Max Rounds", 20, 2)
 
@@ -21,6 +23,9 @@ createWorkshopSetting(int[50:200], "Gameplay", "Global Bot Damage Modifier (%)",
 
 #!define WS_SETTING_LONG_BREAK \
 createWorkshopSetting(bool, "Gameplay", "Long Break Time", false, 1)
+
+#!define WS_SETTING_ANTI_CRASH_DELAY \
+[1, 2, 3][createWorkshopSetting(enum["Prioritize Server Stability", "Balanced", "Prioritize Server Performance"], "General", "Anti-Crash Priority", 2, 3)]
 
 globalvar WS_SETTING_LIMITED_TANK_HEALTH = createWorkshopSetting(bool, "Heroes", "Tank Role: Limited Health", true, 3)
 

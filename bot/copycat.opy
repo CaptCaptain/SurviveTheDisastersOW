@@ -13,11 +13,22 @@ def applyCopycatState():
         allocatePlayerEffect(eventPlayer)
         applyCustomHealthFor(eventPlayer, 25, 0, 125)
 
+        if eventPlayer.getCurrentHero() in [Hero.MOIRA, Hero.KIRIKO]:
+            while not eventPlayer.isFiringSecondaryFire() and entityExists(eventPlayer):
+                eventPlayer.startForcingButton(Button.SECONDARY_FIRE)
+                wait(1)
+        else:
+            while not eventPlayer.isFiringPrimaryFire() and entityExists(eventPlayer):
+                eventPlayer.startForcingButton(Button.PRIMARY_FIRE)
+                wait(1)
+
 rule "[bot/echo.opy]: Echo Behavior":
     @Event eachPlayer
     @Hero echo
     @Team 2
     @Condition hasDisasterTag(getDisasterId(disasters.COPYCAT))
+
+    eventPlayer.preloadHero(DISASTER_COPYCAT_DUPLICATE_HERO)
 
     cleanupDisasterPlayerEffects(eventPlayer)
 
@@ -68,10 +79,5 @@ rule "[bot/copycat.opy] Switch to Duplicated Character":
 
     async(applyCopycatState, AsyncBehavior.RESTART)
 
-    eventPlayer.preloadHero(DISASTER_COPYCAT_DUPLICATE_HERO)
     wait(0.016)
-    if eventPlayer.getHeroOfDuplication() in [Hero.MOIRA, Hero.KIRIKO]:
-        eventPlayer.startForcingButton(Button.SECONDARY_FIRE)
-    else:
-        eventPlayer.startForcingButton(Button.PRIMARY_FIRE)
     eventPlayer.startForcingHero(DISASTER_COPYCAT_DUPLICATE_HERO)
