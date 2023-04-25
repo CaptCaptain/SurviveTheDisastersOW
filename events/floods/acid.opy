@@ -28,7 +28,7 @@ rule "[events/acid.opy] Disaster Damage":
     @Condition disasterReady
     @Condition playerIsBelowWaterLevel(eventPlayer, DISASTER_ACID_Y_POS, -1.5)
 
-    eventPlayer.startDoT(null, 1, 25)
+    eventPlayer.startDoT(null, 1, 50)
 
     wait(1)
 
