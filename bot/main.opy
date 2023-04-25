@@ -41,7 +41,7 @@ rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
 
     eventPlayer.dummyBotLosSpawnPos = sorted(getPlayersInMatch(), lambda player: player.getPosition().y).last()
     eventPlayer.dummyBotLosSpawnPos = [spawn for spawn in dummyBotSpawnArray if eventPlayer.dummyBotLosSpawnPos.y > spawn - 1 and eventPlayer.dummyBotLosSpawnPos.y < spawn + 1]
-    eventPlayer.dummyBotLosSpawnPos = random.choice(eventPlayer.dummyBotLosSpawnPos.exclude([spawn for spawn in eventPlayer.dummyBotLosSpawnPos if not isInLoS(getClosestPlayer(spawn, Team.1), spawn, BarrierLos.PASS_THROUGH_BARRIERS) and not getClosestPlayer(spawn, Team.1).isAlive]))
+    eventPlayer.dummyBotLosSpawnPos = random.choice(eventPlayer.dummyBotLosSpawnPos.exclude([spawn for spawn in eventPlayer.dummyBotLosSpawnPos if not isInLoS(getClosestPlayer(spawn, Team.1), spawn, BarrierLos.PASS_THROUGH_BARRIERS) or not getClosestPlayer(spawn, Team.1).isAlive]))
     eventPlayer.teleport(eventPlayer.dummyBotLosSpawnPos)
 
     wait(5)
