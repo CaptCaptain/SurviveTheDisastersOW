@@ -30,6 +30,7 @@ enum Medals:
     BUZZKILL = [abilityIconString(Hero.KIRIKO, Button.ABILITY_1), "Button Masher", MedalSounds.OKAY[medalSoundData.ID]],
     VICTIM = [abilityIconString(Hero.JUNKER_QUEEN, Button.SECONDARY_FIRE), "Unwitting Victim", MedalSounds.OKAY[medalSoundData.ID]],
     LAST_ONE_STANDING = [iconString(Icon.SPADE), "Last One Standing", MedalSounds.GOOD[medalSoundData.ID]],
+    NO_BP = [iconString(Icon.ASTERISK), "Too Good to Be True", MedalSounds.BAD[medalSoundData.ID]],
 
 #!define queueMedal(player, medal) \
     player.array_medal_titles.append(medal[medalData.ICON])\
@@ -159,13 +160,14 @@ rule "[player/medals.opy] Not Today, Thank You Medal":
     if disasterReady == false and eventPlayer.getNormalizedHealth() < 0.3:
         queueMedal(eventPlayer, Medals.NOT_TODAY)
 
-rule "[player/medals.opy] Karma Medal":
+rule "[player/medals.opy] Player Died Medals":
     @Event playerDied
     @Team 1
     @Condition disasterReady == true
-    @Condition disasters.WIFELEAVER[disasterData.ID] in activeDisasters
-    @Condition attacker.getCurrentHero() == Hero.LIFEWEAVER
 
-    queueMedal(eventPlayer, Medals.KARMA)
+    if disasters.WIFELEAVER[disasterData.ID] in activeDisasters and attacker.getCurrentHero() == Hero.LIFEWEAVER:
+        queueMedal(eventPlayer, Medals.KARMA)
+    if disasters.FAKE_BP[disasterData.ID] in activeDisasters and distance(eventPlayer.getPosition(), DISASTER_FAKE_BP_POS) < 20:
+        queueMedal(eventPlayer, Medals.NO_BP)
 
     waitUntil(disasterReady == false, 9999)
