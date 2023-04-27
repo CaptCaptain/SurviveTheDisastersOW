@@ -30,10 +30,9 @@ rule "[events/mystery.opy] Disaster Initialization":
     # Fog
     createFog(localPlayer, 50, Color.WHITE)
 
-    wait(3)
-
     # Random Disaster
     activeDisasters.append(random.choice(disasterPool.exclude(disasters.MYSTERY[disasterData.ID])))
+    wait(3)
     queueDisasterEntities()
     
     waitUntil(not disasters.MYSTERY[disasterData.ID] in activeDisasters, 9999)
