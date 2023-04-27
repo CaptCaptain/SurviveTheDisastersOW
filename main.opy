@@ -29,6 +29,8 @@ createWorkshopSetting(bool, "Gameplay", "Long Break Time", false, 1)
 
 globalvar WS_SETTING_LIMITED_TANK_HEALTH = createWorkshopSetting(bool, "Heroes", "Tank Role: Limited Health", true, 3)
 
+globalvar WS_SETTING_LIFE_GRIP_LIMITED = createWorkshopSetting(bool, "Heroes", "Lifeweaver: Life Grip / Petal Platform Protection", true, 4)
+
 globalvar WS_SETTING_LIMITED_STEALTH = createWorkshopSetting(bool, "Heroes", "Sombra: Limited Stealth", true, 4)
 
 #!include "../overpy-modules/src/customHealth.opy"
@@ -48,6 +50,7 @@ globalvar WORKSHOP_CODE = "GWZB4"
 
 #!include "player/main.opy"
 #!include "events/main.opy"
+#!include "player/lifeweaver.opy"
 #!include "bot/main.opy"
 #!include "player/medals.opy"
 #!include "game/main.opy"
