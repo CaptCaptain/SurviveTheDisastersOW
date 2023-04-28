@@ -13,7 +13,7 @@ rule "[events/button.opy] Disaster Initialization":
     createIcon(localPlayer if not localPlayer.isInViewAngle(DISASTER_FAKE_BP_POS, 90) and localPlayer.isAlive() else null, DISASTER_FAKE_BP_POS, Icon.ASTERISK, IconReeval.VISIBILITY, Color.ORANGE, true)
     allocateEffect()
 
-    createInWorldText(localPlayer if localPlayer.isInViewAngle(DISASTER_FAKE_BP_POS, 90) and localPlayer.isAlive() else null, "+5000 BP", DISASTER_FAKE_BP_POS, 2, Clip.NONE, WorldTextReeval.VISIBILITY, Color.ORANGE, SpecVisibility.DEFAULT)
+    createInWorldText(localPlayer if localPlayer.isInViewAngle(DISASTER_FAKE_BP_POS, 90) and localPlayer.isAlive() else null, "+50000 BP", DISASTER_FAKE_BP_POS, 2, Clip.NONE, WorldTextReeval.VISIBILITY, Color.ORANGE, SpecVisibility.DEFAULT)
     allocateText()
 
     createEffect(getAllPlayers(), Effect.RING, Color.YELLOW, DISASTER_FAKE_BP_POS, 3, EffectReeval.VISIBILITY)
