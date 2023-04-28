@@ -135,10 +135,13 @@ rule "[player/main.opy] Hud":
     hudSubtext(localPlayer if localPlayer.toggleScoreboard else null, "▼ Notable Co-Op Changes ▼", HudPosition.LEFT, (sorted(getAllPlayers(), lambda player: player.survivalStreak).last().survivalStreak) + 2, Color.ROSE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
 
         # Limited Tank Health
-    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() in getTankHeroes() and WS_SETTING_LIMITED_TANK_HEALTH else null), "| Tank Health Limited to 300", 3)
+    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() in getTankHeroes() and evalOnce(WS_SETTING_LIMITED_TANK_HEALTH) else null), "| Tank Health Limited to 300", 3)
 
         # Limited Stealth
-    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.SOMBRA else null), "| Limited Duration on Stealth (Ability 1)", 3)
+    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.SOMBRA and evalOnce(WS_SETTING_LIMITED_STEALTH) else null), "| Limited Duration on Stealth (Ability 1)", 3)
+
+        # Limited Stealth
+    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.LIFEWEAVER and evalOnce(WS_SETTING_LIFE_GRIP_LIMITED) else null), "| {0} Life Grip / {1} Petal Platform restricted\n| during certain disasters".format(abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_2), abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_1)), 4)
 
     # Hide Scoreboard
     hudSubheader(getAllPlayers(), "{1} [Hold {0}]".format(buttonString(Button.RELOAD), "Hide" if localPlayer.toggleScoreboard else "Show Scoreboard"), HudPosition.LEFT, (sorted(getAllPlayers(), lambda player: player.survivalStreak).last().survivalStreak * -1) - 2, Color.TURQUOISE, HudReeval.VISIBILITY_SORT_ORDER_AND_STRING, SpecVisibility.NEVER)
