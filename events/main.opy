@@ -73,6 +73,7 @@ enum disasters:
     SNIPER = [abilityIconString(Hero.WIDOWMAKER, Button.ULTIMATE), "Snipers", disasterId.SNIPER, 30, true, [], 2],
     BOMBS = [abilityIconString(Hero.PHARAH, Button.ABILITY_2), "Bombers", disasterId.BOMBS, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE], 0],
     FAKE_BP = [abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE), "Free Battle Pass XP", disasterId.FAKE_BP, 30, true, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.BUTTON], 0],
+    WISP = [abilityIconString(Hero.TRACER, Button.ULTIMATE), "Will-o'-wisp", disasterId.WISP, 30, true, [], 1],
 
 enum bossDisasters:
     WITCH = [abilityIconString(Hero.ASHE, Button.ABILITY_2), "Witch", bossDisasterId.WITCH, 60, true, [], 1],
@@ -224,6 +225,7 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/sniper.opy"
 #!include "events/bombs.opy"
 #!include "events/fake_bp.opy"
+#!include "events/wisp.opy"
 
 def queueDisaster():
     @Name "[events/main.opy] Queue Disaster"
@@ -306,6 +308,9 @@ def queueDisaster():
             break
         case disasters.FAKE_BP[disasterData.ID]:
             addDisaster(disasters.FAKE_BP)
+            break
+        case disasters.WISP[disasterData.ID]:
+            addDisaster(disasters.WISP)
             break
 
 def selectDisaster():
