@@ -6,6 +6,7 @@ rule "[player/lifeweaver.opy]: Conditions for Disabling Life Grip":
     @Event eachPlayer
     @Team 1
     @Hero lifeweaver
+    @Condition WS_SETTING_LIFE_GRIP_LIMITED
     @Condition disasterReady
 
     while disasterReady and eventPlayer.isAlive():

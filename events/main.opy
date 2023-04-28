@@ -59,7 +59,7 @@ enum disasters:
     KAME = [abilityIconString(Hero.MOIRA, Button.ULTIMATE), "Kamehameha", disasterId.KAME, 10, true, [], 1],
     FLOOD = [iconString(Icon.BOLT), "Flood", disasterId.FLOOD, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.ACID, disasterId.LAVA, disasterId.BLACK_HOLE, disasterId.BUTTON], 0],
     MYSTERY = [iconString(Icon.QUESTION_MARK), "Mystery Disaster", disasterId.MYSTERY, 30, false, [], true],
-    GET_DOWN = [iconString(Icon.ARROW_DOWN), "Get Down", disasterId.GET_DOWN, 10, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GREEN_ZONE], 0],
+    GET_DOWN = [iconString(Icon.ARROW_DOWN), "Get Down", disasterId.GET_DOWN, 10, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.ACID], 0],
     DEATH_TRAMPOLINE = [iconString(Icon.HALO), "Death Trampoline", disasterId.DEATH_TRAMPOLINE, 10, false, [], 0], # Not Implemented
     GREEN_ZONE = [abilityIconString(Hero.RAMATTRA, Button.ABILITY_2), "Green Zone", disasterId.GREEN_ZONE, 20, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GET_DOWN, disasterId.BUTTON, disasterId.BLACK_HOLE], 0],
     MURDERERS = [abilityIconString(Hero.JUNKER_QUEEN, Button.SECONDARY_FIRE), "Murderers", disasterId.MURDERERS, 30, true, [], 1],
