@@ -16,6 +16,12 @@ rule "[bot/wisp.opy]: Behavior":
     createEffect(getAllPlayers(), Effect.ECHO_CLONING, Team.2, eventPlayer, 1, EffectReeval.VISIBILITY)
     allocateEffect()
 
+    createEffect(getAllPlayers(), Effect.ORB, Color.ORANGE, updateEveryTick(eventPlayer.getEyePosition() + Vector.UP), 1, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    allocateEffect()
+
+    createEffect(getAllPlayers(), Effect.BAD_AURA, Color.YELLOW, updateEveryTick(eventPlayer.getEyePosition() + Vector.UP), 0.1, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    allocateEffect()
+
     while true:
         waitUntil(entityExists(eventPlayer.BOT_PLAYER) and eventPlayer.isAlive(), 9999)
         switch entityExists(eventPlayer.BOT_PLAYER):
