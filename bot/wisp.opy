@@ -9,6 +9,7 @@ rule "[bot/wisp.opy]: Behavior":
     eventPlayer.startForcingName("Will-o'-wisp")
     eventPlayer.setDamageReceived(Math.INFINITY)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1)
+    eventPlayer.setDamageDealt(200)
 
     wait(1)
 
