@@ -75,9 +75,9 @@ rule "[events/simon.opy] Disaster Initialization":
             case disasterSimonInstructions.CROUCH:
                 DISASTER_SIMON_SAYS("Crouch!")
                 break
-            case disasterSimonInstructions.RELOAD:
+            /* case disasterSimonInstructions.RELOAD:
                 DISASTER_SIMON_SAYS("Reload!")
-                break
+                break */
 
         waitUntil(is_dialoguing == false, 9999)
         wait(1, Wait.ABORT_WHEN_FALSE)
@@ -109,6 +109,6 @@ rule "[events/simon.opy] Player Followed Simon Says":
         case disasterSimonInstructions.CROUCH:
             DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.isCrouching())
             break
-        case disasterSimonInstructions.RELOAD:
+        /* case disasterSimonInstructions.RELOAD:
             DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.isReloading())
-            break
+            break */
