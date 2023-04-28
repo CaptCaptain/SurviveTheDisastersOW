@@ -10,8 +10,6 @@ setMatchTime(time)\
 wait(0.032)\
 waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getPlayersInMatch()]), 9999)
 
-#!define getPlayersAlive() [player for player in getPlayers(Team.1) if player.isAlive and player.hasSpawned()]
-
 #!include "game/anti-crash.opy"
 
 rule "[game/main.opy] Init":

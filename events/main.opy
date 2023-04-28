@@ -52,7 +52,7 @@ enum disasters:
     WIFELEAVER = [iconString(Icon.HEART), "Peacemaker", disasterId.WIFELEAVER, 30, true, [], 1],
     MINEFIELD = [abilityIconString(Hero.HAMMOND, Button.ULTIMATE), "MINEFIELD", disasterId.MINEFIELD, 15, true, [], 1],
     BOB = [abilityIconString(Hero.ASHE, Button.ULTIMATE), "Big Omnic Butler", disasterId.BOB, 15, true, [], 1],
-    SIMON = [iconString(Icon.STOP), "Simon Says", disasterId.SIMON, 60, true, [], 1], # Temporarily Disabled
+    SIMON = [iconString(Icon.STOP), "Simon Says", disasterId.SIMON, 90, true, [], 1], # Temporarily Disabled
     ACID_RAIN = [iconString(Icon.RADIOACTIVE), "Acid Rain", disasterId.ACID_RAIN, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE], 0],
     SOMBRA = [abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE), "Hackers", disasterId.SOMBRA, 30, true, [], 1],
     WINTON = [abilityIconString(Hero.WINSTON, Button.ULTIMATE), "Monke", disasterId.WINTON, 30, true, [], 1],
@@ -176,7 +176,7 @@ waitUntil(activeDisasters.index(disasterId) == entitySpawningIndex, 9999)
 #!define applyEntityFlag(player, flag) \
 player.BOT_DISASTER_FLAGS.append(flag)
 
-#!define disasterPool [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.MYSTERY[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID]]
+#!define disasterPool [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.MYSTERY[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID]]
 
 subroutine queueDisaster
 subroutine cleanupDisaster
@@ -354,7 +354,11 @@ def selectMultipleDisasters():
         if len(disastersAlreadyPlayed) == len(disasterPool):
             disastersAlreadyPlayed = []
         
-        selectedDisaster = random.choice(disasterPool.exclude(disastersAlreadyPlayed).exclude(blacklistedDisasters).exclude(activeDisasters).exclude([disasters.MYSTERY[disasterData.ID]]))
+        selectedDisaster = random.choice(disasterPool.exclude(disastersAlreadyPlayed).exclude(blacklistedDisasters).exclude(activeDisasters).exclude([getDisasterId(disasters.MYSTERY), getDisasterId(disasters.SIMON)]))
+
+        # If no disaster is available, assume we went through all of them and reset
+        if selectedDisaster == null:
+            disastersAlreadyPlayed = []
 
         # If no disaster is available, assume we went through all of them and reset
         if selectedDisaster == null:
