@@ -16,6 +16,8 @@
 #!include "bot/ninja.opy"
 #!include "bot/copycat.opy"
 #!include "bot/sniper.opy"
+#!include "bot/wisp.opy"
+#!include "bot/blizzard.opy"
 
 playervar dummyBotLosSpawnPos
 
@@ -36,13 +38,20 @@ rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
     if any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]):
         return
 
+    eventPlayer.dummyBotLosSpawnPos = sorted(getPlayersInMatch(), lambda player: player.getPosition().y).last()
+    eventPlayer.dummyBotLosSpawnPos = [spawn for spawn in dummyBotSpawnArray if eventPlayer.dummyBotLosSpawnPos.y > spawn - 1 and eventPlayer.dummyBotLosSpawnPos.y < spawn + 1]
+    eventPlayer.dummyBotLosSpawnPos = random.choice(eventPlayer.dummyBotLosSpawnPos.exclude([spawn for spawn in eventPlayer.dummyBotLosSpawnPos if not isInLoS(getClosestPlayer(spawn, Team.1), spawn + Vector.UP, BarrierLos.PASS_THROUGH_BARRIERS) or not getClosestPlayer(spawn, Team.1).isAlive]))
+
+    if eventPlayer.dummyBotLosSpawnPos == null or eventPlayer.dummyBotLosSpawnPos == vect(0, 0, 0) or eventPlayer.dummyBotLosSpawnPos == []:
+        eventPlayer.respawn()
+        wait(0.25)
+        eventPlayer.teleport(dummyBotSpawn(15))
+        return
+
     eventPlayer.respawn()
 
     wait(0.25)
 
-    eventPlayer.dummyBotLosSpawnPos = sorted(getPlayersInMatch(), lambda player: player.getPosition().y).last()
-    eventPlayer.dummyBotLosSpawnPos = [spawn for spawn in dummyBotSpawnArray if eventPlayer.dummyBotLosSpawnPos.y > spawn - 1 and eventPlayer.dummyBotLosSpawnPos.y < spawn + 1]
-    eventPlayer.dummyBotLosSpawnPos = random.choice(eventPlayer.dummyBotLosSpawnPos.exclude([spawn for spawn in eventPlayer.dummyBotLosSpawnPos if not isInLoS(getClosestPlayer(spawn, Team.1), spawn, BarrierLos.PASS_THROUGH_BARRIERS) or not getClosestPlayer(spawn, Team.1).isAlive]))
     eventPlayer.teleport(eventPlayer.dummyBotLosSpawnPos)
     eventPlayer.setStatusEffect(null, Status.ROOTED, 1)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1)

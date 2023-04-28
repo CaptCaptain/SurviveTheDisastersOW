@@ -67,7 +67,7 @@ rule "[debug.opy] Input":
         eventPlayer.debugDisasterId = max(0, eventPlayer.debugDisasterId)
     if eventPlayer.isHoldingButton(Button.SECONDARY_FIRE):
         eventPlayer.debugDisasterId += 5 if eventPlayer.isHoldingButton(Button.ABILITY_1) else 1
-        eventPlayer.debugDisasterId = min(len(disasterPool), eventPlayer.debugDisasterId)
+        eventPlayer.debugDisasterId = eventPlayer.debugDisasterId
     if eventPlayer.isHoldingButton(Button.ABILITY_2):
         addDisasterToQueueById(eventPlayer.debugDisasterId)
     if eventPlayer.isHoldingButton(Button.RELOAD):

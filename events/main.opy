@@ -41,6 +41,8 @@ enum disasterId:
     WISP,
     SANDSTORM,
     SLENDERMAN,
+    FAKE_BP,
+    BLIZZARD,
 
 enum bossDisasterId:
     WITCH
@@ -63,7 +65,7 @@ enum disasters:
     MURDERERS = [abilityIconString(Hero.JUNKER_QUEEN, Button.SECONDARY_FIRE), "Murderers", disasterId.MURDERERS, 30, true, [], 1],
     NULL_SECTOR = [abilityIconString(Hero.BASTION, Button.ULTIMATE), "Null Sector", disasterId.NULL_SECTOR, 45, true, [disasterId.TALON], 2],
     TALON = [abilityIconString(Hero.DOOMFIST, Button.ULTIMATE), "Talon", disasterId.TALON, 45, true, [disasterId.NULL_SECTOR], 2],
-    BUTTON = [abilityIconString(Hero.KIRIKO, Button.ABILITY_1), "Press the Button", disasterId.BUTTON, 30, false, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA], 0],
+    BUTTON = [abilityIconString(Hero.KIRIKO, Button.ABILITY_1), "Press the Button", disasterId.BUTTON, 30, false, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.FAKE_BP], 0],
     NINJA = [abilityIconString(Hero.GENJI, Button.ABILITY_2), "Ninjas", disasterId.NINJA, 30, true, [], 2],
     COPYCAT = [abilityIconString(Hero.ECHO, Button.ULTIMATE), "Copycats", disasterId.COPYCAT, 30, true, [], 2],
     BLACK_HOLE = [iconString(Icon.SPIRAL), "Black Hole", disasterId.BLACK_HOLE, 30, true, [disasterId.LAVA, disasterId.ACID, disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.BUTTON], 0],
@@ -71,6 +73,9 @@ enum disasters:
     ACID = [iconString(Icon.POISON), "Rising Acid", disasterId.ACID, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.LAVA, disasterId.FLOOD, disasterId.BLACK_HOLE, disasterId.BUTTON], 0],
     SNIPER = [abilityIconString(Hero.WIDOWMAKER, Button.ULTIMATE), "Snipers", disasterId.SNIPER, 30, true, [], 2],
     BOMBS = [abilityIconString(Hero.PHARAH, Button.ABILITY_2), "Bombers", disasterId.BOMBS, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE], 0],
+    FAKE_BP = [abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE), "Free Battle Pass XP", disasterId.FAKE_BP, 30, true, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.BUTTON], 0],
+    WISP = [abilityIconString(Hero.TRACER, Button.ULTIMATE), "Will-o'-wisp", disasterId.WISP, 30, true, [], 1],
+    BLIZZARD = [abilityIconString(Hero.MEI, Button.ULTIMATE), "Blizzard", disasterId.BLIZZARD, 30, true, [], 0],
 
 enum bossDisasters:
     WITCH = [abilityIconString(Hero.ASHE, Button.ABILITY_2), "Witch", bossDisasterId.WITCH, 60, true, [], 1],
@@ -134,6 +139,7 @@ wait(0.016)\
 #!define cleanupDisasterTexts() \
 for disasterIndex in range(0, len(activeDisasterTexts), 1): \
     destroyInWorldText(activeDisasterTexts[disasterIndex])\
+    destroyProgressBarHud(activeDisasterTexts[disasterIndex])\
     wait(0.016)\
 \
 activeDisasterTexts = []\
@@ -170,7 +176,7 @@ waitUntil(activeDisasters.index(disasterId) == entitySpawningIndex, 9999)
 #!define applyEntityFlag(player, flag) \
 player.BOT_DISASTER_FLAGS.append(flag)
 
-#!define disasterPool [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.MYSTERY[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID]]
+#!define disasterPool [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.MYSTERY[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID]]
 
 subroutine queueDisaster
 subroutine cleanupDisaster
@@ -221,6 +227,9 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/black_hole.opy"
 #!include "events/sniper.opy"
 #!include "events/bombs.opy"
+#!include "events/fake_bp.opy"
+#!include "events/wisp.opy"
+#!include "events/blizzard.opy"
 
 def queueDisaster():
     @Name "[events/main.opy] Queue Disaster"
@@ -301,6 +310,15 @@ def queueDisaster():
         case disasters.BOMBS[disasterData.ID]:
             addDisaster(disasters.BOMBS)
             break
+        case disasters.FAKE_BP[disasterData.ID]:
+            addDisaster(disasters.FAKE_BP)
+            break
+        case disasters.WISP[disasterData.ID]:
+            addDisaster(disasters.WISP)
+            break
+        case disasters.BLIZZARD[disasterData.ID]:
+            addDisaster(disasters.BLIZZARD)
+            break
 
 def selectDisaster():
     disasterReady = false
@@ -337,6 +355,10 @@ def selectMultipleDisasters():
             disastersAlreadyPlayed = []
         
         selectedDisaster = random.choice(disasterPool.exclude(disastersAlreadyPlayed).exclude(blacklistedDisasters).exclude(activeDisasters).exclude([disasters.MYSTERY[disasterData.ID]]))
+
+        # If no disaster is available, assume we went through all of them and reset
+        if selectedDisaster == null:
+            disastersAlreadyPlayed = []
 
         disastersAlreadyPlayed.append(selectedDisaster)
 
