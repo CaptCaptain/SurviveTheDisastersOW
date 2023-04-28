@@ -344,6 +344,10 @@ def selectMultipleDisasters():
         
         selectedDisaster = random.choice(disasterPool.exclude(disastersAlreadyPlayed).exclude(blacklistedDisasters).exclude(activeDisasters).exclude([disasters.MYSTERY[disasterData.ID]]))
 
+        # If no disaster is available, assume we went through all of them and reset
+        if selectedDisaster == null:
+            disastersAlreadyPlayed = []
+
         disastersAlreadyPlayed.append(selectedDisaster)
 
         addDisasterToQueueById(selectedDisaster)
