@@ -57,7 +57,7 @@ enum disasters:
     SOMBRA = [abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE), "Hackers", disasterId.SOMBRA, 30, true, [], 1],
     WINTON = [abilityIconString(Hero.WINSTON, Button.ULTIMATE), "Monke", disasterId.WINTON, 30, true, [], 1],
     KAME = [abilityIconString(Hero.MOIRA, Button.ULTIMATE), "Kamehameha", disasterId.KAME, 10, true, [], 1],
-    FLOOD = [iconString(Icon.BOLT), "Flood", disasterId.FLOOD, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.ACID, disasterId.LAVA, disasterId.BLACK_HOLE, disasterId.BUTTON], 0],
+    FLOOD = [iconString(Icon.BOLT), "Flood", disasterId.FLOOD, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.ACID, disasterId.LAVA, disasterId.BLACK_HOLE, disasterId.BUTTON, disasterId.BLIZZARD, disasterId.FAKE_BP], 0],
     MYSTERY = [iconString(Icon.QUESTION_MARK), "Mystery Disaster", disasterId.MYSTERY, 30, false, [], true],
     GET_DOWN = [iconString(Icon.ARROW_DOWN), "Get Down", disasterId.GET_DOWN, 10, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.ACID], 0],
     DEATH_TRAMPOLINE = [iconString(Icon.HALO), "Death Trampoline", disasterId.DEATH_TRAMPOLINE, 10, false, [], 0], # Not Implemented
@@ -69,13 +69,13 @@ enum disasters:
     NINJA = [abilityIconString(Hero.GENJI, Button.ABILITY_2), "Ninjas", disasterId.NINJA, 30, true, [], 2],
     COPYCAT = [abilityIconString(Hero.ECHO, Button.ULTIMATE), "Copycats", disasterId.COPYCAT, 30, true, [], 2],
     BLACK_HOLE = [iconString(Icon.SPIRAL), "Black Hole", disasterId.BLACK_HOLE, 30, true, [disasterId.LAVA, disasterId.ACID, disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.BUTTON], 0],
-    LAVA = [iconString(Icon.FIRE), "Rising Lava", disasterId.LAVA, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.ACID, disasterId.FLOOD, disasterId.BLACK_HOLE, disasterId.BUTTON], 0],
-    ACID = [iconString(Icon.POISON), "Rising Acid", disasterId.ACID, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.LAVA, disasterId.FLOOD, disasterId.BLACK_HOLE, disasterId.BUTTON], 0],
+    LAVA = [iconString(Icon.FIRE), "Rising Lava", disasterId.LAVA, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.ACID, disasterId.FLOOD, disasterId.BLACK_HOLE, disasterId.BUTTON, disasterId.BLIZZARD, disasterId.FAKE_BP], 0],
+    ACID = [iconString(Icon.POISON), "Rising Acid", disasterId.ACID, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.LAVA, disasterId.FLOOD, disasterId.BLACK_HOLE, disasterId.BUTTON, disasterId.BLIZZARD, disasterId.FAKE_BP], 0],
     SNIPER = [abilityIconString(Hero.WIDOWMAKER, Button.ULTIMATE), "Snipers", disasterId.SNIPER, 30, true, [], 2],
     BOMBS = [abilityIconString(Hero.PHARAH, Button.ABILITY_2), "Bombers", disasterId.BOMBS, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE], 0],
     FAKE_BP = [abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE), "Free Battle Pass XP", disasterId.FAKE_BP, 30, true, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.BUTTON], 0],
     WISP = [abilityIconString(Hero.TRACER, Button.ULTIMATE), "Will-o'-wisp", disasterId.WISP, 30, true, [], 1],
-    BLIZZARD = [abilityIconString(Hero.MEI, Button.ULTIMATE), "Blizzard", disasterId.BLIZZARD, 30, true, [], 0],
+    BLIZZARD = [abilityIconString(Hero.MEI, Button.ULTIMATE), "Blizzard", disasterId.BLIZZARD, 30, true, [disasterId.ACID, disasterId.LAVA, disasterId.FLOOD], 0],
 
 enum bossDisasters:
     WITCH = [abilityIconString(Hero.ASHE, Button.ABILITY_2), "Witch", bossDisasterId.WITCH, 60, true, [], 1],
