@@ -29,7 +29,7 @@ rule "[events/blizzard.opy] Disaster Initialization":
 
     wait(1, Wait.ABORT_WHEN_FALSE)
 
-    #createFog(localPlayer, 30, Color.WHITE)
+    createFog(localPlayer, 30, Color.WHITE)
     
     progressBarHud(localPlayer, localPlayer.DISASTER_BLIZZARD_HEAT, iconString(Icon.FIRE), HudPosition.TOP, 3, Color.ORANGE, Color.WHITE, ProgressHudReeval.VISIBILITY_AND_VALUES, SpecVisibility.NEVER)
     allocateText()
@@ -51,8 +51,11 @@ rule "[events/blizzard.opy] Disaster Initialization":
             getPlayersInRadius(DISASTER_BLIZZARD_FIRES[DISASTER_BLIZZARD_INDEX], 3, Team.1, LosCheck.OFF).DISASTER_BLIZZARD_HEAT += 10
 
         getPlayers(Team.1).DISASTER_BLIZZARD_HEAT -= 5
+        
         ([player for player in getPlayers(Team.1) if player.DISASTER_BLIZZARD_HEAT > 100]).DISASTER_BLIZZARD_HEAT = 100
+
         (getDeadPlayers(Team.1)).DISASTER_BLIZZARD_HEAT = 100
+
         ([player for player in getPlayers(Team.1) if player.DISASTER_BLIZZARD_HEAT < 0]).DISASTER_BLIZZARD_HEAT = 0
         damage(([player for player in getPlayers(Team.1) if player.DISASTER_BLIZZARD_HEAT <= 0]), null, 6.25)
         wait(0.25)
