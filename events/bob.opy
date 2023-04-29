@@ -1,6 +1,6 @@
 #!mainFile "../main.opy"
 
-rule "[events/minefield.opy] Disaster Initialization":
+rule "[events/bob.opy] Disaster Initialization":
     @Condition disasters.BOB[disasterData.ID] in activeDisasters
     @Condition disasterReady
 
