@@ -60,7 +60,7 @@ rule "[events/simon.opy] Disaster Initialization":
 
         wait(0.25, Wait.ABORT_WHEN_FALSE)
 
-        DISASTER_SIMON_INSTRUCTION = random.choice([disasterSimonInstructions.JUMP, disasterSimonInstructions.ULT, disasterSimonInstructions.ABILITY, disasterSimonInstructions.CROUCH, disasterSimonInstructions.RELOAD])
+        DISASTER_SIMON_INSTRUCTION = random.choice([disasterSimonInstructions.JUMP, disasterSimonInstructions.ULT, disasterSimonInstructions.ABILITY, disasterSimonInstructions.CROUCH])
         DISASTER_SIMON_DO = random.choice([true, false])
         getPlayers(Team.1).DISASTER_SIMON_PASSED = false
 
