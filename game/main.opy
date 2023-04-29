@@ -1,5 +1,10 @@
 #!mainFile "../main.opy"
 
+enum dangerMode:
+    NULL,
+    MULTI_DISASTER,
+    MYSTERY
+
 #!define setMatchTimeAndWait(time) \
 setMatchTime(time)\
 wait(0.032)\
@@ -11,6 +16,8 @@ wait(0.032)\
 waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getPlayersInMatch()]), 9999)
 
 #!include "game/anti-crash.opy"
+
+globalvar selectedDangerMode
 
 rule "[game/main.opy] Init":
     disableGamemodeCompletion()
@@ -44,19 +51,34 @@ rule "[game/main.opy] Game Loop":
     # Game Loop
     while true:
         # Disaster
-        if teamScore(Team.1) % 5 == 0 and teamScore(Team.1) > 0:
-            # Double Disaster
-            objectiveDescription = ""
-            selectMultipleDisasters()
-            wait(0.016)
-            setMatchTimeWaitUntilAllDead(activeDisasterDuration)
-        else:
-            objectiveDescription = ""
-            selectDisaster()
-            wait(0.016)
-            setMatchTimeWaitUntilAllDead(activeDisasterDuration)
+        switch (selectedDangerMode):
+            case dangerMode.MULTI_DISASTER:
+                objectiveDescription = ""
+                selectMultipleDisasters()
+                wait(0.016)
+                setMatchTimeWaitUntilAllDead(activeDisasterDuration)
+                break
+            case dangerMode.MYSTERY:
+                objectiveDescription = ""
+                addDisaster(disasters.MYSTERY)
+
+                wait(3)
+
+                disasterReady = true
+                displayDisaster()
+
+                wait(0.016)
+                setMatchTimeWaitUntilAllDead(activeDisasterDuration)
+                break
+            default:
+                objectiveDescription = ""
+                selectDisaster()
+                wait(0.016)
+                setMatchTimeWaitUntilAllDead(activeDisasterDuration)
+                break
 
         cleanupDisaster()
+        selectedDangerMode = dangerMode.NULL
 
         if teamScore(Team.2) == 0:
             declareTeamVictory(Team.1)
@@ -75,6 +97,7 @@ rule "[game/main.opy] Game Loop":
         if teamScore(Team.1) % 5 == 0 and teamScore(Team.1) > 0:
             objectiveDescription = "{0} Warning {0}".format(iconString(Icon.WARNING))
             bigMessage(getAllPlayers(), "{0} Warning  {0}".format(iconString(Icon.WARNING)))
+            selectedDangerMode = random.choice([dangerMode.MYSTERY, dangerMode.MULTI_DISASTER])
             setMatchTimeAndWait(20)
             continue
 
