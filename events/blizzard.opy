@@ -24,6 +24,8 @@ rule "[events/blizzard.opy] Disaster Initialization":
 
     getPlayers(Team.1).DISASTER_BLIZZARD_HEAT = 100
 
+    waitForEntitySpawnFlag(getDisasterId(disasters.BLIZZARD))
+
     createDummy(Hero.MEI, Team.2, -1, nearestWalkablePosition(vect(0, 1000, 0)), null)
     allocateDummyBotTag(getDisasterId(disasters.BLIZZARD))
 

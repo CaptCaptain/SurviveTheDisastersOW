@@ -10,6 +10,7 @@ settings "lobby.opy.json"
 #!extension explosionSounds
 
 #!define getPlayersInMatch() [player for player in getPlayers(Team.1) if player.isAlive() and player.hasSpawned()]
+#!define getPlayersAlive() [player for player in getPlayers(Team.1) if player.isAlive and player.hasSpawned()]
 
 #!define globalBotDamagePercentage min(1, (getNumberOfPlayers(Team.1) / 3)) * (0.35 * WS_SETTING_GLOBAL_BOT_DAMAGE)
 
@@ -47,6 +48,9 @@ globalvar WS_DIFFICULTY = 0.75
 globalvar globalIndex
 globalvar debugMode = createWorkshopSetting(bool, "General", "Debug Mode", false, 3)
 globalvar WORKSHOP_CODE = "GWZB4"
+
+globalvar CREDITS_THERISTER = createWorkshopSetting(enum["Therister"], "Credits", "Dialogue System", 0, 1)
+globalvar CREDITS_ZEZOMBYE = createWorkshopSetting(enum["Zezombye"], "Credits", "Anti-Crash System & Overpy", 0, 1)
 
 #!include "player/main.opy"
 #!include "events/main.opy"
