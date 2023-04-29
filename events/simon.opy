@@ -34,6 +34,8 @@ rule "[events/simon.opy] Disaster Initialization":
     
     getPlayers(Team.1).DISASTER_SIMON_PASSED = true
 
+    waitForEntitySpawnFlag(disasters.SIMON[disasterData.ID])
+
     createDummy(Hero.REINHARDT, Team.2, -1, random.choice(getSpawnPoints(Team.ALL)).getPosition(), null)
     allocateDummyBotTag(getDisasterId(disasters.SIMON))
 
