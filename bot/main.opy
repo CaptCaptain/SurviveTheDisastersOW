@@ -21,9 +21,6 @@
 
 playervar dummyBotLosSpawnPos
 
-globalvar tempDummyBotSpawnArray = []
-globalvar dummyBotSpawnArray = []
-
 rule "[bot/main.opy] Init":
     # Global Bot Damage
     startDamageModification(getPlayers(Team.1), getPlayers(Team.2), globalBotDamagePercentage, DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
@@ -38,7 +35,7 @@ rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
     if any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]):
         return
 
-    eventPlayer.dummyBotLosSpawnPos = sorted(getPlayersAlive(), lambda player: player.getPosition().y).last()
+    eventPlayer.dummyBotLosSpawnPos = sorted(getPlayersAlive(), lambda player: player.survivalStreak).last()
     eventPlayer.dummyBotLosSpawnPos = [spawn for spawn in dummyBotSpawnArray if eventPlayer.dummyBotLosSpawnPos.y > spawn - 1 and eventPlayer.dummyBotLosSpawnPos.y < spawn + 1]
     eventPlayer.dummyBotLosSpawnPos = random.choice(eventPlayer.dummyBotLosSpawnPos.exclude([spawn for spawn in eventPlayer.dummyBotLosSpawnPos if not isInLoS(getClosestPlayer(spawn, Team.1).getEyePosition(), spawn + Vector.UP, BarrierLos.PASS_THROUGH_BARRIERS) or not getClosestPlayer(spawn, Team.1).isAlive]))
 
@@ -72,7 +69,7 @@ rule "[bot/main.opy] Prevent Bot Respawn Clumping":
     eventPlayer.teleport(dummyBotSpawn(15))
 
 rule "[bot/main.opy] Track Player Positions":
-    tempDummyBotSpawnArray = [player for player in getPlayers(Team.1) if player.isOnGround() and player.isMoving()]
+    tempDummyBotSpawnArray = [player for player in getPlayersInMatch() if player.isOnGround() and player.isMoving()]
     dummyBotSpawnArray.append([player.getPosition() for player in getAllPlayers()])
 
     if len(dummyBotSpawnArray) >= 1000:
