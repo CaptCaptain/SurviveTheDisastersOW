@@ -13,7 +13,7 @@ def applyCopycatState():
         allocatePlayerEffect(eventPlayer)
         applyCustomHealthFor(eventPlayer, 25, 0, 125)
 
-        if eventPlayer.getCurrentHero() in [Hero.MOIRA, Hero.KIRIKO]:
+        if eventPlayer.getCurrentHero() in [Hero.MOIRA, Hero.KIRIKO, Hero.LIFEWEAVER]:
             while not eventPlayer.isFiringSecondaryFire() and entityExists(eventPlayer):
                 eventPlayer.startForcingButton(Button.SECONDARY_FIRE)
                 wait(1)
