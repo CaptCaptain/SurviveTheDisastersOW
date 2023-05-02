@@ -18,7 +18,7 @@ rule "[player/sombra.opy]: Sombra Init":
     @Condition WS_SETTING_LIMITED_STEALTH
     @Condition any([playerIsSombra(player) for player in getPlayers(Team.1)])
 
-    progressBarHud(localPlayer if playerIsSombra(localPlayer) and localPlayer.isUsingAbility1() else null, localPlayer.sombraMaxInvisTimer, abilityIconString(Hero.SOMBRA, Button.ABILITY_1), HudPosition.TOP, 3, Color.VIOLET, Color.WHITE, ProgressHudReeval.VISIBILITY_AND_VALUES, SpecVisibility.NEVER)
+    progressBarHud(localPlayer if playerIsSombra(localPlayer) and localPlayer.isUsingAbility1() else [], localPlayer.sombraMaxInvisTimer, abilityIconString(Hero.SOMBRA, Button.ABILITY_1), HudPosition.TOP, 3, Color.VIOLET, Color.WHITE, ProgressHudReeval.VISIBILITY_AND_VALUES, SpecVisibility.NEVER)
     sombraMaxInvisTextId = getLastCreatedText()
 
     waitUntil(all([player.getCurrentHero() != Hero.SOMBRA and player.getHeroOfDuplication() != Hero.SOMBRA for player in getPlayers(Team.1)]), 9999)

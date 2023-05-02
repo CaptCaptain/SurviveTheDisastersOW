@@ -63,8 +63,8 @@ enum disasters:
     DEATH_TRAMPOLINE = [iconString(Icon.HALO), "Death Trampoline", disasterId.DEATH_TRAMPOLINE, 10, false, [], 0], # Not Implemented
     GREEN_ZONE = [abilityIconString(Hero.RAMATTRA, Button.ABILITY_2), "Green Zone", disasterId.GREEN_ZONE, 20, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GET_DOWN, disasterId.BUTTON, disasterId.BLACK_HOLE], 0],
     MURDERERS = [abilityIconString(Hero.JUNKER_QUEEN, Button.SECONDARY_FIRE), "Murderers", disasterId.MURDERERS, 30, true, [], 1],
-    NULL_SECTOR = [abilityIconString(Hero.BASTION, Button.ULTIMATE), "Null Sector", disasterId.NULL_SECTOR, 45, true, [disasterId.TALON], 2],
-    TALON = [abilityIconString(Hero.DOOMFIST, Button.ULTIMATE), "Talon", disasterId.TALON, 45, true, [disasterId.NULL_SECTOR], 2],
+    NULL_SECTOR = [abilityIconString(Hero.BASTION, Button.ULTIMATE), "Null Sector", disasterId.NULL_SECTOR, 30, true, [disasterId.TALON], 2],
+    TALON = [abilityIconString(Hero.DOOMFIST, Button.ULTIMATE), "Talon", disasterId.TALON, 30, true, [disasterId.NULL_SECTOR], 2],
     BUTTON = [abilityIconString(Hero.KIRIKO, Button.ABILITY_1), "Press the Button", disasterId.BUTTON, 30, false, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.FAKE_BP], 0],
     NINJA = [abilityIconString(Hero.GENJI, Button.ABILITY_2), "Ninjas", disasterId.NINJA, 30, true, [], 2],
     COPYCAT = [abilityIconString(Hero.ECHO, Button.ULTIMATE), "Copycats", disasterId.COPYCAT, 30, true, [], 2],

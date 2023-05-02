@@ -87,7 +87,6 @@ rule "[game/main.opy] Game Loop":
         selectedDangerMode = dangerMode.NULL
 
         getPlayersAlive().survivalStreak += 1
-        getPlayersAlive().survivalScore += 100
 
         bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Survived!  {0}".format(iconString(Icon.CHECKMARK)))
 

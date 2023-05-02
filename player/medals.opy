@@ -15,6 +15,7 @@ enum MedalSounds:
     BAD = [3, DynamicEffect.DEBUFF_IMPACT_SOUND],
 
 enum Medals:
+    SURVIVED = [iconString(Icon.CHECKMARK), "Survived!", MedalSounds.GOOD[medalSoundData.ID]],
     NOT_TODAY = [abilityIconString(Hero.BAPTISTE, Button.ABILITY_2), "Not Today, Thank You", MedalSounds.GOOD[medalSoundData.ID]],
     SUPPORTER = [iconString(Icon.PLUS), "Supporter", MedalSounds.GOOD[medalSoundData.ID]],
     CLOSE_FINISH = [abilityIconString(Hero.LUCIO, Button.ABILITY_2), "Close Finish...!", MedalSounds.OKAY[medalSoundData.ID]],
@@ -39,7 +40,11 @@ enum Medals:
     if not medal[medalData.TITLE] in player.medalsEarned:\
         player.medalsEarned.append(medal[medalData.TITLE])\
         player.totalMedals += 1\
-        player.survivalScore += 50\
+
+#!define queueMedalWithPoints(player, medal, points) \
+    queueMedal(player, medal) \
+    player.array_medal_icons[player.array_medal_icons.index(player.array_medal_icons.last())] = "{0} [+{1} PTS]".format(player.array_medal_icons[player.array_medal_icons.index(player.array_medal_icons.last())], points)\
+    player.survivalScore += points\
 
 #!define createMedalSFX(player, dynamicEffect) playEffect(player, dynamicEffect, Color.WHITE, player, 50)
 
@@ -88,7 +93,7 @@ def displayEarnedMedals():
     eventPlayer.medalsDisplayLimit = 0
 
 rule "[player/medals.opy] Init":
-    onScreenText(localPlayer if localPlayer.medalsDisplayed else null, "Achievements", 0, -0.6, 1.2, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.NEVER)
+    onScreenText(localPlayer if localPlayer.medalsDisplayed else [], "Achievements", 0, -0.6, 1.2, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.NEVER)
 
 rule "[player/medals.opy] Queue Medal Messages":
     @Event eachPlayer
@@ -106,6 +111,9 @@ rule "[player/medals.opy] Survival Streak Medals / MVP Medals / Teamwork Medal":
 
     waitUntil(disasterReady == false, 9999)
 
+    if eventPlayer.isAlive:
+        queueMedalWithPoints(eventPlayer, Medals.SURVIVED, 100)
+
     if eventPlayer.survivalStreak == 21:
         queueMedal(eventPlayer, Medals.STREAK_21)
     elif eventPlayer.survivalStreak == 13:
@@ -116,20 +124,20 @@ rule "[player/medals.opy] Survival Streak Medals / MVP Medals / Teamwork Medal":
         queueMedal(eventPlayer, Medals.STREAK_3)
 
     if sorted(getPlayers(Team.1), lambda player: player.survivalStreak).last() == eventPlayer and getNumberOfPlayers(Team.1) >= 3 and eventPlayer.survivalStreak > 0:
-        queueMedal(eventPlayer, Medals.MVP)
+        queueMedalWithPoints(eventPlayer, Medals.MVP, 50)
 
     if all([player.isAlive for player in getPlayers(Team.1)]) and getNumberOfPlayers(Team.1) > 1:
-        queueMedal(eventPlayer, Medals.TEAMWORK)
+        queueMedalWithPoints(eventPlayer, Medals.TEAMWORK, 50)
 
     if len([player for player in getPlayers(Team.1) if player.isAlive]) == 1 and eventPlayer.isAlive and getNumberOfPlayers(Team.1) > 3:
-        queueMedal(eventPlayer, Medals.LAST_ONE_STANDING)
+        queueMedalWithPoints(eventPlayer, Medals.LAST_ONE_STANDING, 100)
 
 rule "[player/medals.opy] Slayer Medal":
     @Event playerDealtFinalBlow
     @Team 1
     @Condition disasterReady == true
 
-    queueMedal(eventPlayer, Medals.SLAYER)
+    queueMedalWithPoints(eventPlayer, Medals.SLAYER, 25)
 
     waitUntil(disasterReady == false, 9999)
 
