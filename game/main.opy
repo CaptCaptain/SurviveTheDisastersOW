@@ -15,6 +15,12 @@ setMatchTime(time)\
 wait(0.032)\
 waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getPlayersInMatch()]), 9999)
 
+#!define getHighestScoredPlayer() sorted(getPlayersInMatch(), lambda player: player.survivalScore).last()
+
+#!define getHighestAchievingPlayer() sorted(getPlayersInMatch(), lambda player: player.totalMedals).last()
+
+#!define getTeamScore() getPlayersInSlot(0, Team.1).survivalScore + getPlayersInSlot(1, Team.1).survivalScore + getPlayersInSlot(2, Team.1).survivalScore + getPlayersInSlot(3, Team.1).survivalScore + getPlayersInSlot(4, Team.1).survivalScore + getPlayersInSlot(5, Team.1).survivalScore
+
 #!include "game/anti-crash.opy"
 
 globalvar selectedDangerMode
@@ -80,18 +86,42 @@ rule "[game/main.opy] Game Loop":
         cleanupDisaster()
         selectedDangerMode = dangerMode.NULL
 
-        if teamScore(Team.2) == 0:
-            declareTeamVictory(Team.1)
-
-        addToTeamScore(Team.1, 1)
-        addToTeamScore(Team.2, -1)
         getPlayersAlive().survivalStreak += 1
+        getPlayersAlive().survivalScore += 100
 
         bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Survived!  {0}".format(iconString(Icon.CHECKMARK)))
 
         bigMessage([player for player in getPlayers(Team.1) if not player.isAlive], "{0} Wipeout!  {0}".format(iconString(Icon.CROSS)))
 
         wait(1)
+
+        if teamScore(Team.2) == 0:
+            wait(2)
+
+            getAllPlayers().disableGamemodeHud()
+
+            # Create end results
+                # Results
+            onScreenText(getAllPlayers(), "End Results", 0, 1.8, 3, WorldTextReeval.VISIBILITY_AND_POSITION, Color.LIME_GREEN, SpecVisibility.DEFAULT)
+
+                # Best Score
+            onScreenText(getAllPlayers(), "Best Score", 0, 1.65, 1.5, WorldTextReeval.VISIBILITY_AND_POSITION, Color.ORANGE, SpecVisibility.DEFAULT)
+            onScreenText(getAllPlayers(), "{0} ({1} PTS)".format(getHighestScoredPlayer(), getHighestScoredPlayer().survivalScore), 0, 1.55, 1.25, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
+
+                # Achievement Hunter
+            onScreenText(getAllPlayers(), "Achievement Hunter", -1.1, 1.65, 1.5, WorldTextReeval.VISIBILITY_AND_POSITION, Color.ORANGE, SpecVisibility.DEFAULT)
+            onScreenText(getAllPlayers(), "{0} ({1} Earned)".format(getHighestAchievingPlayer(), getHighestAchievingPlayer().totalMedals), -1.1, 1.55, 1.25, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
+
+                # Team Score
+            onScreenText(getAllPlayers(), "Team Score", 1.1, 1.65, 1.5, WorldTextReeval.VISIBILITY_AND_POSITION, Color.ORANGE, SpecVisibility.DEFAULT)
+            onScreenText(getAllPlayers(), "{0} PTS".format(getTeamScore()), 1.1, 1.55, 1.25, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
+
+            wait(2)
+
+            declareTeamVictory(Team.1)
+
+        addToTeamScore(Team.1, 1)
+        addToTeamScore(Team.2, -1)
 
         # Break
         if teamScore(Team.1) % 5 == 0 and teamScore(Team.1) > 0:

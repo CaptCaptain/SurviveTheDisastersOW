@@ -9,7 +9,7 @@ rule "[bot/wisp.opy]: Behavior":
     eventPlayer.startForcingName("Will-o'-wisp")
     eventPlayer.setDamageReceived(Math.INFINITY)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1)
-    eventPlayer.setDamageDealt(200)
+    eventPlayer.setDamageDealt(100)
 
     wait(1)
 
@@ -28,6 +28,7 @@ rule "[bot/wisp.opy]: Behavior":
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():
                     case true:
+                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
                         eventPlayer.setAbilityCharge(Button.ABILITY_1, 3)
                         if distance(eventPlayer.BOT_PLAYER.getPosition(), eventPlayer.getPosition()) > 7.5:
                             eventPlayer.forceButtonPress(Button.ABILITY_1)

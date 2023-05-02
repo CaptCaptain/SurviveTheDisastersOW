@@ -39,6 +39,7 @@ enum Medals:
     if not medal[medalData.TITLE] in player.medalsEarned:\
         player.medalsEarned.append(medal[medalData.TITLE])\
         player.totalMedals += 1\
+        player.survivalScore += 50\
 
 #!define createMedalSFX(player, dynamicEffect) playEffect(player, dynamicEffect, Color.WHITE, player, 50)
 
