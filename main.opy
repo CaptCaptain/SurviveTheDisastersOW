@@ -40,7 +40,7 @@ globalvar WS_SETTING_LIMITED_STEALTH = createWorkshopSetting(bool, "Heroes", "So
 #!include "../overpy-modules/src/restart.opy"
 #!include "../overpy-modules/src/rainbow.opy"
 
-globalvar WS_DIFFICULTY = 0.75
+globalvar WS_DIFFICULTY = 1
 
 #!include "../Bot-Playground/src/bot/controller.opy"
 #!include "../Bot-Playground/src/bot/heroes/all.opy"
