@@ -2,6 +2,8 @@
 
 #!define hasDisasterTag(tag) eventPlayer.BOT_DISASTER_TAG == tag
 
+#!define botWaitUntilReady() waitUntil(entityExists(eventPlayer.BOT_PLAYER) and eventPlayer.isAlive(), 9999)
+
 #!include "bot/moth.opy"
 #!include "bot/wife.opy"
 #!include "bot/minefield.opy"

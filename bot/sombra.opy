@@ -9,7 +9,7 @@ rule "[bot/sombra.opy]: Behavior":
     eventPlayer.startForcingName("Hacker")
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER), 9999)
+        botWaitUntilReady()
         eventPlayer.BOT_ABILITY_1_ENABLED = true if not eventPlayer.isUsingAbility1() and eventPlayer.getNormalizedHealth() >= 1 and not eventPlayer.BOT_PLAYER.hasStatusEffect(Status.HACKED) else false
 
         switch entityExists(eventPlayer.BOT_PLAYER):

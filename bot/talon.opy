@@ -23,7 +23,7 @@ rule "[bot/talon.opy]: Doomfist Behavior":
     allocatePlayerEffect(eventPlayer)
 
     while eventPlayer.isAlive():
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_PLAYER):
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():
@@ -64,7 +64,7 @@ rule "[bot/talon.opy]: Trooper Behavior":
     applyCustomHealth()
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_PLAYER):
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():
@@ -89,7 +89,7 @@ rule "[bot/talon.opy]: Shotgunner Behavior":
     applyCustomHealth()
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_PLAYER):
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():
