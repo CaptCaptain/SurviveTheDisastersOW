@@ -13,7 +13,7 @@ rule "[bot/ninja.opy]: Genji Behavior":
     applyCustomHealthFor(eventPlayer, 150, 0, 0)
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_PLAYER):
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():
@@ -68,11 +68,6 @@ rule "[bot/ninja.opy]: Kiriko Behavior":
                         EXECUTE_ULTIMATE_ABILITY()
                 break
     
-        switch getCurrentGamemode():
-            case Gamemode.FFA:
-                break
-            default:
-                UPDATE_BOT_TEAMMATE()
-                break
+        UPDATE_BOT_TEAMMATE()
                 
         waitThrottle(Wait.IGNORE_CONDITION)

@@ -16,7 +16,7 @@ rule "[bot/sniper.opy]: Ashe Behavior":
     eventPlayer.startForcingName("Sniper")
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_PLAYER):
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():
@@ -40,7 +40,7 @@ rule "[bot/sniper.opy]: Widow Behavior":
     eventPlayer.startForcingName("Sniper")
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_PLAYER):
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():

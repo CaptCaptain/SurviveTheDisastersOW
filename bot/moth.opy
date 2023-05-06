@@ -9,7 +9,7 @@ rule "[bot/moth.opy]: Behavior":
     eventPlayer.startForcingName("Moth")
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_PLAYER):
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():

@@ -10,7 +10,7 @@ rule "[bot/winton.opy]: Behavior":
     eventPlayer.setDamageDealt(300)
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_PLAYER):
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():

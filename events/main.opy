@@ -43,6 +43,9 @@ enum disasterId:
     SLENDERMAN,
     FAKE_BP,
     BLIZZARD,
+    WITCH,
+    TIKTOK,
+    PHARAMERCY
 
 enum bossDisasterId:
     WITCH
@@ -53,7 +56,7 @@ enum disasters:
     MINEFIELD = [abilityIconString(Hero.HAMMOND, Button.ULTIMATE), "MINEFIELD", disasterId.MINEFIELD, 15, true, [], 1],
     BOB = [abilityIconString(Hero.ASHE, Button.ULTIMATE), "Big Omnic Butler", disasterId.BOB, 15, true, [], 1],
     SIMON = [iconString(Icon.STOP), "Simon Says", disasterId.SIMON, 90, true, [], 1], # Temporarily Disabled
-    ACID_RAIN = [iconString(Icon.RADIOACTIVE), "Acid Rain", disasterId.ACID_RAIN, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE], 0],
+    ACID_RAIN = [iconString(Icon.RADIOACTIVE), "Acid Rain", disasterId.ACID_RAIN, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.LAVA], 0],
     SOMBRA = [abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE), "Hackers", disasterId.SOMBRA, 30, true, [], 1],
     WINTON = [abilityIconString(Hero.WINSTON, Button.ULTIMATE), "Monke", disasterId.WINTON, 30, true, [], 1],
     KAME = [abilityIconString(Hero.MOIRA, Button.ULTIMATE), "Kamehameha", disasterId.KAME, 10, true, [], 1],
@@ -76,6 +79,9 @@ enum disasters:
     FAKE_BP = [abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE), "Free Battle Pass XP", disasterId.FAKE_BP, 30, true, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.BUTTON], 0],
     WISP = [abilityIconString(Hero.TRACER, Button.ULTIMATE), "Will-o'-wisp", disasterId.WISP, 30, true, [], 1],
     BLIZZARD = [abilityIconString(Hero.MEI, Button.ULTIMATE), "Blizzard", disasterId.BLIZZARD, 30, true, [disasterId.ACID, disasterId.LAVA, disasterId.FLOOD], 1],
+    WITCH = [abilityIconString(Hero.RAMATTRA, Button.ULTIMATE), "Witch", disasterId.WITCH, 30, true, [], 1],
+    TIKTOK = [abilityIconString(Hero.MOIRA, Button.ABILITY_2), "DPS Moira", disasterId.TIKTOK, 30, true, [], 1],
+    PHARAMERCY = ["{}{}".format(abilityIconString(Hero.PHARAH, Button.ULTIMATE), abilityIconString(Hero.MERCY, Button.ULTIMATE)), "Pharamercy", disasterId.PHARAMERCY, 30, true, [], 2],
 
 enum bossDisasters:
     WITCH = [abilityIconString(Hero.ASHE, Button.ABILITY_2), "Witch", bossDisasterId.WITCH, 60, true, [], 1],
@@ -176,7 +182,7 @@ waitUntil(activeDisasters.index(disasterId) == entitySpawningIndex, 9999)
 #!define applyEntityFlag(player, flag) \
 player.BOT_DISASTER_FLAGS.append(flag)
 
-#!define disasterPool [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID]]
+#!define disasterPool [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID], disasters.WITCH[disasterData.ID], disasters.PHARAMERCY[disasterData.ID], disasters.TIKTOK[disasterData.ID]]
 
 subroutine queueDisaster
 subroutine cleanupDisaster
@@ -233,6 +239,9 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/fake_bp.opy"
 #!include "events/wisp.opy"
 #!include "events/blizzard.opy"
+#!include "events/witch.opy"
+#!include "events/tiktok.opy"
+#!include "events/pharamercy.opy"
 
 def queueDisaster():
     @Name "[events/main.opy] Queue Disaster"
@@ -321,6 +330,15 @@ def queueDisaster():
             break
         case disasters.BLIZZARD[disasterData.ID]:
             addDisaster(disasters.BLIZZARD)
+            break
+        case disasters.WITCH[disasterData.ID]:
+            addDisaster(disasters.WITCH)
+            break
+        case disasters.TIKTOK[disasterData.ID]:
+            addDisaster(disasters.TIKTOK)
+            break
+        case disasters.PHARAMERCY[disasterData.ID]:
+            addDisaster(disasters.PHARAMERCY)
             break
 
 def selectDisaster():

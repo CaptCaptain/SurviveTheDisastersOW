@@ -40,6 +40,9 @@ rule "[events/button.opy] Disaster Initialization":
 
     DISASTER_BUTTON_DAMAGE_EFFECT()
 
+    if len(activeDisasters) == 1:
+        setMatchTime(getMatchTime() / 2)
+
     while disasters.BUTTON[disasterData.ID] in activeDisasters:
         kill([player for player in getPlayers(Team.ALL) if distance(player.getPosition(), DISASTER_BUTTON_POS) > 10], getPlayersInRadius(DISASTER_BUTTON_POS, 3, Team.1, LosCheck.OFF))
         wait(0.25)
