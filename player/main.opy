@@ -96,6 +96,9 @@ for globalIndex in range(0, len(activeDisasters), 1):\
         case disasters.BLIZZARD[disasterData.ID]:\
             appendDisasterString(disasters.BLIZZARD, disasterLastEntryMacro)\
             break\
+        case disasters.WITCH[disasterData.ID]:\
+            appendDisasterString(disasters.WITCH, disasterLastEntryMacro)\
+            break\
 
 #!define createScoreboardText(slot) hudText(localPlayer if getPlayersInSlot(slot, Team.1) and localPlayer.toggleScoreboard else [], heroIcon(getPlayersInSlot(slot, Team.1).getCurrentHero()), "Score: {2} | Survival Streak: {0} | Achievements: {1}".format(getPlayersInSlot(slot, Team.1).survivalStreak, getPlayersInSlot(slot, Team.1).totalMedals, getPlayersInSlot(slot, Team.1).survivalScore), "[{0}]".format(getPlayersInSlot(slot, Team.1)), HudPosition.LEFT, (getPlayersInSlot(slot, Team.1).survivalScore) * -1, Color.LIME_GREEN if getPlayersInSlot(slot, Team.1).isAlive else Color.RED, evalOnce(Color.ORANGE), evalOnce(Color.WHITE), HudReeval.VISIBILITY_SORT_ORDER_STRING_AND_COLOR)
 

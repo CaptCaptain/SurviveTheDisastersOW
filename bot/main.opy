@@ -20,6 +20,7 @@
 #!include "bot/sniper.opy"
 #!include "bot/wisp.opy"
 #!include "bot/blizzard.opy"
+#!include "bot/witch.opy"
 
 playervar dummyBotLosSpawnPos
 

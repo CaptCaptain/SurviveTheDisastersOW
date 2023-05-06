@@ -95,6 +95,9 @@ def displayDebugDisasterName():
         case disasters.BLIZZARD[disasterData.ID]:
             displayDebugDisaster(disasters.BLIZZARD)
             break
+        case disasters.WITCH[disasterData.ID]:
+            displayDebugDisaster(disasters.WITCH)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break

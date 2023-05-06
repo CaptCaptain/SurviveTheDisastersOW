@@ -43,6 +43,7 @@ enum disasterId:
     SLENDERMAN,
     FAKE_BP,
     BLIZZARD,
+    WITCH,
 
 enum bossDisasterId:
     WITCH
@@ -76,6 +77,7 @@ enum disasters:
     FAKE_BP = [abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE), "Free Battle Pass XP", disasterId.FAKE_BP, 30, true, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.BUTTON], 0],
     WISP = [abilityIconString(Hero.TRACER, Button.ULTIMATE), "Will-o'-wisp", disasterId.WISP, 30, true, [], 1],
     BLIZZARD = [abilityIconString(Hero.MEI, Button.ULTIMATE), "Blizzard", disasterId.BLIZZARD, 30, true, [disasterId.ACID, disasterId.LAVA, disasterId.FLOOD], 1],
+    WITCH = [abilityIconString(Hero.RAMATTRA, Button.ULTIMATE), "Witch", disasterId.WITCH, 30, true, [], 1],
 
 enum bossDisasters:
     WITCH = [abilityIconString(Hero.ASHE, Button.ABILITY_2), "Witch", bossDisasterId.WITCH, 60, true, [], 1],
@@ -233,6 +235,7 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/fake_bp.opy"
 #!include "events/wisp.opy"
 #!include "events/blizzard.opy"
+#!include "events/witch.opy"
 
 def queueDisaster():
     @Name "[events/main.opy] Queue Disaster"
@@ -321,6 +324,9 @@ def queueDisaster():
             break
         case disasters.BLIZZARD[disasterData.ID]:
             addDisaster(disasters.BLIZZARD)
+            break
+        case disasters.WITCH[disasterData.ID]:
+            addDisaster(disasters.WITCH)
             break
 
 def selectDisaster():
