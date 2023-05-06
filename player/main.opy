@@ -106,11 +106,11 @@ for globalIndex in range(0, len(activeDisasters), 1):\
             appendDisasterString(disasters.PHARAMERCY, disasterLastEntryMacro)\
             break\
 
-#!define scoreboardPosition(slot) sorted(getPlayers(Team.1), lambda player: player.survivalScore).index(getPlayersInSlot(slot, Team.1)) * -1
+#!define scoreboardPosition(slot) scoreboardPlayers.index(getPlayersInSlot(slot, Team.1)) * -1
 
-#!define firstOnScoreboardPosition() sorted(getPlayers(Team.1), lambda player: player.survivalScore).index(sorted(getPlayers(Team.1), lambda player: player.survivalScore)[0])
+#!define firstOnScoreboardPosition() scoreboardPlayers.index(scoreboardPlayers[0])
 
-#!define lastOnScoreboardPosition() sorted(getPlayers(Team.1), lambda player: player.survivalScore).index(sorted(getPlayers(Team.1), lambda player: player.survivalScore).last())
+#!define lastOnScoreboardPosition() scoreboardPlayers.index(scoreboardPlayers.last())
 
 #!define createScoreboardText(slot) hudText(localPlayer if getPlayersInSlot(slot, Team.1) and localPlayer.toggleScoreboard else [], heroIcon(getPlayersInSlot(slot, Team.1).getCurrentHero()), "Score: {2} | Survival Streak: {0} | Achievements: {1}".format(getPlayersInSlot(slot, Team.1).survivalStreak, getPlayersInSlot(slot, Team.1).totalMedals, getPlayersInSlot(slot, Team.1).survivalScore), "[{0}]".format(getPlayersInSlot(slot, Team.1)), HudPosition.LEFT, scoreboardPosition(slot), Color.LIME_GREEN if getPlayersInSlot(slot, Team.1).isAlive else Color.RED, evalOnce(Color.ORANGE), evalOnce(Color.WHITE), HudReeval.VISIBILITY_SORT_ORDER_STRING_AND_COLOR)
 
@@ -123,6 +123,8 @@ playervar totalMedals = 0
 playervar isAlive = true
 playervar timeJoined = 0
 playervar toggleScoreboard = true
+
+globalvar scoreboardPlayers = []
 
 globalvar objectiveDescription = ""
 
@@ -221,3 +223,8 @@ rule "[player/main.opy] Reset Survival Streak on Death":
     wait(1)
 
     eventPlayer.isAlive = true
+
+rule "[player/main.opy] Update Scoreboard":
+    while true:
+        scoreboardPlayers = sorted(getPlayers(Team.1), lambda player: player.survivalScore)
+        wait(1)
