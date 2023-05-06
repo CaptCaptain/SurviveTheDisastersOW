@@ -53,7 +53,7 @@ enum disasters:
     MINEFIELD = [abilityIconString(Hero.HAMMOND, Button.ULTIMATE), "MINEFIELD", disasterId.MINEFIELD, 15, true, [], 1],
     BOB = [abilityIconString(Hero.ASHE, Button.ULTIMATE), "Big Omnic Butler", disasterId.BOB, 15, true, [], 1],
     SIMON = [iconString(Icon.STOP), "Simon Says", disasterId.SIMON, 90, true, [], 1], # Temporarily Disabled
-    ACID_RAIN = [iconString(Icon.RADIOACTIVE), "Acid Rain", disasterId.ACID_RAIN, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE], 0],
+    ACID_RAIN = [iconString(Icon.RADIOACTIVE), "Acid Rain", disasterId.ACID_RAIN, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.LAVA], 0],
     SOMBRA = [abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE), "Hackers", disasterId.SOMBRA, 30, true, [], 1],
     WINTON = [abilityIconString(Hero.WINSTON, Button.ULTIMATE), "Monke", disasterId.WINTON, 30, true, [], 1],
     KAME = [abilityIconString(Hero.MOIRA, Button.ULTIMATE), "Kamehameha", disasterId.KAME, 10, true, [], 1],
