@@ -34,6 +34,8 @@ enum Medals:
     NO_BP = [iconString(Icon.ASTERISK), "Too Good to Be True", MedalSounds.BAD[medalSoundData.ID]],
 
 #!define queueMedal(player, medal) \
+    if not player.hasSpawned():\
+        return\
     player.array_medal_titles.append(medal[medalData.ICON])\
     player.array_medal_icons.append(medal[medalData.TITLE])\
     player.array_medal_sounds.append(medal[medalData.SOUND])\

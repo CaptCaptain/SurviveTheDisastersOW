@@ -48,7 +48,7 @@ rule "[bot/witch.opy]: Potion Behavior":
         wait(1)
 
         DISASTER_WITCH_POTION = random.choice([disasterWitchPotionType.POISON, disasterWitchPotionType.FREEZE, disasterWitchPotionType.STUNNED, disasterWitchPotionType.BURNING])
-        DISASTER_WITCH_POTION_POS = dummyBotSpawn(5) + Vector.UP
+        DISASTER_WITCH_POTION_POS = random.choice(getPlayersAlive()).getPosition() + Vector.UP
 
         switch (DISASTER_WITCH_POTION):
             case disasterWitchPotionType.POISON:
