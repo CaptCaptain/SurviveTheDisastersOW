@@ -72,7 +72,7 @@ rule "[events/simon.opy] Disaster Initialization":
                 DISASTER_SIMON_SAYS("Use your Ultimate!")
                 break
             case disasterSimonInstructions.ABILITY:
-                DISASTER_SIMON_SAYS("Use your abilities!")
+                DISASTER_SIMON_SAYS("Use your 1st or 2nd Ability")
                 break
             case disasterSimonInstructions.CROUCH:
                 DISASTER_SIMON_SAYS("Crouch!")
