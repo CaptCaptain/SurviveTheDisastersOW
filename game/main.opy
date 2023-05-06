@@ -30,6 +30,9 @@ rule "[game/main.opy] Init":
     disableAnnouncer()
     disableScoring()
 
+    if not WS_SETTING_ENABLE_MUSIC:
+        disableMusic()
+
     wait(1)
 
     if debugMode:

@@ -84,3 +84,12 @@ rule "[bot/main.opy] Track Player Positions":
     wait(1)
 
     if RULE_CONDITION: goto RULE_START
+
+rule "[bot/main.opy] Respawn if Teleported to Null":
+    @Event eachPlayer
+    @Team 2
+    
+    waitUntil(eventPlayer.getPosition() == vect(0, 0, 0), 9999)
+    eventPlayer.teleport(nearestWalkablePosition(dummyBotSpawnAny(15)))
+    wait(0.25)
+    goto RULE_START

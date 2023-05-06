@@ -25,6 +25,9 @@ createWorkshopSetting(int[50:200], "Gameplay", "Global Bot Damage Modifier (%)",
 #!define WS_SETTING_LONG_BREAK \
 createWorkshopSetting(bool, "Gameplay", "Long Break Time", false, 1)
 
+#!define WS_SETTING_ENABLE_MUSIC \
+createWorkshopSetting(bool, "General", "Enable Music", true, 1)
+
 #!define WS_SETTING_ANTI_CRASH_DELAY \
 [1, 2, 3][createWorkshopSetting(enum["Prioritize Server Stability", "Balanced", "Prioritize Server Performance"], "General", "Anti-Crash Priority", 2, 3)]
 
