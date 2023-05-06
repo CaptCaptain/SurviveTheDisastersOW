@@ -1,6 +1,6 @@
 #!mainFile "../main.opy"
 
-rule "[events/sniper.opy] Disaster Initialization":
+rule "[events/wisp.opy] Disaster Initialization":
     @Condition getDisasterId(disasters.WISP) in activeDisasters
     @Condition disasterReady
 
