@@ -98,6 +98,12 @@ def displayDebugDisasterName():
         case disasters.WITCH[disasterData.ID]:
             displayDebugDisaster(disasters.WITCH)
             break
+        case disasters.TIKTOK[disasterData.ID]:
+            displayDebugDisaster(disasters.TIKTOK)
+            break
+        case disasters.PHARAMERCY[disasterData.ID]:
+            displayDebugDisaster(disasters.PHARAMERCY)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break

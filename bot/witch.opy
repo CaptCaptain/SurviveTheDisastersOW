@@ -2,7 +2,9 @@
 
 enum disasterWitchPotionType:
     POISON,
-    FREEZE
+    FREEZE,
+    STUNNED,
+    BURNING,
 
 globalvar DISASTER_WITCH_POTION = 0
 globalvar DISASTER_WITCH_POTION_POS = 0
@@ -16,7 +18,7 @@ rule "[bot/witch.opy]: Potion Behavior":
     @Condition hasDisasterTag(getDisasterId(disasters.WITCH))
 
     eventPlayer.startForcingName("Witch")
-    eventPlayer.setMaxHealth(200)
+    eventPlayer.setMaxHealth(500)
     eventPlayer.BOT_DISABLE_AI = true
     eventPlayer.setKnockbackReceived(0)
     eventPlayer.startForcingButton(Button.SECONDARY_FIRE)
@@ -24,23 +26,28 @@ rule "[bot/witch.opy]: Potion Behavior":
 
     createEffect(getAllPlayers(), Effect.ORB, DISASTER_WITCH_POTION_COLOR, DISASTER_WITCH_POTION_POS, evalOnce(1), EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
     allocateEffect()
+    allocatePlayerEffect(eventPlayer)
 
     createEffect(getAllPlayers(), Effect.RING, DISASTER_WITCH_POTION_COLOR, DISASTER_WITCH_POTION_POS, evalOnce(3), EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
     allocateEffect()
+    allocatePlayerEffect(eventPlayer)
 
     createEffect(getAllPlayers(), Effect.RING, DISASTER_WITCH_POTION_COLOR, updateEveryTick(eventPlayer.getPosition()) if eventPlayer.isMoving() else eventPlayer.getPosition(), evalOnce(3), EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
     allocateEffect()
+    allocatePlayerEffect(eventPlayer)
 
     createEffect(getAllPlayers(), Effect.CLOUD, DISASTER_WITCH_POTION_COLOR, updateEveryTick(eventPlayer.getPosition()) if eventPlayer.isMoving() else eventPlayer.getPosition(), evalOnce(3), EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
     allocateEffect()
+    allocatePlayerEffect(eventPlayer)
 
     createEffect(getAllPlayers(), Effect.BAD_AURA, DISASTER_WITCH_POTION_COLOR, updateEveryTick(eventPlayer.getPosition()) if eventPlayer.isMoving() else eventPlayer.getPosition(), evalOnce(3), EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
     allocateEffect()
+    allocatePlayerEffect(eventPlayer)
 
     while eventPlayer.isAlive():
-        DISASTER_WITCH_POTION = random.choice([disasterWitchPotionType.POISON, disasterWitchPotionType.FREEZE])
         wait(1)
 
+        DISASTER_WITCH_POTION = random.choice([disasterWitchPotionType.POISON, disasterWitchPotionType.FREEZE, disasterWitchPotionType.STUNNED, disasterWitchPotionType.BURNING])
         DISASTER_WITCH_POTION_POS = dummyBotSpawn(5) + Vector.UP
 
         switch (DISASTER_WITCH_POTION):
@@ -52,7 +59,7 @@ rule "[bot/witch.opy]: Potion Behavior":
                 wait(1)
 
                 for DISASTER_WITCH_INDEX in range(0, 50, 1):
-                    createProjectile(Projectile.RAMATTRA_RAVENOUS_VORTEX_SPHERE, eventPlayer, DISASTER_WITCH_POTION_POS, Vector.UP + (Vector.LEFT * random.uniform(-1, 1)) + (Vector.FORWARD * random.uniform(-1, 1)), Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.ALL, 25, 1, 2, DynamicEffect.SIGMA_HYPERSPHERE_IMPLOSION, DynamicEffect.SIGMA_HYPERSPHERE_IMPLOSION_SOUND, 0, 10, 1, 0, 0, 30)
+                    createProjectile(Projectile.RAMATTRA_RAVENOUS_VORTEX_SPHERE, eventPlayer, DISASTER_WITCH_POTION_POS, Vector.UP + (Vector.LEFT * random.uniform(-1, 1)) + (Vector.FORWARD * random.uniform(-1, 1)), Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.ALL, 30, 1, 2, DynamicEffect.SIGMA_HYPERSPHERE_IMPLOSION, DynamicEffect.SIGMA_HYPERSPHERE_IMPLOSION_SOUND, 0, 10, 1, 0, 0, 30)
                     wait(0.016)
 
                 break
@@ -64,12 +71,40 @@ rule "[bot/witch.opy]: Potion Behavior":
                 wait(1)
 
                 for DISASTER_WITCH_INDEX in range(0, 50, 1):
-                    createProjectile(Projectile.MEI_ICICLE, eventPlayer, DISASTER_WITCH_POTION_POS + (Vector.UP * 4) + (Vector.LEFT * random.uniform(-3, 3)) + (Vector.FORWARD * random.uniform(-3, 3)), Vector.DOWN, Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.ALL, 25, 1, 2, DynamicEffect.TRACER_RECALL_DISAPPEAR, DynamicEffect.TRACER_RECALL_DISAPPEAR_SOUND, 0, 10, 1, 0, 0, 30)
+                    createProjectile(Projectile.MEI_ICICLE, eventPlayer, DISASTER_WITCH_POTION_POS + (Vector.UP * 4) + (Vector.LEFT * random.uniform(-3, 3)) + (Vector.FORWARD * random.uniform(-3, 3)), Vector.DOWN, Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.ALL, 30, 1, 2, DynamicEffect.TRACER_RECALL_DISAPPEAR, DynamicEffect.TRACER_RECALL_DISAPPEAR_SOUND, 0, 10, 1, 0, 0, 30)
                     wait(0.016)
 
                 break
+            case disasterWitchPotionType.STUNNED:
+                DISASTER_WITCH_POTION_COLOR = Color.WHITE
+
+                playEffect(getAllPlayers(), DynamicEffect.BAD_EXPLOSION, Color.WHITE, DISASTER_WITCH_POTION_POS, 2)
+
+                wait(1)
+
+                playEffect(getAllPlayers(), DynamicEffect.DVA_MICRO_MISSILES_EXPLOSION, Team.2, DISASTER_WITCH_POTION_POS, 1)
+                playEffect(getAllPlayers(), DynamicEffect.DVA_MICRO_MISSILES_EXPLOSION_SOUND, Team.2, DISASTER_WITCH_POTION_POS, 100)
+
+                getPlayersInRadius(DISASTER_WITCH_POTION_POS, 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).setStatusEffect(eventPlayer, Status.STUNNED, 1)
+
+                break
+            case disasterWitchPotionType.BURNING:
+                DISASTER_WITCH_POTION_COLOR = Color.ORANGE
+
+                playEffect(getAllPlayers(), DynamicEffect.BAD_EXPLOSION, Color.ORANGE, DISASTER_WITCH_POTION_POS, 2)
+
+                wait(1)
+
+                playEffect(getAllPlayers(), DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION, Team.2, DISASTER_WITCH_POTION_POS, 1)
+                playEffect(getAllPlayers(), DynamicEffect.DVA_MICRO_MISSILES_EXPLOSION_SOUND, Team.2, DISASTER_WITCH_POTION_POS, 100)
+
+                getPlayersInRadius(DISASTER_WITCH_POTION_POS, 20, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).startDoT(null, 1, 50)
+                getPlayersInRadius(DISASTER_WITCH_POTION_POS, 20, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).setStatusEffect(eventPlayer, Status.BURNING, 1)
+                break
     
         wait(1)
+
+    cleanupDisasterPlayerEffects(eventPlayer)
 
 rule "[bot/witch.opy]: Behavior":
     @Event eachPlayer
@@ -77,12 +112,12 @@ rule "[bot/witch.opy]: Behavior":
     @Team 2
     @Condition hasDisasterTag(getDisasterId(disasters.WITCH))
     
-    waitUntil(eventPlayer.getNormalizedHealth() < 1, 9999)
+    waitUntil(eventPlayer.getNormalizedHealth() < 0.75, 9999)
     eventPlayer.BOT_DISABLE_AI = false
     eventPlayer.stopForcingButton(Button.SECONDARY_FIRE)
     RESET_TO_IDLE()
     while eventPlayer.isAlive():
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER) and eventPlayer.isAlive(), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_PLAYER):
             case true:
                 switch eventPlayer.BOT_PLAYER.isAlive():
@@ -108,9 +143,13 @@ rule "[bot/witch.opy]: Behavior":
     @Hero ramattra
     @Team 2
     @Condition hasDisasterTag(getDisasterId(disasters.WITCH))
-    @Condition eventPlayer.BOT_DISABLE_AI == true
 
     switch (DISASTER_WITCH_POTION):
         case disasterWitchPotionType.FREEZE:
             victim.setStatusEffect(eventPlayer, Status.FROZEN, 1)
             break
+        case disasterWitchPotionType.STUNNED:
+            victim.setStatusEffect(eventPlayer, Status.STUNNED, 1)
+            break
+
+    wait(2)

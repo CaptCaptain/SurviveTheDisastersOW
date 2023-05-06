@@ -68,11 +68,6 @@ rule "[bot/ninja.opy]: Kiriko Behavior":
                         EXECUTE_ULTIMATE_ABILITY()
                 break
     
-        switch getCurrentGamemode():
-            case Gamemode.FFA:
-                break
-            default:
-                UPDATE_BOT_TEAMMATE()
-                break
+        UPDATE_BOT_TEAMMATE()
                 
         waitThrottle(Wait.IGNORE_CONDITION)

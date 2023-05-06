@@ -34,6 +34,9 @@ rule "[events/button.opy] Disaster Initialization":
     if not disasterReady:
         return
 
+    if len(activeDisasters) == 1:
+        setMatchTime(getMatchTime() / 2)
+
     playEffect(getAllPlayers(), DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION, Team.2, DISASTER_FAKE_BP_POS, 1)
     playEffect(getAllPlayers(), DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION_SOUND, Team.2, DISASTER_FAKE_BP_POS, 50)
 

@@ -44,6 +44,8 @@ enum disasterId:
     FAKE_BP,
     BLIZZARD,
     WITCH,
+    TIKTOK,
+    PHARAMERCY
 
 enum bossDisasterId:
     WITCH
@@ -78,6 +80,8 @@ enum disasters:
     WISP = [abilityIconString(Hero.TRACER, Button.ULTIMATE), "Will-o'-wisp", disasterId.WISP, 30, true, [], 1],
     BLIZZARD = [abilityIconString(Hero.MEI, Button.ULTIMATE), "Blizzard", disasterId.BLIZZARD, 30, true, [disasterId.ACID, disasterId.LAVA, disasterId.FLOOD], 1],
     WITCH = [abilityIconString(Hero.RAMATTRA, Button.ULTIMATE), "Witch", disasterId.WITCH, 30, true, [], 1],
+    TIKTOK = [abilityIconString(Hero.MOIRA, Button.ABILITY_2), "DPS Moira", disasterId.TIKTOK, 30, true, [], 1],
+    PHARAMERCY = ["{}{}".format(abilityIconString(Hero.PHARAH, Button.ULTIMATE), abilityIconString(Hero.MERCY, Button.ULTIMATE)), "Pharamercy", disasterId.PHARAMERCY, 30, true, [], 2],
 
 enum bossDisasters:
     WITCH = [abilityIconString(Hero.ASHE, Button.ABILITY_2), "Witch", bossDisasterId.WITCH, 60, true, [], 1],
@@ -236,6 +240,8 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/wisp.opy"
 #!include "events/blizzard.opy"
 #!include "events/witch.opy"
+#!include "events/tiktok.opy"
+#!include "events/pharamercy.opy"
 
 def queueDisaster():
     @Name "[events/main.opy] Queue Disaster"
@@ -327,6 +333,12 @@ def queueDisaster():
             break
         case disasters.WITCH[disasterData.ID]:
             addDisaster(disasters.WITCH)
+            break
+        case disasters.TIKTOK[disasterData.ID]:
+            addDisaster(disasters.TIKTOK)
+            break
+        case disasters.PHARAMERCY[disasterData.ID]:
+            addDisaster(disasters.PHARAMERCY)
             break
 
 def selectDisaster():
