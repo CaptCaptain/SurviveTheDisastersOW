@@ -39,12 +39,12 @@ rule "[game/main.opy] Init":
         return
 
     waitUntil(getNumberOfPlayers(Team.1) > 0, 9999)
-    while not isGameInProgress():
+    while isWaitingForPlayers():
         startGamemode()
         wait(0.016)
 
 rule "[game/main.opy] Game Loop":
-    @Condition isGameInProgress()
+    waitUntil(isGameInProgress(), 9999)
 
     if debugMode:
         return
