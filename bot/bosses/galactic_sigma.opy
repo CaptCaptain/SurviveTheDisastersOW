@@ -46,8 +46,6 @@ rule "[bot/galactic_sigma.opy]: Behavior":
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 
-    setMatchTime(min(1, getMatchTime()))
-
 rule "[bot/galactic_sigma.opy]: Kinetic Grasp Projectiles":
     @Event eachPlayer
     @Hero sigma

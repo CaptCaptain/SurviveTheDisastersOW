@@ -32,7 +32,6 @@ rule "[events/galactic_sigma.opy] Disaster Initialization":
 
     createDummy(DISASTER_GALACTIC_SIGMA_SUPPORT, Team.2, -1, getPlayersOnHero(Hero.SIGMA, Team.2)[0].getPosition(), null)
     allocateDummyBotTag(getDisasterId(disasters.GALACTIC_SIGMA))
-    applyEntityFlag(allocatedDummyBot, botFlags.BOSS)
 
     switch (DISASTER_GALACTIC_SIGMA_SUPPORT):
         case disasterGalacticEmperorSupport.MERCY:

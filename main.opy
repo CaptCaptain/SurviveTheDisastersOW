@@ -55,6 +55,7 @@ globalvar WORKSHOP_CODE = "GWZB4"
 globalvar CREDITS_THERISTER = createWorkshopSetting(enum["Therister"], "Credits", "Dialogue System", 0, 1)
 globalvar CREDITS_ZEZOMBYE = createWorkshopSetting(enum["Zezombye"], "Credits", "Anti-Crash System & Overpy", 0, 1)
 
+#!include "disasterData.opy"
 #!include "player/main.opy"
 #!include "events/main.opy"
 #!include "player/lifeweaver.opy"

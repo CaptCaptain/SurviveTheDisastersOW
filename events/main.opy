@@ -1,91 +1,5 @@
 #!mainFile "../main.opy"
 
-enum disasterData:
-    ICON,
-    NAME,
-    ID,
-    DURATION,
-    RESPAWNABLE,
-    BLACKLIST,
-    BOT_TYPES,
-
-enum disasterId:
-    NULL,
-    MOTHS,
-    WIFELEAVER,
-    MINEFIELD,
-    BOB,
-    SIMON, #TODO: Implement Simon
-    ACID_RAIN,
-    SOMBRA,
-    WINTON,
-    KAME,
-    FLOOD,
-    MYSTERY,
-    GET_DOWN,
-    DEATH_TRAMPOLINE, #TODO: Implement Death Trampoline
-    GREEN_ZONE,
-    MURDERERS,
-    NULL_SECTOR,
-    TALON,
-    BUTTON,
-    NINJA,
-    COPYCAT,
-    BLACK_HOLE,
-    LAVA,
-    ACID,
-    SNIPER,
-    BOMBS,
-    #TODO: Implement the following disasters:
-    VOLCANO,
-    WISP,
-    SANDSTORM,
-    SLENDERMAN,
-    FAKE_BP,
-    BLIZZARD,
-    WITCH,
-    TIKTOK,
-    PHARAMERCY,
-
-    #Bosses
-    GALACTIC_SIGMA
-
-enum disasters:
-    MOTHS = [abilityIconString(Hero.MERCY, Button.ULTIMATE), "Moths", disasterId.MOTHS, 25, true, [], 1],
-    WIFELEAVER = [iconString(Icon.HEART), "Peacemaker", disasterId.WIFELEAVER, 30, true, [], 1],
-    MINEFIELD = [abilityIconString(Hero.HAMMOND, Button.ULTIMATE), "MINEFIELD", disasterId.MINEFIELD, 15, true, [], 1],
-    BOB = [abilityIconString(Hero.ASHE, Button.ULTIMATE), "Big Omnic Butler", disasterId.BOB, 15, true, [], 1],
-    SIMON = [iconString(Icon.STOP), "Simon Says", disasterId.SIMON, 90, true, [], 1], # Temporarily Disabled
-    ACID_RAIN = [iconString(Icon.RADIOACTIVE), "Acid Rain", disasterId.ACID_RAIN, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.LAVA], 0],
-    SOMBRA = [abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE), "Hackers", disasterId.SOMBRA, 30, true, [], 1],
-    WINTON = [abilityIconString(Hero.WINSTON, Button.ULTIMATE), "Monke", disasterId.WINTON, 30, true, [], 1],
-    KAME = [abilityIconString(Hero.MOIRA, Button.ULTIMATE), "Kamehameha", disasterId.KAME, 10, true, [], 1],
-    FLOOD = [iconString(Icon.BOLT), "Flood", disasterId.FLOOD, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.ACID, disasterId.LAVA, disasterId.BLACK_HOLE, disasterId.BUTTON, disasterId.BLIZZARD, disasterId.FAKE_BP], 0],
-    MYSTERY = [iconString(Icon.QUESTION_MARK), "Mystery Disaster", disasterId.MYSTERY, 30, false, [], true],
-    GET_DOWN = [iconString(Icon.ARROW_DOWN), "Get Down", disasterId.GET_DOWN, 10, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.ACID], 0],
-    DEATH_TRAMPOLINE = [iconString(Icon.HALO), "Death Trampoline", disasterId.DEATH_TRAMPOLINE, 10, false, [], 0], # Not Implemented
-    GREEN_ZONE = [abilityIconString(Hero.RAMATTRA, Button.ABILITY_2), "Green Zone", disasterId.GREEN_ZONE, 20, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GET_DOWN, disasterId.BUTTON, disasterId.BLACK_HOLE], 0],
-    MURDERERS = [abilityIconString(Hero.JUNKER_QUEEN, Button.SECONDARY_FIRE), "Murderers", disasterId.MURDERERS, 30, true, [], 1],
-    NULL_SECTOR = [abilityIconString(Hero.BASTION, Button.ULTIMATE), "Null Sector", disasterId.NULL_SECTOR, 30, true, [disasterId.TALON], 2],
-    TALON = [abilityIconString(Hero.DOOMFIST, Button.ULTIMATE), "Talon", disasterId.TALON, 30, true, [disasterId.NULL_SECTOR], 2],
-    BUTTON = [abilityIconString(Hero.KIRIKO, Button.ABILITY_1), "Press the Button", disasterId.BUTTON, 30, false, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.FAKE_BP], 0],
-    NINJA = [abilityIconString(Hero.GENJI, Button.ABILITY_2), "Ninjas", disasterId.NINJA, 30, true, [], 2],
-    COPYCAT = [abilityIconString(Hero.ECHO, Button.ULTIMATE), "Copycats", disasterId.COPYCAT, 30, true, [], 2],
-    BLACK_HOLE = [iconString(Icon.SPIRAL), "Black Hole", disasterId.BLACK_HOLE, 30, true, [disasterId.LAVA, disasterId.ACID, disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.BUTTON], 0],
-    LAVA = [iconString(Icon.FIRE), "Rising Lava", disasterId.LAVA, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.ACID, disasterId.FLOOD, disasterId.BLACK_HOLE, disasterId.BUTTON, disasterId.BLIZZARD, disasterId.FAKE_BP], 0],
-    ACID = [iconString(Icon.POISON), "Rising Acid", disasterId.ACID, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.LAVA, disasterId.FLOOD, disasterId.BLACK_HOLE, disasterId.BUTTON, disasterId.BLIZZARD, disasterId.FAKE_BP], 0],
-    SNIPER = [abilityIconString(Hero.WIDOWMAKER, Button.ULTIMATE), "Snipers", disasterId.SNIPER, 30, true, [], 2],
-    BOMBS = [abilityIconString(Hero.PHARAH, Button.ABILITY_2), "Bombers", disasterId.BOMBS, 25, true, [disasterId.FLOOD, disasterId.GREEN_ZONE], 0],
-    FAKE_BP = [abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE), "Free Battle Pass XP", disasterId.FAKE_BP, 30, true, [disasterId.BLACK_HOLE, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.BUTTON], 0],
-    WISP = [abilityIconString(Hero.TRACER, Button.ULTIMATE), "Will-o'-wisp", disasterId.WISP, 30, true, [], 1],
-    BLIZZARD = [abilityIconString(Hero.MEI, Button.ULTIMATE), "Blizzard", disasterId.BLIZZARD, 30, true, [disasterId.ACID, disasterId.LAVA, disasterId.FLOOD], 1],
-    WITCH = [abilityIconString(Hero.RAMATTRA, Button.ULTIMATE), "Witch", disasterId.WITCH, 30, true, [], 1],
-    TIKTOK = [abilityIconString(Hero.MOIRA, Button.ABILITY_2), "DPS Moira", disasterId.TIKTOK, 30, true, [], 1],
-    PHARAMERCY = ["{}{}".format(abilityIconString(Hero.PHARAH, Button.ULTIMATE), abilityIconString(Hero.MERCY, Button.ULTIMATE)), "Pharamercy", disasterId.PHARAMERCY, 30, true, [], 2],
-
-    # Bosses
-    GALACTIC_SIGMA = [abilityIconString(Hero.SIGMA, Button.ULTIMATE), "Galactic Emperor", disasterId.GALACTIC_SIGMA, 60, true, [], 1],
-    
 enum botFlags:
     RESPAWNABLE_NO_LOS,
     BOSS
@@ -102,17 +16,9 @@ queueDisaster()\
 
 #!define addDisaster(disaster) \
 \
-if activeDisasterEntityTypes + disaster[disasterData.BOT_TYPES] > 2: \
-    return\
-\
-bigMessage(getAllPlayers(), "{0}  {1}   {0}".format(disaster[disasterData.ICON], disaster[disasterData.NAME]))\
-activeDisasters.append(disaster[disasterData.ID])\
-activeDisasterDuration = disaster[disasterData.DURATION]\
-activeDisasterEntityTypes += disaster[disasterData.BOT_TYPES]\
-if disaster[disasterData.BOT_TYPES] > 0: \
-    activeDisasterEntitySpawning += 1\
-disasterRespawnable = disaster[disasterData.RESPAWNABLE]\
-blacklistedDisasters.append(disaster[disasterData.BLACKLIST])\
+currentDisaster = disaster\
+wait(0.016)\
+addDisasterSub()\
 
 #!define cleanupDummyBots() \
 for disasterIndex in range(0, getNumberOfPlayers(Team.2), 1): \
@@ -190,7 +96,7 @@ allocatedDummyBot.BOT_DISASTER_TAG = tag
 #!define dummyBotSpawnAnyHeight(range) vect(dummyBotSpawn(range).x, dummyBotSpawnAny(range).y, dummyBotSpawn(range).z)
 #!define dummyBotSpawn(range) random.choice([random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.OFF)) == 0])), random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.SURFACES)) == 0])), nearestWalkablePosition(dummyBotSpawnAny(range))])
 
-#!define getBossHealth() 1000 + (len(getPlayersInMatch()) * 500)
+#!define getBossHealth() 500 + (len(getPlayersInMatch()) * 500)
 
 #!define waitForEntitySpawnFlag(disasterId) \
 waitUntil(activeDisasters.index(disasterId) == entitySpawningIndex, 9999)
@@ -200,15 +106,17 @@ player.BOT_DISASTER_FLAGS.append(flag)
 
 #!define disasterPool [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID], disasters.WITCH[disasterData.ID], disasters.PHARAMERCY[disasterData.ID], disasters.TIKTOK[disasterData.ID]]
 
+#!define bossDisasterPool [getDisasterId(disasters.GALACTIC_SIGMA)]
+
 subroutine queueDisaster
 subroutine cleanupDisaster
 subroutine selectDisaster
+subroutine selectBossDisaster
 subroutine selectMultipleDisasters
 subroutine queueDisasterEntities
 
 globalvar selectedDisaster = 0
 globalvar queuedDisasterId = 0
-globalvar activeDisasters = []
 globalvar activeDisasterTexts = []
 globalvar activeDisasterEffects = []
 globalvar activeDisasterDuration = 0
@@ -260,6 +168,20 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/tiktok.opy"
 #!include "events/pharamercy.opy"
 #!include "events/bosses/galactic_sigma.opy"
+
+subroutine addDisasterSub
+globalvar currentDisaster
+def addDisasterSub():
+    if activeDisasterEntityTypes + currentDisaster[disasterData.BOT_TYPES] > 2:
+        return
+    bigMessage(getAllPlayers(), "{0}  {1}   {0}".format(currentDisaster[disasterData.ICON], currentDisaster[disasterData.NAME]))
+    activeDisasters.append(currentDisaster[disasterData.ID])
+    activeDisasterDuration = currentDisaster[disasterData.DURATION]
+    activeDisasterEntityTypes += currentDisaster[disasterData.BOT_TYPES]
+    if currentDisaster[disasterData.BOT_TYPES] > 0:
+        activeDisasterEntitySpawning += 1
+    disasterRespawnable = currentDisaster[disasterData.RESPAWNABLE]
+    blacklistedDisasters.append(currentDisaster[disasterData.BLACKLIST])
 
 def queueDisaster():
     @Name "[events/main.opy] Queue Disaster"
@@ -375,6 +297,24 @@ def selectDisaster():
     wait(3)
 
     disasterReady = true
+    displayDisaster()
+    queueDisasterEntities()
+
+def selectBossDisaster():
+    disasterReady = false
+    disasterTypeShown = true
+
+    disasterTypeDescription = "Boss Disaster"
+    disasterTypeColor = Color.ORANGE
+    
+    selectedDisaster = random.choice(bossDisasterPool)
+    addDisasterToQueueById(selectedDisaster)
+    disastersAlreadyPlayed.append(selectedDisaster)
+    
+    wait(3)
+
+    disasterReady = true
+    disasterTypeShown = false
     displayDisaster()
     queueDisasterEntities()
 

@@ -9,7 +9,7 @@
 
 #!define disasterLastEntryMacro (true if globalIndex == len(activeDisasters) - 1 and len(activeDisasters) > 1 else false)
 
-#!define displayDisaster() \
+#!define displayDisasterMacro() \
 for globalIndex in range(0, len(activeDisasters), 1):\
     switch (activeDisasters[globalIndex]):\
         case disasters.MOTHS[disasterData.ID]:\
@@ -134,11 +134,15 @@ globalvar objectiveDescription = ""
 globalvar disasterTypeShown = false
 globalvar disasterTypeDescription = ""
 globalvar disasterTypeColor = ""
-subroutine displayDisasterType
 
 #!include "player/dialogue.opy"
 #!include "player/tank.opy"
 #!include "player/sombra.opy"
+
+subroutine displayDisasterSub
+globalvar displayedDisaster
+def displayDisaster():
+    displayDisasterMacro()
 
 rule "[player/main.opy] Hud":
     hudSubtext(localPlayer if localPlayer.toggleScoreboard else [], "▼ Scoreboard ▼", HudPosition.LEFT, -7, Color.GREEN, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.DEFAULT)
