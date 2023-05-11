@@ -88,7 +88,7 @@ rule "global init":
 
 
 def spawnDialogueBot():    
-    createDummy(Hero.REINHARDT, Team.2, -1, sky, Vector.UP)
+    createDummy(random.choice([player.getCurrentHero() for player in getPlayers(Team.2)]), Team.2, -1, sky, Vector.UP)
     dialogue_bot = getLastCreatedEntity()
     dialogue_bot.no_dialogue = true
     dialogue_bot.setInvisibility(Invis.ALL)

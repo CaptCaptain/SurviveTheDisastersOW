@@ -23,6 +23,11 @@
 #!include "bot/witch.opy"
 #!include "bot/tiktok.opy"
 #!include "bot/pharamercy.opy"
+#!include "bot/bosses/galactic_sigma.opy"
+#!include "bot/bosses/seer_mercy.opy"
+#!include "bot/bosses/infinite_admiral.opy"
+#!include "bot/bosses/royal_captain.opy"
+#!include "bot/bosses/space_prince.opy"
 
 playervar dummyBotLosSpawnPos
 

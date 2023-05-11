@@ -104,6 +104,9 @@ def displayDebugDisasterName():
         case disasters.PHARAMERCY[disasterData.ID]:
             displayDebugDisaster(disasters.PHARAMERCY)
             break
+        case disasters.GALACTIC_SIGMA[disasterData.ID]:
+            displayDebugDisaster(disasters.GALACTIC_SIGMA)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break

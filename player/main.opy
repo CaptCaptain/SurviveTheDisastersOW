@@ -96,6 +96,9 @@ for globalIndex in range(0, len(activeDisasters), 1):\
         case disasters.BLIZZARD[disasterData.ID]:\
             appendDisasterString(disasters.BLIZZARD, disasterLastEntryMacro)\
             break\
+        case disasters.GALACTIC_SIGMA[disasterData.ID]:\
+            appendDisasterString(disasters.GALACTIC_SIGMA, disasterLastEntryMacro)\
+            break\
         case disasters.WITCH[disasterData.ID]:\
             appendDisasterString(disasters.WITCH, disasterLastEntryMacro)\
             break\

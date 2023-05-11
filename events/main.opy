@@ -45,10 +45,10 @@ enum disasterId:
     BLIZZARD,
     WITCH,
     TIKTOK,
-    PHARAMERCY
+    PHARAMERCY,
 
-enum bossDisasterId:
-    WITCH
+    #Bosses
+    GALACTIC_SIGMA
 
 enum disasters:
     MOTHS = [abilityIconString(Hero.MERCY, Button.ULTIMATE), "Moths", disasterId.MOTHS, 25, true, [], 1],
@@ -83,11 +83,12 @@ enum disasters:
     TIKTOK = [abilityIconString(Hero.MOIRA, Button.ABILITY_2), "DPS Moira", disasterId.TIKTOK, 30, true, [], 1],
     PHARAMERCY = ["{}{}".format(abilityIconString(Hero.PHARAH, Button.ULTIMATE), abilityIconString(Hero.MERCY, Button.ULTIMATE)), "Pharamercy", disasterId.PHARAMERCY, 30, true, [], 2],
 
-enum bossDisasters:
-    WITCH = [abilityIconString(Hero.ASHE, Button.ABILITY_2), "Witch", bossDisasterId.WITCH, 60, true, [], 1],
+    # Bosses
+    GALACTIC_SIGMA = [abilityIconString(Hero.SIGMA, Button.ULTIMATE), "Galactic Emperor", disasterId.GALACTIC_SIGMA, 60, true, [], 1],
     
 enum botFlags:
-    RESPAWNABLE_NO_LOS
+    RESPAWNABLE_NO_LOS,
+    BOSS
 
 #!define getDisasterId(disaster) disaster[disasterData.ID]
 
@@ -151,6 +152,15 @@ for disasterIndex in range(0, len(activeDisasterTexts), 1): \
 activeDisasterTexts = []\
 wait(0.016)\
 
+#!define cleanupDisasterPlayerTexts(player) \
+for player.playerIndex in range(0, len(player.activeDisasterPlayerTexts), 1): \
+    destroyInWorldText(player.activeDisasterPlayerTexts[player.playerIndex])\
+    destroyProgressBarHud(player.activeDisasterPlayerTexts[player.playerIndex])\
+    wait(0.016)\
+\
+player.activeDisasterPlayerEffects = []\
+wait(0.016)\
+
 #!define allocateEffect() \
 activeDisasterEffects.append(getLastCreatedEntity())\
 wait(0.016)\
@@ -161,6 +171,10 @@ wait(0.016)\
 
 #!define allocateText() \
 activeDisasterTexts.append(getLastCreatedText())\
+wait(0.016)\
+
+#!define allocatePlayerText(player) \
+player.activeDisasterPlayerTexts.append(getLastCreatedText())\
 wait(0.016)\
 
 #!define allocateDummyBot() \
@@ -175,6 +189,8 @@ allocatedDummyBot.BOT_DISASTER_TAG = tag
 #!define dummyBotSpawnAny(range) random.choice(getPlayersInMatch()).getPosition() + vect(random.randint(-range, range), sorted(getPlayersInMatch(), lambda player: player.getPosition().y).last().getPosition().y, random.randint(-range, range))
 #!define dummyBotSpawnAnyHeight(range) vect(dummyBotSpawn(range).x, dummyBotSpawnAny(range).y, dummyBotSpawn(range).z)
 #!define dummyBotSpawn(range) random.choice([random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.OFF)) == 0])), random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.SURFACES)) == 0])), nearestWalkablePosition(dummyBotSpawnAny(range))])
+
+#!define getBossHealth() 1000 + (len(getPlayersInMatch()) * 500)
 
 #!define waitForEntitySpawnFlag(disasterId) \
 waitUntil(activeDisasters.index(disasterId) == entitySpawningIndex, 9999)
@@ -211,6 +227,7 @@ globalvar tempDummyBotSpawnArray = []
 globalvar dummyBotSpawnArray = []
 
 playervar activeDisasterPlayerEffects = []
+playervar activeDisasterPlayerTexts = []
 playervar BOT_DISASTER_TAG = ""
 playervar BOT_DISASTER_FLAGS = []
 
@@ -242,6 +259,7 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/witch.opy"
 #!include "events/tiktok.opy"
 #!include "events/pharamercy.opy"
+#!include "events/bosses/galactic_sigma.opy"
 
 def queueDisaster():
     @Name "[events/main.opy] Queue Disaster"
@@ -339,6 +357,9 @@ def queueDisaster():
             break
         case disasters.PHARAMERCY[disasterData.ID]:
             addDisaster(disasters.PHARAMERCY)
+            break
+        case disasters.GALACTIC_SIGMA[disasterData.ID]:
+            addDisaster(disasters.GALACTIC_SIGMA)
             break
 
 def selectDisaster():

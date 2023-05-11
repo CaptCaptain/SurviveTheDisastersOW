@@ -32,6 +32,7 @@ enum Medals:
     VICTIM = [abilityIconString(Hero.JUNKER_QUEEN, Button.SECONDARY_FIRE), "Unwitting Victim", MedalSounds.OKAY[medalSoundData.ID]],
     LAST_ONE_STANDING = [iconString(Icon.SPADE), "Last One Standing", MedalSounds.GOOD[medalSoundData.ID]],
     NO_BP = [iconString(Icon.ASTERISK), "Too Good to Be True", MedalSounds.BAD[medalSoundData.ID]],
+    BOSS_HUNTER = [iconString(Icon.SKULL), "Boss Hunter", MedalSounds.GOOD[medalSoundData.ID]]
 
 #!define queueMedal(player, medal) \
     if player.hasSpawned():\
@@ -138,7 +139,20 @@ rule "[player/medals.opy] Slayer Medal":
     @Team 1
     @Condition disasterReady == true
 
-    queueMedalWithPoints(eventPlayer, Medals.SLAYER, 25)
+    if botFlags.BOSS in victim.BOT_DISASTER_FLAGS:
+        queueMedalWithPoints(eventPlayer, Medals.BOSS_HUNTER, 25)
+    else:
+        queueMedalWithPoints(eventPlayer, Medals.SLAYER, 25)
+
+    waitUntil(disasterReady == false, 9999)
+
+rule "[player/medals.opy] Boss Hunter Medal":
+    @Event playerEarnedElimination
+    @Team 1
+    @Condition disasterReady == true
+
+    if botFlags.BOSS in victim.BOT_DISASTER_FLAGS:
+        queueMedalWithPoints(eventPlayer, Medals.BOSS_HUNTER, 50)
 
     waitUntil(disasterReady == false, 9999)
 
