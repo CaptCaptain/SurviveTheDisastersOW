@@ -319,7 +319,6 @@ def selectBossDisaster():
 
     disasterTypeDescription = "Boss Hunt"
     disasterTypeColor = Color.ORANGE
-    activeDisasterFlags.append(disasterFlags.HARDCORE)
     
     selectedDisaster = random.choice(bossDisasterPool)
     addDisasterToQueueById(selectedDisaster)

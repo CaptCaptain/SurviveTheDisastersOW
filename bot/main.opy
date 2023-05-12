@@ -34,7 +34,7 @@ playervar dummyBotLosSpawnPos
 
 rule "[bot/main.opy] Init":
     # Global Bot Damage
-    startDamageModification(getPlayers(Team.1), getPlayers(Team.2), globalBotDamagePercentage * (2 if disasterFlags.HARDCORE in activeDisasterFlags else 1), DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
+    startDamageModification(getPlayers(Team.1), getPlayers(Team.2), globalBotDamagePercentage * (1.5 if disasterFlags.HARDCORE in activeDisasterFlags else 1), DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
 
 rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
     @Event eachPlayer
@@ -80,8 +80,7 @@ rule "[bot/main.opy] Prevent Bot Respawn Clumping":
     eventPlayer.teleport(dummyBotSpawn(15))
 
 rule "[bot/main.opy] Track Player Positions":
-    tempDummyBotSpawnArray = [player for player in getPlayersInMatch() if player.isOnGround() and player.isMoving()]
-    dummyBotSpawnArray.append([player.getPosition() for player in getAllPlayers()])
+    dummyBotSpawnArray.append([player for player in getPlayersInMatch() if player.isOnGround() and player.isMoving()])
 
     if len(dummyBotSpawnArray) >= 1000:
         dummyBotSpawnArray = []
