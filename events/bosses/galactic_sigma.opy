@@ -12,11 +12,11 @@ rule "[events/galactic_sigma.opy] Disaster Initialization":
     @Condition disasters.GALACTIC_SIGMA[disasterData.ID] in activeDisasters
     @Condition disasterReady
 
-    DISASTER_GALACTIC_SIGMA_SUPPORT = random.choice([disasterGalacticEmperorSupport.MERCY, disasterGalacticEmperorSupport.LUCIO, disasterGalacticEmperorSupport.SOJOURN, disasterGalacticEmperorSupport.BRIGITTE])
+    DISASTER_GALACTIC_SIGMA_SUPPORT = random.choice([disasterGalacticEmperorSupport.MERCY, disasterGalacticEmperorSupport.SOJOURN, disasterGalacticEmperorSupport.BRIGITTE])
 
-    setDialogueNames(["Infinite Seer", "Infinite Admiral", "Royal Captain", "Space Prince"])
-    setDialogueHeroes([Hero.MERCY, Hero.SOJOURN, Hero.BRIGITTE, Hero.LUCIO])
-    setDialogueHeroColors([rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255)])
+    setDialogueNames(["Infinite Seer", "Infinite Admiral", "Royal Captain", "Space Prince", "Galactic Emperor"])
+    setDialogueHeroes([Hero.MERCY, Hero.SOJOURN, Hero.BRIGITTE, Hero.LUCIO, Hero.SIGMA])
+    setDialogueHeroColors([rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255)])
 
     waitForEntitySpawnFlag(disasters.GALACTIC_SIGMA[disasterData.ID])
 
@@ -24,11 +24,13 @@ rule "[events/galactic_sigma.opy] Disaster Initialization":
     allocateDummyBotTag(getDisasterId(disasters.GALACTIC_SIGMA))
     applyEntityFlag(allocatedDummyBot, botFlags.BOSS)
 
-    wait(2)
+    startDialogueOnce(1, [[Hero.SIGMA, random.choice(["Suffer the wrath of the Infinite!", "The universe bows to me!"]), 1]], sky)
+
+    waitUntil(is_dialoguing == false, 9999)
+    if not disasterReady: return
 
     waitUntil(getPlayersOnHero(Hero.SIGMA, Team.2)[0].getNormalizedHealth() < 0.5 or not disasterReady, 9999)
-    if not disasterReady:
-        return
+    if not disasterReady: return
 
     createDummy(DISASTER_GALACTIC_SIGMA_SUPPORT, Team.2, -1, getPlayersOnHero(Hero.SIGMA, Team.2)[0].getPosition(), null)
     allocateDummyBotTag(getDisasterId(disasters.GALACTIC_SIGMA))

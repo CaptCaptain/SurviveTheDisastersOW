@@ -22,7 +22,7 @@ queueDisaster()\
 #!define addDisaster(disaster) \
 \
 currentDisaster = disaster\
-wait(0.016)\
+wait(0.032)\
 addDisasterSub()\
 
 #!define cleanupDummyBots() \
@@ -113,7 +113,7 @@ globalvar disasterPool = [disasters.BOB[disasterData.ID], disasters.MINEFIELD[di
 
 globalvar bossDisasterPool = [getDisasterId(disasters.GALACTIC_SIGMA)]
 
-globalvar hardcoreDisasterPool = [getDisasterId(disasters.NINJA), getDisasterId(disasters.SNIPER)]
+globalvar hardcoreDisasterPool = [getDisasterId(disasters.NINJA), getDisasterId(disasters.SNIPER), getDisasterId(disasters.MOTHS), getDisasterId(disasters.TIKTOK), getDisasterId(disasters.PHARAMERCY)]
 
 subroutine queueDisaster
 subroutine cleanupDisaster
@@ -364,20 +364,14 @@ def selectMultipleDisasters():
         disastersAlreadyPlayed = []
 
     # Add disasters that have not already been selected
-    while len(activeDisasters) < multipleDisastersMax:
-        # Reset disastersAlreadyPlayed when we went through every disaster
-        if len(disastersAlreadyPlayed) == len(disasterPool):
-            disastersAlreadyPlayed = []
-        
+    while len(activeDisasters) < multipleDisastersMax:        
         selectedDisaster = random.choice(disasterPool.exclude(disastersAlreadyPlayed).exclude(blacklistedDisasters).exclude(activeDisasters).exclude([getDisasterId(disasters.MYSTERY), getDisasterId(disasters.SIMON)]))
 
         # If no disaster is available, assume we went through all of them and reset
         if selectedDisaster == null:
             disastersAlreadyPlayed = []
-
-        # If no disaster is available, assume we went through all of them and reset
-        if selectedDisaster == null:
-            disastersAlreadyPlayed = []
+            wait(0.016)
+            continue
 
         disastersAlreadyPlayed.append(selectedDisaster)
 
@@ -401,6 +395,7 @@ def queueDisasterEntities():
 def cleanupDisaster():
     @Name "[events/main.opy] Cleanup Disaster"
 
+    disasterReady = false
     cleanupDummyBots()
     cleanupDisasterEffects()
     cleanupDisasterTexts()
@@ -408,7 +403,6 @@ def cleanupDisaster():
     activeDisasterFlags = []
     blacklistedDisasters = []
     objectiveDescription = ""
-    disasterReady = false
     disasterRespawnable = true
     disasterTypeShown = false
     disasterTypeColor = Color.WHITE

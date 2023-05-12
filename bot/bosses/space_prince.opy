@@ -1,6 +1,6 @@
 #!mainFile "../../main.opy"
 
-rule "[bot/space_prince.opy]: Mercy Behavior":
+rule "[bot/space_prince.opy]: Space Prince Behavior":
     @Event eachPlayer
     @Hero lucio
     @Team 2
