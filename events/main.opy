@@ -317,7 +317,7 @@ def selectBossDisaster():
     disasterReady = false
     disasterTypeShown = true
 
-    disasterTypeDescription = "Boss Disaster"
+    disasterTypeDescription = "Boss Hunt"
     disasterTypeColor = Color.ORANGE
     activeDisasterFlags.append(disasterFlags.HARDCORE)
     
@@ -336,7 +336,7 @@ def selectHardcoreDisaster():
     disasterReady = false
     disasterTypeShown = true
 
-    disasterTypeDescription = "Hardcore Disaster"
+    disasterTypeDescription = "Hardcore"
     disasterTypeColor = Color.ROSE
     
     selectedDisaster = random.choice(hardcoreDisasterPool)
