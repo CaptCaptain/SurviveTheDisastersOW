@@ -57,7 +57,7 @@ rule "[bot/galactic_sigma.opy]: Kinetic Grasp Projectiles":
     @Condition eventPlayer.isUsingAbility1()
 
     for eventPlayer.playerIndex in range(0, 5, 1):
-        createEffect(getAllPlayers() if DISASTER_GALACTIC_SIGMA_ATK_POS != [] else [], Effect.RING, Color.RED, DISASTER_GALACTIC_SIGMA_ATK_POS[evalOnce(eventPlayer.playerIndex)], evalOnce(3), EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+        createEffect(getAllPlayers() if DISASTER_GALACTIC_SIGMA_ATK_POS != [] else [], Effect.RING, Color.RED, DISASTER_GALACTIC_SIGMA_ATK_POS[evalOnce(eventPlayer.playerIndex)], evalOnce(5), EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
         allocateEffect()
 
         createEffect(getAllPlayers() if DISASTER_GALACTIC_SIGMA_ATK_POS != [] else [], Effect.LUCIO_SOUND_BARRIER_PROTECTED, Team.2, DISASTER_GALACTIC_SIGMA_ATK_POS[evalOnce(eventPlayer.playerIndex)], evalOnce(1), EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
@@ -70,14 +70,14 @@ rule "[bot/galactic_sigma.opy]: Kinetic Grasp Projectiles":
 
         wait(1)
         for eventPlayer.playerIndex in range(0, 100, 1):
-            createProjectile(Projectile.RAMATTRA_RAVENOUS_VORTEX_SPHERE, eventPlayer, random.choice(DISASTER_GALACTIC_SIGMA_ATK_POS) + (Vector.UP * 4) + (Vector.LEFT * random.uniform(-3, 3)) + (Vector.FORWARD * random.uniform(-3, 3)), Vector.DOWN, Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.1, 30, 1, 2, DynamicEffect.ECHO_STICKY_BOMB_EXPLOSION, DynamicEffect.ZARYA_PARTICLE_CANNON_EXPLOSION_SOUND, 0, 10, 1, 0, 0, 30)
+            createProjectile(Projectile.RAMATTRA_RAVENOUS_VORTEX_SPHERE, eventPlayer, random.choice(DISASTER_GALACTIC_SIGMA_ATK_POS) + (Vector.UP * 4) + (Vector.LEFT * random.uniform(-5, 5)) + (Vector.FORWARD * random.uniform(-5, 5)), Vector.DOWN, Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.1, 30, 1, 2, DynamicEffect.ECHO_STICKY_BOMB_EXPLOSION, DynamicEffect.ZARYA_PARTICLE_CANNON_EXPLOSION_SOUND, 0, 10, 1, 0, 0, 30)
             wait(0.016)
         
         waitUntil(not eventPlayer.isUsingAbility1(), 9999)
 
         DISASTER_GALACTIC_SIGMA_ATK_POS = []
 
-rule "[bot/galactic_sigma.opy]: Gravitic Flux Charge":
+rule "[bot/galactic_sigma.opy]: Gravitic Flux Charge / Kinetic Grasp Behavior":
     @Event eachPlayer
     @Hero sigma
     @Team 2
@@ -86,6 +86,11 @@ rule "[bot/galactic_sigma.opy]: Gravitic Flux Charge":
     while true:
         waitUntil(not eventPlayer.isUsingUltimate(), 9999)
         eventPlayer.setUltCharge(eventPlayer.getUltCharge() + 5)
+
+        if not entityExists(eventPlayer.BOT_PLAYER):
+            eventPlayer.forceButtonPress(Button.ABILITY_1)
+            eventPlayer.setAbilityCooldown(Button.ABILITY_1, min(eventPlayer.getAbilityCooldown(Button.ABILITY_1), 6))
+
         wait(1)
 
 rule "[bot/galactic_sigma.opy]: Gravitic Flux":
