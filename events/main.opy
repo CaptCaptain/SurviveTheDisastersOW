@@ -176,6 +176,7 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/witch.opy"
 #!include "events/tiktok.opy"
 #!include "events/pharamercy.opy"
+#!include "events/vishkar.opy"
 #!include "events/bosses/galactic_sigma.opy"
 
 subroutine addDisasterSub
@@ -291,6 +292,9 @@ def queueDisaster():
             break
         case disasters.GALACTIC_SIGMA[disasterData.ID]:
             addDisaster(disasters.GALACTIC_SIGMA)
+            break
+        case disasters.VISHKAR[disasterData.ID]:
+            addDisaster(disasters.VISHKAR)
             break
 
 def selectDisaster():

@@ -23,6 +23,7 @@
 #!include "bot/witch.opy"
 #!include "bot/tiktok.opy"
 #!include "bot/pharamercy.opy"
+#!include "bot/vishkar.opy"
 #!include "bot/bosses/galactic_sigma.opy"
 #!include "bot/bosses/seer_mercy.opy"
 #!include "bot/bosses/infinite_admiral.opy"

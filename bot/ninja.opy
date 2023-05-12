@@ -48,7 +48,7 @@ rule "[bot/ninja.opy]: Kiriko Behavior":
     applyCustomHealthFor(eventPlayer, 150, 0, 0)
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER) or entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER), 9999)
+        botWaitUntilReady()
         switch entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER):
             case true:
                 async(UPDATE_SUPPORT_POSITION, AsyncBehavior.NOOP)
@@ -66,6 +66,7 @@ rule "[bot/ninja.opy]: Kiriko Behavior":
                         eventPlayer.BOT_ABILITY_1_ENABLED = false
                         eventPlayer.BOT_ABILITY_2_ENABLED = false 
                         EXECUTE_ULTIMATE_ABILITY()
+                        break
                 break
     
         UPDATE_BOT_TEAMMATE()

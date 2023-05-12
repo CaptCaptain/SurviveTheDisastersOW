@@ -48,6 +48,7 @@ enum disasterId:
     WITCH,
     TIKTOK,
     PHARAMERCY,
+    VISHKAR,
 
     #Bosses
     GALACTIC_SIGMA
@@ -84,6 +85,7 @@ enum disasters:
     WITCH = [abilityIconString(Hero.RAMATTRA, Button.ULTIMATE), "Witch", disasterId.WITCH, 30, true, [], 1],
     TIKTOK = [abilityIconString(Hero.MOIRA, Button.ABILITY_2), "DPS Moira", disasterId.TIKTOK, 30, true, [], 1],
     PHARAMERCY = ["{}{}".format(abilityIconString(Hero.PHARAH, Button.ULTIMATE), abilityIconString(Hero.MERCY, Button.ULTIMATE)), "Pharamercy", disasterId.PHARAMERCY, 30, true, [], 2],
+    VISHKAR = ["{}{}".format(abilityIconString(Hero.SYMMETRA, Button.ULTIMATE), abilityIconString(Hero.LIFEWEAVER, Button.ULTIMATE)), "Vishkar Architects", disasterId.VISHKAR, 30, true, [], 2],
 
     # Bosses
     GALACTIC_SIGMA = [abilityIconString(Hero.SIGMA, Button.ULTIMATE), "Galactic Emperor", disasterId.GALACTIC_SIGMA, 60, true, [], 1],

@@ -107,6 +107,9 @@ def displayDebugDisasterName():
         case disasters.GALACTIC_SIGMA[disasterData.ID]:
             displayDebugDisaster(disasters.GALACTIC_SIGMA)
             break
+        case disasters.VISHKAR[disasterData.ID]:
+            displayDebugDisaster(disasters.VISHKAR)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break
