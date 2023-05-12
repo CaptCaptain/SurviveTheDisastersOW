@@ -23,12 +23,18 @@
 #!include "bot/witch.opy"
 #!include "bot/tiktok.opy"
 #!include "bot/pharamercy.opy"
+#!include "bot/vishkar.opy"
+#!include "bot/bosses/galactic_sigma.opy"
+#!include "bot/bosses/seer_mercy.opy"
+#!include "bot/bosses/infinite_admiral.opy"
+#!include "bot/bosses/royal_captain.opy"
+#!include "bot/bosses/space_prince.opy"
 
 playervar dummyBotLosSpawnPos
 
 rule "[bot/main.opy] Init":
     # Global Bot Damage
-    startDamageModification(getPlayers(Team.1), getPlayers(Team.2), globalBotDamagePercentage, DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
+    startDamageModification(getPlayers(Team.1), getPlayers(Team.2), globalBotDamagePercentage * (2 if disasterFlags.HARDCORE in activeDisasterFlags else 1), DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
 
 rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
     @Event eachPlayer
@@ -84,12 +90,3 @@ rule "[bot/main.opy] Track Player Positions":
     wait(1)
 
     if RULE_CONDITION: goto RULE_START
-
-rule "[bot/main.opy] Respawn if Teleported to Null":
-    @Event eachPlayer
-    @Team 2
-    
-    waitUntil(eventPlayer.getPosition() == vect(0, 0, 0), 9999)
-    eventPlayer.teleport(nearestWalkablePosition(dummyBotSpawnAny(15)))
-    wait(0.25)
-    goto RULE_START

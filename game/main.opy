@@ -3,7 +3,22 @@
 enum dangerMode:
     NULL,
     MULTI_DISASTER,
-    MYSTERY
+    MYSTERY,
+    BOSS_HUNT,
+    HARDCORE,
+
+#!define createBossSpawn(position, color, text, icon)\
+createEffect(getAllPlayers() if not disasterReady else null, Effect.RING, color, position, 3.25, EffectReeval.VISIBILITY_AND_COLOR)\
+allocateEffect()\
+\
+createInWorldText(getAllPlayers() if not disasterReady else null, text if distance(position, localPlayer.getPosition()) < 15 else "〔{0}〕".format(icon), position + (Vector.UP * 2.25), 2, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, color, SpecVisibility.DEFAULT)\
+allocateText()\
+\
+createEffect(getAllPlayers() if not disasterReady else null, Effect.BAD_AURA, Color.ORANGE, position, 0, EffectReeval.VISIBILITY_AND_COLOR)\
+allocateEffect()\
+\
+createEffect(getAllPlayers() if not disasterReady else null, Effect.ORB, Color.ORANGE, position, 0, EffectReeval.VISIBILITY_AND_COLOR)\
+allocateEffect()\
 
 #!define setMatchTimeAndWait(time) \
 setMatchTime(time)\
@@ -14,6 +29,11 @@ waitUntil(getMatchTime() == 0, 9999)
 setMatchTime(time)\
 wait(0.032)\
 waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getPlayersInMatch()]), 9999)
+
+#!define setMatchTimeWaitUntilAllDeadOrBossDead(time) \
+setMatchTime(time)\
+wait(0.032)\
+waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getPlayersInMatch()]) or all([player.isDead() for player in getPlayers(Team.2)]), 9999)
 
 #!define getHighestScoredPlayer() sorted(getPlayersInMatch(), lambda player: player.survivalScore).last()
 
@@ -79,6 +99,29 @@ rule "[game/main.opy] Game Loop":
                 wait(0.016)
                 setMatchTimeWaitUntilAllDead(activeDisasterDuration)
                 break
+            case dangerMode.BOSS_HUNT:
+                cleanupDisasterEffects()
+                cleanupDisasterTexts()
+
+                objectiveDescription = ""
+                selectBossDisaster()
+
+                fixedSmallMessageWithIcon(getAllPlayers(), iconString(Icon.WARNING), "Survive or defeat the boss!")
+
+                wait(0.016)
+                setMatchTimeWaitUntilAllDeadOrBossDead(activeDisasterDuration)
+
+                if all([player.isDead() for player in getPlayers(Team.2)]):
+                    wait(1)
+                    bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Boss Defeat!  {0}".format(abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE)))
+
+                break
+            case dangerMode.HARDCORE:
+                objectiveDescription = ""
+                selectHardcoreDisaster()
+                wait(0.016)
+                setMatchTimeWaitUntilAllDead(activeDisasterDuration)
+                break
             default:
                 objectiveDescription = ""
                 selectDisaster()
@@ -87,13 +130,15 @@ rule "[game/main.opy] Game Loop":
                 break
 
         cleanupDisaster()
-        selectedDangerMode = dangerMode.NULL
 
         getPlayersAlive().survivalStreak += 1
 
-        bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Survived!  {0}".format(iconString(Icon.CHECKMARK)))
+        if not selectedDangerMode == dangerMode.BOSS_HUNT:
+            bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Survived!  {0}".format(iconString(Icon.CHECKMARK)))
 
         bigMessage([player for player in getPlayers(Team.1) if not player.isAlive], "{0} Wipeout!  {0}".format(iconString(Icon.CROSS)))
+
+        selectedDangerMode = dangerMode.NULL
 
         wait(1)
 
@@ -126,10 +171,22 @@ rule "[game/main.opy] Game Loop":
         addToTeamScore(Team.2, -1)
 
         # Break
-        if teamScore(Team.1) % 5 == 0 and teamScore(Team.1) > 0:
-            objectiveDescription = "{0} Warning {0}".format(iconString(Icon.WARNING))
-            bigMessage(getAllPlayers(), "{0} Warning  {0}".format(iconString(Icon.WARNING)))
-            selectedDangerMode = random.choice([dangerMode.MYSTERY, dangerMode.MULTI_DISASTER])
+        if teamScore(Team.1) % [2, 5, 10][WS_SETTING_SPECIAL_EVENTS] == 0 and teamScore(Team.1) > 0:
+            selectedDangerMode = random.choice([dangerMode.MULTI_DISASTER, dangerMode.MYSTERY, dangerMode.BOSS_HUNT, dangerMode.HARDCORE])
+            
+            switch (selectedDangerMode):
+                case dangerMode.BOSS_HUNT:
+                    objectiveDescription = "{0} Boss Hunt {0}".format(abilityIconString(Hero.KIRIKO, Button.ULTIMATE))
+                    bigMessage(getAllPlayers(), "{0} Boss Hunt  {0}".format(abilityIconString(Hero.KIRIKO, Button.ULTIMATE)))
+
+                    createBossSpawn(getSpawnPoints(Team.ALL)[1], Color.ORANGE, "{0} Boss Spawn {0}".format(iconString(Icon.ARROW_DOWN)), abilityIconString(Hero.KIRIKO, Button.ULTIMATE))
+
+                    break
+                default:
+                    objectiveDescription = "{0} Warning {0}".format(iconString(Icon.WARNING))
+                    bigMessage(getAllPlayers(), "{0} Warning  {0}".format(iconString(Icon.WARNING)))
+                    break
+
             setMatchTimeAndWait(20)
             continue
 

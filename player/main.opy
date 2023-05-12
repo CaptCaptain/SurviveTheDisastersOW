@@ -9,7 +9,7 @@
 
 #!define disasterLastEntryMacro (true if globalIndex == len(activeDisasters) - 1 and len(activeDisasters) > 1 else false)
 
-#!define displayDisaster() \
+#!define displayDisasterMacro() \
 for globalIndex in range(0, len(activeDisasters), 1):\
     switch (activeDisasters[globalIndex]):\
         case disasters.MOTHS[disasterData.ID]:\
@@ -96,6 +96,9 @@ for globalIndex in range(0, len(activeDisasters), 1):\
         case disasters.BLIZZARD[disasterData.ID]:\
             appendDisasterString(disasters.BLIZZARD, disasterLastEntryMacro)\
             break\
+        case disasters.GALACTIC_SIGMA[disasterData.ID]:\
+            appendDisasterString(disasters.GALACTIC_SIGMA, disasterLastEntryMacro)\
+            break\
         case disasters.WITCH[disasterData.ID]:\
             appendDisasterString(disasters.WITCH, disasterLastEntryMacro)\
             break\
@@ -104,6 +107,9 @@ for globalIndex in range(0, len(activeDisasters), 1):\
             break\
         case disasters.PHARAMERCY[disasterData.ID]:\
             appendDisasterString(disasters.PHARAMERCY, disasterLastEntryMacro)\
+            break\
+        case disasters.VISHKAR[disasterData.ID]:\
+            appendDisasterString(disasters.VISHKAR, disasterLastEntryMacro)\
             break\
 
 #!define scoreboardPosition(slot) scoreboardPlayers.index(getPlayersInSlot(slot, Team.1)) * -1
@@ -131,11 +137,15 @@ globalvar objectiveDescription = ""
 globalvar disasterTypeShown = false
 globalvar disasterTypeDescription = ""
 globalvar disasterTypeColor = ""
-subroutine displayDisasterType
 
 #!include "player/dialogue.opy"
 #!include "player/tank.opy"
 #!include "player/sombra.opy"
+
+subroutine displayDisasterSub
+globalvar displayedDisaster
+def displayDisaster():
+    displayDisasterMacro()
 
 rule "[player/main.opy] Hud":
     hudSubtext(localPlayer if localPlayer.toggleScoreboard else [], "▼ Scoreboard ▼", HudPosition.LEFT, -7, Color.GREEN, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.DEFAULT)

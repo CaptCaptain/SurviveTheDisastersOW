@@ -32,11 +32,12 @@ enum Medals:
     VICTIM = [abilityIconString(Hero.JUNKER_QUEEN, Button.SECONDARY_FIRE), "Unwitting Victim", MedalSounds.OKAY[medalSoundData.ID]],
     LAST_ONE_STANDING = [iconString(Icon.SPADE), "Last One Standing", MedalSounds.GOOD[medalSoundData.ID]],
     NO_BP = [iconString(Icon.ASTERISK), "Too Good to Be True", MedalSounds.BAD[medalSoundData.ID]],
+    BOSS_HUNTER = [iconString(Icon.SKULL), "Boss Hunter", MedalSounds.GOOD[medalSoundData.ID]]
 
 #!define queueMedal(player, medal) \
     if player.hasSpawned():\
-        player.array_medal_titles.append(medal[medalData.ICON])\
-        player.array_medal_icons.append(medal[medalData.TITLE])\
+        player.array_medal_titles.append(medal[medalData.TITLE])\
+        player.array_medal_icons.append(medal[medalData.ICON])\
         player.array_medal_sounds.append(medal[medalData.SOUND])\
         if not medal[medalData.TITLE] in player.medalsEarned:\
             player.medalsEarned.append(medal[medalData.TITLE])\
@@ -44,7 +45,7 @@ enum Medals:
 
 #!define queueMedalWithPoints(player, medal, points) \
     queueMedal(player, medal) \
-    player.array_medal_icons[player.array_medal_icons.index(player.array_medal_icons.last())] = "{0} [+{1} PTS]".format(player.array_medal_icons[player.array_medal_icons.index(player.array_medal_icons.last())], points)\
+    player.array_medal_titles[player.array_medal_titles.index(player.array_medal_titles.last())] = "{0} [+{1} PTS]".format(player.array_medal_titles[player.array_medal_titles.index(player.array_medal_titles.last())], points)\
     player.survivalScore += points\
 
 #!define createMedalSFX(player, dynamicEffect) playEffect(player, dynamicEffect, Color.WHITE, player, 50)
@@ -73,7 +74,7 @@ playervar medalsDisplayLimit = 0
 def displayEarnedMedals():
     eventPlayer.medalsDisplayed = true
     while len(eventPlayer.array_medal_titles) > 0:
-        fixedSmallMessageWithIcon(eventPlayer, eventPlayer.array_medal_titles[0], eventPlayer.array_medal_icons[0])
+        fixedSmallMessageWithIcon(eventPlayer, eventPlayer.array_medal_icons[0], eventPlayer.array_medal_titles[0])
         playMedalSound(eventPlayer, eventPlayer.array_medal_sounds[0])
 
         eventPlayer.medalsDisplayLimit += 1
@@ -138,7 +139,18 @@ rule "[player/medals.opy] Slayer Medal":
     @Team 1
     @Condition disasterReady == true
 
-    queueMedalWithPoints(eventPlayer, Medals.SLAYER, 25)
+    if not (botFlags.BOSS in victim.BOT_DISASTER_FLAGS):
+        queueMedalWithPoints(eventPlayer, Medals.SLAYER, 25)
+
+    waitUntil(disasterReady == false, 9999)
+
+rule "[player/medals.opy] Boss Hunter Medal":
+    @Event playerEarnedElimination
+    @Team 1
+    @Condition disasterReady == true
+
+    if botFlags.BOSS in victim.BOT_DISASTER_FLAGS:
+        queueMedalWithPoints(eventPlayer, Medals.BOSS_HUNTER, 50)
 
     waitUntil(disasterReady == false, 9999)
 
