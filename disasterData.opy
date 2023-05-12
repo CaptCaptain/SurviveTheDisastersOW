@@ -47,7 +47,7 @@ enum disasterId:
     VISHKAR,
 
     #Bosses
-    GALACTIC_SIGMA
+    GALACTIC_SIGMA,
 
     #TODO: Implement the following disasters:
     VOLCANO,
