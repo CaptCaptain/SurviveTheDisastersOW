@@ -8,7 +8,7 @@ globalvar SHOP_DISASTER_INFO_POSITION
 
 #!define createShop(position, color, text, icon)\
 createEffect(getAllPlayers() if not disasterReady else null, Effect.RING, color, position, 3.25, EffectReeval.VISIBILITY_AND_COLOR)\
-createInWorldText(getAllPlayers() if not disasterReady else null, text if distance(position, localPlayer.getPosition()) < 15 else icon, position + (Vector.UP * 2.25), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, color, SpecVisibility.DEFAULT)\
+createInWorldText(getAllPlayers() if not disasterReady else null, text if distance(position, localPlayer.getPosition()) < 15 else "〔{0}〕".format(icon), position + (Vector.UP * 2.25), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, color, SpecVisibility.DEFAULT)\
 \
 createBeam(getAllPlayers() if not disasterReady else null, Beam.GOOD, position + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), position + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
 createBeam(getAllPlayers() if not disasterReady else null, Beam.GOOD, position + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), position + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\

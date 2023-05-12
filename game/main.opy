@@ -10,7 +10,7 @@ enum dangerMode:
 createEffect(getAllPlayers() if not disasterReady else null, Effect.RING, color, position, 3.25, EffectReeval.VISIBILITY_AND_COLOR)\
 allocateEffect()\
 \
-createInWorldText(getAllPlayers() if not disasterReady else null, text if distance(position, localPlayer.getPosition()) < 15 else icon, position + (Vector.UP * 2.25), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, color, SpecVisibility.DEFAULT)\
+createInWorldText(getAllPlayers() if not disasterReady else null, text if distance(position, localPlayer.getPosition()) < 15 else "〔{0}〕".format(icon), position + (Vector.UP * 2.25), 2, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, color, SpecVisibility.DEFAULT)\
 allocateText()\
 \
 createEffect(getAllPlayers() if not disasterReady else null, Effect.BAD_AURA, Color.ORANGE, position, 0, EffectReeval.VISIBILITY_AND_COLOR)\
@@ -112,8 +112,7 @@ rule "[game/main.opy] Game Loop":
 
                 if all([player.isDead() for player in getPlayers(Team.2)]):
                     wait(1)
-
-                bigMessage([player for player in getPlayers(Team.1) if player.isAlive and Medals.BOSS_HUNTER[medalData.TITLE] in player.medalsEarned], "{0} Boss Defeat!  {0}".format(abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE)))
+                    bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Boss Defeat!  {0}".format(abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE)))
 
                 break
             default:
@@ -124,13 +123,15 @@ rule "[game/main.opy] Game Loop":
                 break
 
         cleanupDisaster()
-        selectedDangerMode = dangerMode.NULL
 
         getPlayersAlive().survivalStreak += 1
 
-        bigMessage([player for player in getPlayers(Team.1) if player.isAlive and not Medals.BOSS_HUNTER[medalData.TITLE] in player.medalsEarned], "{0} Survived!  {0}".format(iconString(Icon.CHECKMARK)))
+        if not selectedDangerMode == dangerMode.BOSS_HUNT:
+            bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Survived!  {0}".format(iconString(Icon.CHECKMARK)))
 
         bigMessage([player for player in getPlayers(Team.1) if not player.isAlive], "{0} Wipeout!  {0}".format(iconString(Icon.CROSS)))
+
+        selectedDangerMode = dangerMode.NULL
 
         wait(1)
 
@@ -163,8 +164,8 @@ rule "[game/main.opy] Game Loop":
         addToTeamScore(Team.2, -1)
 
         # Break
-        if teamScore(Team.1) % 2 == 0 and teamScore(Team.1) > 0:
-            selectedDangerMode = random.choice([dangerMode.BOSS_HUNT])
+        if teamScore(Team.1) % [2, 5, 10][WS_SETTING_SPECIAL_EVENTS] == 0 and teamScore(Team.1) > 0:
+            selectedDangerMode = random.choice([dangerMode.MYSTERY, dangerMode.MULTI_DISASTER, dangerMode.BOSS_HUNT])
             
             switch (selectedDangerMode):
                 case dangerMode.BOSS_HUNT:

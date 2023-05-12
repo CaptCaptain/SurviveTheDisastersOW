@@ -95,6 +95,9 @@ rule "[bot/main.opy] Respawn if Teleported to Null":
     @Team 2
     
     waitUntil(eventPlayer.getPosition() == vect(0, 0, 0), 9999)
+    wait(0.016)
+    eventPlayer.respawn()
+    wait(0.016)
     eventPlayer.teleport(nearestWalkablePosition(dummyBotSpawnAny(15)))
     wait(0.25)
     goto RULE_START

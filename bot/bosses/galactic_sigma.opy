@@ -21,6 +21,7 @@ rule "[bot/galactic_sigma.opy]: Behavior":
     eventPlayer.setDamageReceived(50)
     eventPlayer.setKnockbackReceived(0)
     eventPlayer.startScalingSize(1.5, false)
+    eventPlayer.disableRespawn()
     eventPlayer.BOT_CROUCH_SPAM = false
 
     createEffect(getAllPlayers(), Effect.WRECKING_BALL_ADAPTIVE_SHIELD_TARGET, Team.2, updateEveryTick(evalOnce(eventPlayer).getEyePosition()), evalOnce(1), EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
