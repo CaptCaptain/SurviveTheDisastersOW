@@ -17,7 +17,7 @@ enum disasterId:
     WIFELEAVER,
     MINEFIELD,
     BOB,
-    SIMON, #TODO: Implement Simon
+    SIMON,
     ACID_RAIN,
     SOMBRA,
     WINTON,
@@ -38,11 +38,7 @@ enum disasterId:
     ACID,
     SNIPER,
     BOMBS,
-    #TODO: Implement the following disasters:
-    VOLCANO,
     WISP,
-    SANDSTORM,
-    SLENDERMAN,
     FAKE_BP,
     BLIZZARD,
     WITCH,
@@ -52,6 +48,11 @@ enum disasterId:
 
     #Bosses
     GALACTIC_SIGMA
+
+    #TODO: Implement the following disasters:
+    VOLCANO,
+    SANDSTORM,
+    SLENDERMAN,
 
 enum disasters:
     MOTHS = [abilityIconString(Hero.MERCY, Button.ULTIMATE), "Moths", disasterId.MOTHS, 25, true, [], 1],
