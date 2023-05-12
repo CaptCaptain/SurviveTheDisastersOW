@@ -4,7 +4,8 @@ enum dangerMode:
     NULL,
     MULTI_DISASTER,
     MYSTERY,
-    BOSS_HUNT
+    BOSS_HUNT,
+    HARDCORE,
 
 #!define createBossSpawn(position, color, text, icon)\
 createEffect(getAllPlayers() if not disasterReady else null, Effect.RING, color, position, 3.25, EffectReeval.VISIBILITY_AND_COLOR)\
@@ -115,6 +116,12 @@ rule "[game/main.opy] Game Loop":
                     bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Boss Defeat!  {0}".format(abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE)))
 
                 break
+            case dangerMode.HARDCORE:
+                objectiveDescription = ""
+                selectHardcoreDisaster()
+                wait(0.016)
+                setMatchTimeWaitUntilAllDead(activeDisasterDuration)
+                break
             default:
                 objectiveDescription = ""
                 selectDisaster()
@@ -165,7 +172,7 @@ rule "[game/main.opy] Game Loop":
 
         # Break
         if teamScore(Team.1) % [2, 5, 10][WS_SETTING_SPECIAL_EVENTS] == 0 and teamScore(Team.1) > 0:
-            selectedDangerMode = random.choice([dangerMode.MYSTERY, dangerMode.MULTI_DISASTER, dangerMode.BOSS_HUNT])
+            selectedDangerMode = random.choice([dangerMode.MULTI_DISASTER, dangerMode.MYSTERY, dangerMode.BOSS_HUNT, dangerMode.HARDCORE])
             
             switch (selectedDangerMode):
                 case dangerMode.BOSS_HUNT:

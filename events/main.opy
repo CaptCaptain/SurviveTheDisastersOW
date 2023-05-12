@@ -1,8 +1,13 @@
 #!mainFile "../main.opy"
 
 enum botFlags:
+    NULL,
     RESPAWNABLE_NO_LOS,
     BOSS
+
+enum disasterFlags:
+    NULL,
+    HARDCORE
 
 #!define getDisasterId(disaster) disaster[disasterData.ID]
 
@@ -94,7 +99,7 @@ allocatedDummyBot.BOT_DISASTER_TAG = tag
 #!define dummyBotLimit floor(WS_SETTING_MAX_BOTS / activeDisasterEntitySpawning)
 #!define dummyBotSpawnAny(range) random.choice(getPlayersInMatch()).getPosition() + vect(random.randint(-range, range), sorted(getPlayersInMatch(), lambda player: player.getPosition().y).last().getPosition().y, random.randint(-range, range))
 #!define dummyBotSpawnAnyHeight(range) vect(dummyBotSpawn(range).x, dummyBotSpawnAny(range).y, dummyBotSpawn(range).z)
-#!define dummyBotSpawn(range) random.choice([random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.OFF)) == 0])), random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.SURFACES)) == 0])), nearestWalkablePosition(dummyBotSpawnAny(range))])
+#!define dummyBotSpawn(range) random.choice([random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.OFF)) == 0])), random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.SURFACES)) == 0])), nearestWalkablePosition(dummyBotSpawnAny(range))].exclude([null, 0, vect(0, 0, 0)]))
 
 #!define getBossHealth() 500 + (len(getPlayersInMatch()) * 500)
 
@@ -104,19 +109,23 @@ waitUntil(activeDisasters.index(disasterId) == entitySpawningIndex, 9999)
 #!define applyEntityFlag(player, flag) \
 player.BOT_DISASTER_FLAGS.append(flag)
 
-#!define disasterPool [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID], disasters.WITCH[disasterData.ID], disasters.PHARAMERCY[disasterData.ID], disasters.TIKTOK[disasterData.ID]]
+globalvar disasterPool = [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID], disasters.WITCH[disasterData.ID], disasters.PHARAMERCY[disasterData.ID], disasters.TIKTOK[disasterData.ID]]
 
-#!define bossDisasterPool [getDisasterId(disasters.GALACTIC_SIGMA)]
+globalvar bossDisasterPool = [getDisasterId(disasters.GALACTIC_SIGMA)]
+
+globalvar hardcoreDisasterPool = [getDisasterId(disasters.NINJA), getDisasterId(disasters.SNIPER)]
 
 subroutine queueDisaster
 subroutine cleanupDisaster
 subroutine selectDisaster
 subroutine selectBossDisaster
+subroutine selectHardcoreDisaster
 subroutine selectMultipleDisasters
 subroutine queueDisasterEntities
 
 globalvar selectedDisaster = 0
 globalvar queuedDisasterId = 0
+globalvar activeDisasterFlags = []
 globalvar activeDisasterTexts = []
 globalvar activeDisasterEffects = []
 globalvar activeDisasterDuration = 0
@@ -306,10 +315,34 @@ def selectBossDisaster():
 
     disasterTypeDescription = "Boss Disaster"
     disasterTypeColor = Color.ORANGE
+    activeDisasterFlags.append(disasterFlags.HARDCORE)
     
     selectedDisaster = random.choice(bossDisasterPool)
     addDisasterToQueueById(selectedDisaster)
     disastersAlreadyPlayed.append(selectedDisaster)
+    
+    wait(3)
+
+    disasterReady = true
+    disasterTypeShown = false
+    displayDisaster()
+    queueDisasterEntities()
+
+def selectHardcoreDisaster():
+    disasterReady = false
+    disasterTypeShown = true
+
+    disasterTypeDescription = "Hardcore Disaster"
+    disasterTypeColor = Color.ROSE
+    
+    selectedDisaster = random.choice(hardcoreDisasterPool)
+    addDisasterToQueueById(selectedDisaster)
+    disastersAlreadyPlayed.append(selectedDisaster)
+    activeDisasterFlags.append(disasterFlags.HARDCORE)
+
+    for globalIndex in range(0, WS_SETTING_MAX_BOTS, 1):
+        createEffect(getAllPlayers(), Effect.WINSTON_PRIMAL_RAGE, Team.2, getPlayersInSlot(evalOnce(globalIndex), Team.2), evalOnce(1), EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+        allocateEffect()
     
     wait(3)
 
@@ -372,6 +405,7 @@ def cleanupDisaster():
     cleanupDisasterEffects()
     cleanupDisasterTexts()
     activeDisasters = []
+    activeDisasterFlags = []
     blacklistedDisasters = []
     objectiveDescription = ""
     disasterReady = false
