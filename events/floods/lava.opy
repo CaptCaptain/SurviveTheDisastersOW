@@ -11,9 +11,9 @@ rule "[events/lava.opy] Disaster Initialization":
     createEffect(localPlayer, Effect.SPHERE, Color.RED, vect(localPlayer.getPosition().x, DISASTER_LAVA_Y_POS - 198, localPlayer.getPosition().z), 500, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     allocateEffect()
 
-    while disasters.LAVA[disasterData.ID] in activeDisasters:
-        DISASTER_LAVA_Y_POS += 0.032
-        wait(0.128)
+    while disasters.LAVA[disasterData.ID] in activeDisasters and DISASTER_LAVA_Y_POS < getHighestLevel():
+        DISASTER_LAVA_Y_POS += 0.064
+        wait(0.08)
 
 rule "[events/lava.opy] Disaster Damage":
     @Event eachPlayer

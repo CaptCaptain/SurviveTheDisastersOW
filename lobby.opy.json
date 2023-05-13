@@ -30,7 +30,9 @@
 				"templeOfAnubis",
 				"paris",
 				"kanezaka",
-				"petra"
+				"petra",
+				"eichenwalde",
+				"eichenwaldeHalloween"
 			]
 		}
 	},
@@ -50,6 +52,7 @@
 		}
 	},
 	"workshop": {
-		"Restart Match": 2
+		"Restart Match": 2,
+		"Anti-Crash Priority": 0
 	}
 }

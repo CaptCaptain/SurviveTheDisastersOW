@@ -20,7 +20,6 @@ rule "[bot/galactic_sigma.opy]: Behavior":
 
     eventPlayer.startForcingName("Galactic Emperor")
     eventPlayer.setDamageDealt(250)
-    eventPlayer.setDamageReceived(50)
     eventPlayer.setKnockbackReceived(0)
     eventPlayer.startScalingSize(1.5, false)
     eventPlayer.disableRespawn()

@@ -17,9 +17,9 @@ rule "[events/acid.opy] Disaster Initialization":
     createEffect(localPlayer if playerIsBelowWaterLevel(localPlayer, DISASTER_ACID_Y_POS, -1.5) else null, Effect.LUCIO_SOUND_BARRIER_PROTECTED_SOUND, Team.1, localPlayer, 50, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     allocateEffect()
 
-    while disasters.ACID[disasterData.ID] in activeDisasters:
-        DISASTER_ACID_Y_POS += 0.032
-        wait(0.128)
+    while disasters.ACID[disasterData.ID] in activeDisasters and DISASTER_ACID_Y_POS < getHighestLevel():
+        DISASTER_ACID_Y_POS += 0.064
+        wait(0.08)
 
 rule "[events/acid.opy] Disaster Damage":
     @Event eachPlayer

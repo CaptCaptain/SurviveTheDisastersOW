@@ -41,14 +41,15 @@ waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getP
 
 #!define getTeamScore() getPlayersInSlot(0, Team.1).survivalScore + getPlayersInSlot(1, Team.1).survivalScore + getPlayersInSlot(2, Team.1).survivalScore + getPlayersInSlot(3, Team.1).survivalScore + getPlayersInSlot(4, Team.1).survivalScore + getPlayersInSlot(5, Team.1).survivalScore
 
-#!include "game/anti-crash.opy"
-
 globalvar selectedDangerMode
 
 rule "[game/main.opy] Init":
     disableGamemodeCompletion()
     disableAnnouncer()
     disableScoring()
+
+    # Damage Scaling
+    startDamageModification(getPlayers(Team.1), getPlayers(Team.2).exclude([player for player in getPlayers(Team.2) if selectedDangerMode == dangerMode.BOSS_HUNT]), 10 / (getNumberOfPlayers(Team.2) / WS_SETTING_MAX_BOTS), DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
 
     if not WS_SETTING_ENABLE_MUSIC:
         disableMusic()

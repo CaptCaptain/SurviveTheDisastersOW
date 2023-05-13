@@ -32,7 +32,7 @@ createWorkshopSetting(bool, "Gameplay", "Long Break Time", false, 1)
 createWorkshopSetting(bool, "General", "Enable Music", true, 1)
 
 #!define WS_SETTING_ANTI_CRASH_DELAY \
-[1, 2, 3][createWorkshopSetting(enum["Prioritize Server Stability", "Balanced", "Prioritize Server Performance"], "General", "Anti-Crash Priority", 2, 3)]
+[1, 2, 3][createWorkshopSetting(enum["Prioritize Server Stability", "Balanced", "Prioritize Server Performance"], "General", "Anti-Crash Priority", 0, 3)]
 
 globalvar WS_SETTING_LIMITED_TANK_HEALTH = createWorkshopSetting(bool, "Heroes", "Tank Role: Limited Health", true, 3)
 
@@ -68,6 +68,7 @@ globalvar CREDITS_ZEZOMBYE = createWorkshopSetting(enum["Zezombye"], "Credits", 
 #!include "player/medals.opy"
 #!include "game/main.opy"
 #!include "shop/main.opy"
+#!include "game/anti-crash.opy"
 
 #!include "debug.opy"
 

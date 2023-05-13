@@ -21,7 +21,6 @@ rule "[bot/space_prince.opy]: Space Prince Behavior":
     wait(1)
 
     eventPlayer.startForcingName("Space Prince")
-    eventPlayer.setDamageReceived(50)
     eventPlayer.setHealingDealt(1000)
     eventPlayer.setHealingReceived(0)
     eventPlayer.setKnockbackReceived(0)

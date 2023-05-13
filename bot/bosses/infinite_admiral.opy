@@ -21,12 +21,11 @@ rule "[bot/infinite_admiral.opy]: Sojourn Behavior":
     wait(1)
 
     eventPlayer.startForcingName("Infinite Admiral")
-    eventPlayer.setDamageReceived(50)
     eventPlayer.setKnockbackReceived(0)
     eventPlayer.setDamageDealt(150)
     eventPlayer.setUltCharge(100)
 
-    applyCustomHealthFor(eventPlayer, getBossHealth() / 10, 0, 0)
+    applyCustomHealthFor(eventPlayer, getBossHealth() / 5, 0, 0)
 
     eventPlayer.disableRespawn()
 

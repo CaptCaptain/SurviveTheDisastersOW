@@ -21,12 +21,11 @@ rule "[bot/seer_mercy.opy]: Mercy Behavior":
     wait(1)
 
     eventPlayer.startForcingName("Infinite Seer")
-    eventPlayer.setDamageReceived(50)
-    eventPlayer.setHealingDealt(500)
+    eventPlayer.setHealingDealt(1000)
     eventPlayer.setKnockbackReceived(0)
     eventPlayer.setHealingReceived(0)
 
-    applyCustomHealthFor(eventPlayer, getBossHealth() / 10, 0, 0)
+    applyCustomHealthFor(eventPlayer, getBossHealth() / 5, 0, 0)
 
     eventPlayer.disableRespawn()
 

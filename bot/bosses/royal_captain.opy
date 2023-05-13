@@ -21,14 +21,13 @@ rule "[bot/royal_captain.opy]: Sojourn Behavior":
     wait(1)
 
     eventPlayer.startForcingName("Royal Captain")
-    eventPlayer.setDamageReceived(50)
     eventPlayer.setKnockbackReceived(0)
     eventPlayer.setHealingReceived(0)
     eventPlayer.setDamageDealt(250)
-    eventPlayer.setHealingDealt(500)
+    eventPlayer.setHealingDealt(1000)
     eventPlayer.setUltCharge(100)
 
-    applyCustomHealthFor(eventPlayer, getBossHealth() / 10, 0, 0)
+    applyCustomHealthFor(eventPlayer, getBossHealth() / 5, 0, 0)
 
     eventPlayer.disableRespawn()
 
