@@ -150,7 +150,7 @@ rule "[player/medals.opy] Boss Hunter Medal":
     @Condition disasterReady == true
 
     if botFlags.BOSS in victim.BOT_DISASTER_FLAGS:
-        queueMedalWithPoints(eventPlayer, Medals.BOSS_HUNTER, 50)
+        queueMedalWithPoints(eventPlayer, Medals.BOSS_HUNTER, 75)
 
     waitUntil(disasterReady == false, 9999)
 

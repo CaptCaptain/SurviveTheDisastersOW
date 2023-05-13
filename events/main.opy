@@ -99,7 +99,7 @@ allocatedDummyBot.BOT_DISASTER_TAG = tag
 #!define dummyBotLimit floor(WS_SETTING_MAX_BOTS / activeDisasterEntitySpawning)
 #!define dummyBotSpawnAny(range) random.choice(getPlayersInMatch()).getPosition() + vect(random.randint(-range, range), sorted(getPlayersInMatch(), lambda player: player.getPosition().y).last().getPosition().y, random.randint(-range, range))
 #!define dummyBotSpawnAnyHeight(range) vect(dummyBotSpawn(range).x, dummyBotSpawnAny(range).y, dummyBotSpawn(range).z)
-#!define dummyBotSpawn(range) random.choice([random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.OFF)) == 0])), random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.SURFACES)) == 0])), nearestWalkablePosition(dummyBotSpawnAny(range))].exclude([null, 0, vect(0, 0, 0)]))
+#!define dummyBotSpawn(range) random.choice([random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.OFF)) == 0])), random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.SURFACES)) == 0])), nearestWalkablePosition(dummyBotSpawnAny(range)), nearestWalkablePosition(dummyBotSpawnAny(range))].exclude([null, 0, vect(0, 0, 0)]))
 
 #!define getBossHealth() 500 + (len(getPlayersInMatch()) * 500)
 
@@ -299,13 +299,18 @@ def queueDisaster():
 
 def selectDisaster():
     disasterReady = false
-
-    if len(disastersAlreadyPlayed) == len(disasterPool):
-        disastersAlreadyPlayed = []
     
-    selectedDisaster = random.choice(disasterPool.exclude(disastersAlreadyPlayed).exclude(blacklistedDisasters))
-    addDisasterToQueueById(selectedDisaster)
-    disastersAlreadyPlayed.append(selectedDisaster)
+    while selectedDisaster == null:
+        selectedDisaster = random.choice(disasterPool.exclude(disastersAlreadyPlayed).exclude(blacklistedDisasters))
+        addDisasterToQueueById(selectedDisaster)
+        disastersAlreadyPlayed.append(selectedDisaster)
+
+        if selectedDisaster == null:
+            disastersAlreadyPlayed = []
+            wait(0.016)
+            continue
+
+        wait(0.016)
     
     wait(3)
 
@@ -362,10 +367,6 @@ def selectMultipleDisasters():
     disasterTypeDescription = "Triple Threat" if multipleDisastersMax == 3 else "Double Trouble"
     disasterTypeColor = Color.RED
 
-    # Reset disastersAlreadyPlayed when we went through every disaster
-    if len(disastersAlreadyPlayed) == len(disasterPool):
-        disastersAlreadyPlayed = []
-
     # Add disasters that have not already been selected
     while len(activeDisasters) < multipleDisastersMax:        
         selectedDisaster = random.choice(disasterPool.exclude(disastersAlreadyPlayed).exclude(blacklistedDisasters).exclude(activeDisasters).exclude([getDisasterId(disasters.MYSTERY), getDisasterId(disasters.SIMON)]))
@@ -405,6 +406,7 @@ def cleanupDisaster():
     activeDisasters = []
     activeDisasterFlags = []
     blacklistedDisasters = []
+    selectedDisaster = null
     objectiveDescription = ""
     disasterRespawnable = true
     disasterTypeShown = false

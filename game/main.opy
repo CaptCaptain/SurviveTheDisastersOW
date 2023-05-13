@@ -113,7 +113,7 @@ rule "[game/main.opy] Game Loop":
 
                 if all([player.isDead() for player in getPlayers(Team.2)]):
                     wait(1)
-                    bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Boss Defeat!  {0}".format(abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE)))
+                    bigMessage([player for player in getPlayers(Team.1) if player.isAlive and Medals.BOSS_HUNTER[medalData.TITLE] in player.medalsEarned], "{0} Boss Defeat!  {0}".format(abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE)))
 
                 break
             case dangerMode.HARDCORE:
@@ -133,8 +133,7 @@ rule "[game/main.opy] Game Loop":
 
         getPlayersAlive().survivalStreak += 1
 
-        if not selectedDangerMode == dangerMode.BOSS_HUNT:
-            bigMessage([player for player in getPlayers(Team.1) if player.isAlive], "{0} Survived!  {0}".format(iconString(Icon.CHECKMARK)))
+        bigMessage([player for player in getPlayers(Team.1) if player.isAlive and not Medals.BOSS_HUNTER[medalData.TITLE] in player.medalsEarned], "{0} Survived!  {0}".format(iconString(Icon.CHECKMARK)))
 
         bigMessage([player for player in getPlayers(Team.1) if not player.isAlive], "{0} Wipeout!  {0}".format(iconString(Icon.CROSS)))
 

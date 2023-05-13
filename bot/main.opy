@@ -80,7 +80,7 @@ rule "[bot/main.opy] Prevent Bot Respawn Clumping":
     eventPlayer.teleport(dummyBotSpawn(15))
 
 rule "[bot/main.opy] Track Player Positions":
-    dummyBotSpawnArray.append([player for player in getPlayersInMatch() if player.isOnGround() and player.isMoving()])
+    dummyBotSpawnArray.append([player.getPosition() for player in getPlayersInMatch() if player.isOnGround() and player.isMoving()])
 
     if len(dummyBotSpawnArray) >= 1000:
         dummyBotSpawnArray = []
