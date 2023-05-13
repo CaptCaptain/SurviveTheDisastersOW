@@ -34,31 +34,21 @@ rule "[bot/royal_captain.opy]: Sojourn Behavior":
 
     while eventPlayer.isAlive():
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER):
-            case true:
-                async(UPDATE_SUPPORT_POSITION, AsyncBehavior.NOOP)
-                PRESS_ABILITY_2()
+        if entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER):
+            async(UPDATE_SUPPORT_POSITION, AsyncBehavior.NOOP)
+            PRESS_ABILITY_2()
+            EXECUTE_ULTIMATE_ABILITY()
+        elif entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true if (eventPlayer.getAbilityCooldown(Button.PRIMARY_FIRE) == 0 and distance(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()) < 6) or not eventPlayer.BOT_SECONDARY_FIRE_ENABLED else false
+                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if distance(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()) > 6 else false
+                EXECUTE_OFFENSE_ABILITY_1()
                 EXECUTE_ULTIMATE_ABILITY()
-                break
-            default:
-                switch entityExists(eventPlayer.BOT_PLAYER):
-                    case true:
-                        switch eventPlayer.BOT_PLAYER.isAlive():
-                            case true:
-                                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true if (eventPlayer.getAbilityCooldown(Button.PRIMARY_FIRE) == 0 and distance(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()) < 6) or not eventPlayer.BOT_SECONDARY_FIRE_ENABLED else false
-                                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if distance(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()) > 6 else false
-                                EXECUTE_OFFENSE_ABILITY_1()
-                                EXECUTE_ULTIMATE_ABILITY()
-                                break
-                        break
-                break
-        switch eventPlayer.getAbilityCharge(Button.ABILITY_2) > 0:
-            case true:
-                UPDATE_BOT_TEAMMATE()
-                break
-            default:
-                eventPlayer.BOT_OVERRIDE_FACING_PLAYER = false
-                break
+
+        if eventPlayer.getAbilityCharge(Button.ABILITY_2) > 0:
+            UPDATE_BOT_TEAMMATE()
+        else:
+            eventPlayer.BOT_OVERRIDE_FACING_PLAYER = null
             
         waitThrottle(Wait.IGNORE_CONDITION)
 

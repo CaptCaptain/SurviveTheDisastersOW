@@ -100,16 +100,16 @@ rule "[events/simon.opy] Player Followed Simon Says":
 
     switch (DISASTER_SIMON_INSTRUCTION):
         case disasterSimonInstructions.JUMP:
-            DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.isJumping())
+            DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.isHoldingButton(Button.JUMP))
             break
         case disasterSimonInstructions.ULT:
-            DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.getUltCharge() < 100)
+            DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.getUltCharge() < 100 or (eventPlayer.isUsingUltimate() and eventPlayer.isHoldingButton(Button.ULTIMATE)))
             break
         case disasterSimonInstructions.ABILITY:
             DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 0 or eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0 or eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) > 0)
             break
         case disasterSimonInstructions.CROUCH:
-            DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.isCrouching())
+            DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.isHoldingButton(Button.CROUCH))
             break
         /* case disasterSimonInstructions.RELOAD:
             DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.isReloading())

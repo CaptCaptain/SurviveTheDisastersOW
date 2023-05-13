@@ -61,6 +61,7 @@ globalvar CREDITS_ZEZOMBYE = createWorkshopSetting(enum["Zezombye"], "Credits", 
 #!include "disasterData.opy"
 #!include "player/main.opy"
 #!include "events/main.opy"
+#!include "player/mercy.opy"
 #!include "player/lifeweaver.opy"
 #!include "player/reinhardt.opy"
 #!include "bot/main.opy"

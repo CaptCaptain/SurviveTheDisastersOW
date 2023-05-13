@@ -22,6 +22,8 @@ rule "[events/lava.opy] Disaster Damage":
     @Condition disasterReady
     @Condition playerIsBelowWaterLevel(eventPlayer, DISASTER_LAVA_Y_POS, -1.5)
 
+    wait(0.032, Wait.ABORT_WHEN_FALSE)
+
     eventPlayer.setStatusEffect(null, Status.BURNING, 9999)
 
     eventPlayer.startDoT(null, 1, 50)

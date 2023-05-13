@@ -23,6 +23,8 @@ rule "[events/flood.opy] Disaster Damage":
     @Condition disasterReady
     @Condition playerIsBelowWaterLevel(eventPlayer, DISASTER_FLOOD_Y_POS, 0)
 
+    wait(0.032, Wait.ABORT_WHEN_FALSE)
+
     damage(eventPlayer, null, 50)
 
     wait(1)

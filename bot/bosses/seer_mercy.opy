@@ -32,27 +32,20 @@ rule "[bot/seer_mercy.opy]: Mercy Behavior":
 
     while eventPlayer.isAlive():
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER):
-            case true:
-                eventPlayer.setWeapon(1)
-                async(UPDATE_SUPPORT_POSITION, AsyncBehavior.NOOP)
+        if entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER):
+            eventPlayer.setWeapon(1)
+            async(UPDATE_SUPPORT_POSITION, AsyncBehavior.NOOP)
+            eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+            eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if eventPlayer.BOT_OVERRIDE_FACING_PLAYER.getNormalizedHealth() == 1 else false
+            eventPlayer.BOT_ABILITY_1_ENABLED = true if distance(eventPlayer.getPosition(), eventPlayer.BOT_OVERRIDE_FACING_PLAYER.getPosition()) > 2 else false
+            eventPlayer.setAbilityCooldown(Button.ABILITY_2, 0)
+            PRESS_ABILITY_2()
+            EXECUTE_ULTIMATE_ABILITY()
+        elif entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.setWeapon(2)
                 eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if eventPlayer.BOT_OVERRIDE_FACING_PLAYER.getNormalizedHealth() == 1 else false
-                eventPlayer.BOT_ABILITY_1_ENABLED = true if distance(eventPlayer.getPosition(), eventPlayer.BOT_OVERRIDE_FACING_PLAYER.getPosition()) > 2 else false
-                eventPlayer.setAbilityCooldown(Button.ABILITY_2, 0)
-                PRESS_ABILITY_2()
                 EXECUTE_ULTIMATE_ABILITY()
-                break
-            default:
-                switch entityExists(eventPlayer.BOT_PLAYER):
-                    case true:
-                        switch eventPlayer.BOT_PLAYER.isAlive():
-                            case true:
-                                eventPlayer.setWeapon(2)
-                                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                                EXECUTE_ULTIMATE_ABILITY()
-                        break
-                break
         
         UPDATE_MERCY_TEAMMATE()
                 

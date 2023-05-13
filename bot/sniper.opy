@@ -45,10 +45,8 @@ rule "[bot/sniper.opy]: Widow Behavior":
                     eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
                     # Run this subroutine independently so the rest of the code can continue to execute
                     async(delayedSniperScopedAttack, AsyncBehavior.NOOP)
-                    break
                 else:
-                    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                    break           
+                    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true        
                 EXECUTE_DEFENSE_ABILITY_1()
                 EXECUTE_OFFENSE_ABILITY_2()
                 EXECUTE_ULTIMATE_ABILITY()

@@ -43,6 +43,13 @@
 		"team1Slots": 6,
 		"team2Slots": 0
 	},
+	"heroes": {
+		"team1": {
+			"mercy": {
+				"ability2Cooldown%": 50
+			}
+		}
+	},
 	"workshop": {
 		"Restart Match": 2
 	}

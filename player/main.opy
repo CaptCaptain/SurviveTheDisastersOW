@@ -168,8 +168,11 @@ rule "[player/main.opy] Hud":
         # Limited Stealth
     createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.SOMBRA and evalOnce(WS_SETTING_LIMITED_STEALTH) else []), "| Limited Duration on Stealth (Ability 1)", 3)
 
-        # Limited Stealth
+        # Limited Lifegrip
     createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.LIFEWEAVER and evalOnce(WS_SETTING_LIFE_GRIP_LIMITED) else []), "| {0} Life Grip / {1} Petal Platform restricted\n| during certain disasters".format(abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_2), abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_1)), 4)
+
+        # Buffed Resurrect
+    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.MERCY else []), "| {0} Resurrect cooldown reduced".format(abilityIconString(Hero.MERCY, Button.ABILITY_2)), 5)
 
     # Hide Scoreboard
     hudSubheader(getAllPlayers(), "{1} [Hold {0}]".format(buttonString(Button.RELOAD), "Hide" if localPlayer.toggleScoreboard else "Show Scoreboard"), HudPosition.LEFT, -8, Color.TURQUOISE, HudReeval.VISIBILITY_SORT_ORDER_AND_STRING, SpecVisibility.NEVER)

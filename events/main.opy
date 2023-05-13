@@ -22,7 +22,7 @@ queueDisaster()\
 #!define addDisaster(disaster) \
 \
 currentDisaster = disaster\
-wait(0.032)\
+wait(0.064)\
 addDisasterSub()\
 
 #!define cleanupDummyBots() \

@@ -36,16 +36,12 @@ rule "[bot/galactic_sigma.opy]: Behavior":
 
     while eventPlayer.isAlive():
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        PRESS_PRIMARY_FIRE()
-                        EXECUTE_DEFENSE_ABILITY_1()
-                        EXECUTE_OFFENSE_ABILITY_2()
-                        EXECUTE_ULTIMATE_ABILITY()
-                        break
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                PRESS_PRIMARY_FIRE()
+                EXECUTE_DEFENSE_ABILITY_1()
+                EXECUTE_OFFENSE_ABILITY_2()
+                EXECUTE_ULTIMATE_ABILITY()
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 

@@ -58,7 +58,6 @@ rule "[bot/pharamercy.opy]: Mercy Behavior":
             eventPlayer.setAbilityCooldown(Button.ABILITY_2, 0)
             PRESS_ABILITY_2()
             EXECUTE_ULTIMATE_ABILITY()
-            break
         else:
             if entityExists(eventPlayer.BOT_PLAYER):
                 if eventPlayer.BOT_PLAYER.isAlive():

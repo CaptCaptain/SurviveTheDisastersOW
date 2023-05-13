@@ -32,20 +32,16 @@ rule "[bot/infinite_admiral.opy]: Sojourn Behavior":
 
     while eventPlayer.isAlive():
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                        eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if distance(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()) > 5 else false     
-                        EXECUTE_DEFENSE_ABILITY_1()
-                        EXECUTE_OFFENSE_ABILITY_2()
-                        EXECUTE_ULTIMATE_ABILITY()
-                        if eventPlayer.isUsingAbility1():
-                            eventPlayer.forceButtonPress(Button.JUMP)
-                        break
-                break
-        
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if distance(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()) > 5 else false     
+                EXECUTE_DEFENSE_ABILITY_1()
+                EXECUTE_OFFENSE_ABILITY_2()
+                EXECUTE_ULTIMATE_ABILITY()
+                if eventPlayer.isUsingAbility1():
+                    eventPlayer.forceButtonPress(Button.JUMP)
+    
         waitThrottle(Wait.IGNORE_CONDITION)
 
 rule "[bot/infinite_admiral.opy]: Overclock Charge":

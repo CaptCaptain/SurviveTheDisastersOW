@@ -62,6 +62,9 @@ enum Medals:
             createMedalSFX(player, MedalSounds.OKAY[medalSoundData.EFFECT])\
             break\
 
+#!define getDamagePoints(player) ceil((player.getStatistic(Stat.FINAL_BLOWS) - player.damageStatistic) * 5)
+#!define getHealingPoints(player) ceil((player.getStatistic(Stat.HEALING_DEALT) - player.healingStatistic) / 10)
+
 subroutine displayEarnedMedals
 
 playervar array_medal_titles = []
@@ -70,6 +73,9 @@ playervar array_medal_sounds = []
 playervar medalsEarned = []
 playervar medalsDisplayed = false
 playervar medalsDisplayLimit = 0
+
+playervar damageStatistic
+playervar healingStatistic
 
 def displayEarnedMedals():
     eventPlayer.medalsDisplayed = true
@@ -135,14 +141,15 @@ rule "[player/medals.opy] Survival Streak Medals / MVP Medals / Teamwork Medal":
         queueMedalWithPoints(eventPlayer, Medals.LAST_ONE_STANDING, 100)
 
 rule "[player/medals.opy] Slayer Medal":
-    @Event playerDealtFinalBlow
+    @Event eachPlayer
     @Team 1
     @Condition disasterReady == true
 
-    if not (botFlags.BOSS in victim.BOT_DISASTER_FLAGS):
-        queueMedalWithPoints(eventPlayer, Medals.SLAYER, 25)
+    eventPlayer.damageStatistic = eventPlayer.getStatistic(Stat.FINAL_BLOWS)
 
     waitUntil(disasterReady == false, 9999)
+    if getDamagePoints(eventPlayer) > 1:
+        queueMedalWithPoints(eventPlayer, Medals.SLAYER, getDamagePoints(eventPlayer))
 
 rule "[player/medals.opy] Boss Hunter Medal":
     @Event playerEarnedElimination
@@ -169,9 +176,11 @@ rule "[player/medals.opy] Supporter Medal":
     @Team 1
     @Condition disasterReady == true
 
-    waitUntil(disasterReady == false or eventPlayer.getStatistic(Stat.HEALING_DEALT) != evalOnce(eventPlayer.getStatistic(Stat.HEALING_DEALT)), 9999)
-    if disasterReady == true:
-        queueMedal(eventPlayer, Medals.SUPPORTER)
+    eventPlayer.healingStatistic = eventPlayer.getStatistic(Stat.HEALING_DEALT)
+
+    waitUntil(disasterReady == false, 9999)
+    if getHealingPoints(eventPlayer) > 1:
+        queueMedalWithPoints(eventPlayer, Medals.SUPPORTER, getHealingPoints(eventPlayer))
     
 rule "[player/medals.opy] Not Today, Thank You Medal":
     @Event eachPlayer

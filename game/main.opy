@@ -171,7 +171,7 @@ rule "[game/main.opy] Game Loop":
 
         # Break
         if teamScore(Team.1) % [2, 5, 10][WS_SETTING_SPECIAL_EVENTS] == 0 and teamScore(Team.1) > 0:
-            selectedDangerMode = random.choice([dangerMode.MULTI_DISASTER, dangerMode.MYSTERY, dangerMode.BOSS_HUNT, dangerMode.HARDCORE])
+            selectedDangerMode = random.choice([dangerMode.MULTI_DISASTER, dangerMode.MYSTERY, dangerMode.BOSS_HUNT, dangerMode.BOSS_HUNT, dangerMode.HARDCORE])
             
             switch (selectedDangerMode):
                 case dangerMode.BOSS_HUNT:
