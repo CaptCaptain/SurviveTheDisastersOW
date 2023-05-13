@@ -17,17 +17,13 @@ rule "[bot/sniper.opy]: Ashe Behavior":
 
     while true:
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        PRESS_PRIMARY_FIRE()
-                        EXECUTE_SCOPING()            
-                        EXECUTE_DEFENSE_ABILITY_1()
-                        EXECUTE_OFFENSE_ABILITY_2()
-                        EXECUTE_ULTIMATE_ABILITY()
-                        break
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                PRESS_PRIMARY_FIRE()
+                EXECUTE_SCOPING()            
+                EXECUTE_DEFENSE_ABILITY_1()
+                EXECUTE_OFFENSE_ABILITY_2()
+                EXECUTE_ULTIMATE_ABILITY()
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 
@@ -41,25 +37,20 @@ rule "[bot/sniper.opy]: Widow Behavior":
 
     while true:
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        EXECUTE_SCOPING()
-                        wait()
-                        switch eventPlayer.isHoldingButton(Button.SECONDARY_FIRE):
-                            case true:
-                                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
-                                # Run this subroutine independently so the rest of the code can continue to execute
-                                async(delayedSniperScopedAttack, AsyncBehavior.NOOP)
-                                break
-                            default:
-                                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                                break           
-                        EXECUTE_DEFENSE_ABILITY_1()
-                        EXECUTE_OFFENSE_ABILITY_2()
-                        EXECUTE_ULTIMATE_ABILITY()
-                        break
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                EXECUTE_SCOPING()
+                wait()
+                if eventPlayer.isHoldingButton(Button.SECONDARY_FIRE):
+                    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
+                    # Run this subroutine independently so the rest of the code can continue to execute
+                    async(delayedSniperScopedAttack, AsyncBehavior.NOOP)
+                    break
+                else:
+                    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+                    break           
+                EXECUTE_DEFENSE_ABILITY_1()
+                EXECUTE_OFFENSE_ABILITY_2()
+                EXECUTE_ULTIMATE_ABILITY()
                 
         waitThrottle(Wait.IGNORE_CONDITION)

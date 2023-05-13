@@ -65,13 +65,9 @@ rule "[bot/talon.opy]: Trooper Behavior":
 
     while true:
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                        break
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 
@@ -90,12 +86,8 @@ rule "[bot/talon.opy]: Shotgunner Behavior":
 
     while true:
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                        break
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
                 
         waitThrottle(Wait.IGNORE_CONDITION)

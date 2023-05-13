@@ -14,24 +14,16 @@ rule "[bot/ninja.opy]: Genji Behavior":
 
     while true:
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        EXECUTE_ATTACK_BASED_ON_RANGE()    
-                        switch eventPlayer.isInAlternateForm():
-                            case true:
-                                PRESS_ABILITY_1()
-                                break
-                            default:
-                                EXECUTE_OFFENSE_ABILITY_1()
-                                break            
-                        EXECUTE_DEFENSE_ABILITY_2()
-                        eventPlayer.DEFLECT_BUTTON = Button.ABILITY_2
-                        EXECUTE_ULTIMATE_DEFLECT()
-                        EXECUTE_ULTIMATE_ABILITY()
-                        break
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                EXECUTE_ATTACK_BASED_ON_RANGE()    
+                if eventPlayer.isInAlternateForm():
+                    PRESS_ABILITY_1()
+                EXECUTE_OFFENSE_ABILITY_1()         
+                EXECUTE_DEFENSE_ABILITY_2()
+                eventPlayer.DEFLECT_BUTTON = Button.ABILITY_2
+                EXECUTE_ULTIMATE_DEFLECT()
+                EXECUTE_ULTIMATE_ABILITY()
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 
@@ -49,25 +41,19 @@ rule "[bot/ninja.opy]: Kiriko Behavior":
 
     while true:
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER):
-            case true:
-                async(UPDATE_SUPPORT_POSITION, AsyncBehavior.NOOP)
-                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = false
-                eventPlayer.BOT_ABILITY_1_ENABLED = true if distance(eventPlayer.getPosition(), eventPlayer.BOT_OVERRIDE_FACING_PLAYER.getPosition()) > 2 else false
-                PRESS_ABILITY_2()
-                EXECUTE_ULTIMATE_ABILITY()
-                break
-            default:
-                switch entityExists(eventPlayer.BOT_PLAYER):
-                    case true:
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
-                        eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true
-                        eventPlayer.BOT_ABILITY_1_ENABLED = false
-                        eventPlayer.BOT_ABILITY_2_ENABLED = false 
-                        EXECUTE_ULTIMATE_ABILITY()
-                        break
-                break
+        if entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER):
+            async(UPDATE_SUPPORT_POSITION, AsyncBehavior.NOOP)
+            eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+            eventPlayer.BOT_SECONDARY_FIRE_ENABLED = false
+            eventPlayer.BOT_ABILITY_1_ENABLED = true if distance(eventPlayer.getPosition(), eventPlayer.BOT_OVERRIDE_FACING_PLAYER.getPosition()) > 2 else false
+            PRESS_ABILITY_2()
+            EXECUTE_ULTIMATE_ABILITY()
+        elif entityExists(eventPlayer.BOT_PLAYER):
+            eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
+            eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true
+            eventPlayer.BOT_ABILITY_1_ENABLED = false
+            eventPlayer.BOT_ABILITY_2_ENABLED = false 
+            EXECUTE_ULTIMATE_ABILITY()
     
         UPDATE_BOT_TEAMMATE()
                 

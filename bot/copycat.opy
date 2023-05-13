@@ -41,31 +41,21 @@ rule "[bot/echo.opy]: Echo Behavior":
 
     while true:
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        switch eventPlayer.getHeroOfDuplication() != null:
-                            default:
-                                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true
-                                eventPlayer.BOT_ABILITY_1_ENABLED = true
-                                eventPlayer.BOT_JUMP_ENABLED = true if eventPlayer.isInAir() else false
-            
-                                switch eventPlayer.BOT_PLAYER.getNormalizedHealth() < 0.5 and not eventPlayer.isUsingAbility2():
-                                    case true:
-                                        PRESS_ABILITY_2()
-                                        break
-                                EXECUTE_ULTIMATE_ABILITY()
-                                break
-                        break
-                    default:
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
-                        break
-                break
-            default:
+
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true
+                eventPlayer.BOT_ABILITY_1_ENABLED = true
+                eventPlayer.BOT_JUMP_ENABLED = true if eventPlayer.isInAir() else false
+
+                if eventPlayer.BOT_PLAYER.getNormalizedHealth() < 0.5 and not eventPlayer.isUsingAbility2():
+                    PRESS_ABILITY_2()
+                EXECUTE_ULTIMATE_ABILITY()
+            else:
                 eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
-                break
+        else:
+            eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 

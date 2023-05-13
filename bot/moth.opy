@@ -10,14 +10,10 @@ rule "[bot/moth.opy]: Behavior":
 
     while true:
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        eventPlayer.setWeapon(2)
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                        break
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.setWeapon(2)
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 
@@ -30,6 +26,7 @@ rule "[bot/moth.opy]: Force Valk":
     eventPlayer.setUltCharge(100)
 
     while true:
+        botWaitUntilReady()
         eventPlayer.setUltCharge(100)
         wait(0.016)
         eventPlayer.forceButtonPress(Button.ULTIMATE)

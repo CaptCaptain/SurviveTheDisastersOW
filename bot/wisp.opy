@@ -24,23 +24,22 @@ rule "[bot/wisp.opy]: Behavior":
 
     while true:
         waitUntil(entityExists(eventPlayer.BOT_PLAYER) and eventPlayer.isAlive(), 9999)
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                        eventPlayer.setAbilityCharge(Button.ABILITY_1, 3)
-                        if distance(eventPlayer.BOT_PLAYER.getPosition(), eventPlayer.getPosition()) > 7.5:
-                            eventPlayer.forceButtonPress(Button.ABILITY_1)
-                            eventPlayer.teleport(nearestWalkablePosition(eventPlayer.getPosition()))
-                        else:
-                            eventPlayer.forceButtonPress(Button.ABILITY_1)
-                            eventPlayer.teleport(eventPlayer.BOT_PLAYER.getPosition())
-                        if eventPlayer.BOT_PLAYER.isMeleeing() or eventPlayer.BOT_PLAYER.isFiringPrimaryFire() or eventPlayer.BOT_PLAYER.isFiringSecondaryFire():
-                            eventPlayer.forceButtonPress(Button.ABILITY_2)
-                        eventPlayer.forceButtonPress(Button.MELEE)
-                        eventPlayer.communicate(Comms.HELLO)
-                        break
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+                eventPlayer.setAbilityCharge(Button.ABILITY_1, 3)
+
+                if distance(eventPlayer.BOT_PLAYER.getPosition(), eventPlayer.getPosition()) > 7.5:
+                    eventPlayer.forceButtonPress(Button.ABILITY_1)
+                    eventPlayer.teleport(nearestWalkablePosition(eventPlayer.getPosition()))
+                else:
+                    eventPlayer.forceButtonPress(Button.ABILITY_1)
+                    eventPlayer.teleport(eventPlayer.BOT_PLAYER.getPosition())
+
+                if eventPlayer.BOT_PLAYER.isMeleeing() or eventPlayer.BOT_PLAYER.isFiringPrimaryFire() or eventPlayer.BOT_PLAYER.isFiringSecondaryFire():
+                    eventPlayer.forceButtonPress(Button.ABILITY_2)
+                    
+                eventPlayer.forceButtonPress(Button.MELEE)
+                eventPlayer.communicate(Comms.HELLO)
                 
         waitThrottle(Wait.IGNORE_CONDITION)

@@ -12,23 +12,16 @@ rule "[bot/sombra.opy]: Behavior":
         botWaitUntilReady()
         eventPlayer.BOT_ABILITY_1_ENABLED = true if not eventPlayer.isUsingAbility1() and eventPlayer.getNormalizedHealth() >= 1 and not eventPlayer.BOT_PLAYER.hasStatusEffect(Status.HACKED) else false
 
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        switch eventPlayer.BOT_PLAYER.hasStatusEffect(Status.HACKED):
-                            case true:
-                                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = false
-                                break
-                            case false:
-                                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false if eventPlayer.getNormalizedHealth() >= 1 else true
-                                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if eventPlayer.getNormalizedHealth() >= 1 else false
-                                eventPlayer.setAbilityCooldown(Button.ABILITY_1, 0)
-                                eventPlayer.setAbilityCooldown(Button.SECONDARY_FIRE, 0)
-                                break
-                        break
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                if eventPlayer.BOT_PLAYER.hasStatusEffect(Status.HACKED):
+                    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+                    eventPlayer.BOT_SECONDARY_FIRE_ENABLED = false
+                else:
+                    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false if eventPlayer.getNormalizedHealth() >= 1 else true
+                    eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if eventPlayer.getNormalizedHealth() >= 1 else false
+                    eventPlayer.setAbilityCooldown(Button.ABILITY_1, 0)
+                    eventPlayer.setAbilityCooldown(Button.SECONDARY_FIRE, 0)
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 

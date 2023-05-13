@@ -120,15 +120,11 @@ rule "[bot/null_sector.opy]: Bastion Behavior":
     eventPlayer.startForcingOutlineFor(getAllPlayers(), true, Color.PURPLE, OutlineVisibility.DEFAULT)
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER) or getPlayersOnHero(Hero.RAMATTRA, Team.2)[0].isDead(), 9999)
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                        eventPlayer.BOT_ABILITY_1_ENABLED = true if not eventPlayer.isUsingAbility1() else false
-                        break
-                break
+        botWaitUntilReady()
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+                eventPlayer.BOT_ABILITY_1_ENABLED = true if not eventPlayer.isUsingAbility1() else false
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 
@@ -152,14 +148,10 @@ rule "[bot/null_sector.opy]: Nulltrooper Behavior":
     eventPlayer.startForcingOutlineFor(getAllPlayers(), true, Color.PURPLE, OutlineVisibility.DEFAULT)
 
     while true:
-        waitUntil(entityExists(eventPlayer.BOT_PLAYER) or getPlayersOnHero(Hero.RAMATTRA, Team.2)[0].isDead(), 9999)
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                        break
-                break
+        botWaitUntilReady()
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 

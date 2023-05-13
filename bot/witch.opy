@@ -118,24 +118,20 @@ rule "[bot/witch.opy]: Behavior":
     RESET_TO_IDLE()
     while eventPlayer.isAlive():
         botWaitUntilReady()
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        if eventPlayer.getMaxHealthOfType(Health.ARMOR) > 0:
-                            eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                            eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if eventPlayer.getNormalizedHealth() < 0.5 else false
-                            eventPlayer.BOT_ABILITY_1_ENABLED = false
-                        else:
-                            eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                            eventPlayer.BOT_SECONDARY_FIRE_ENABLED = false
-                            eventPlayer.BOT_ABILITY_1_ENABLED = true if (eventPlayer.BOT_PLAYER.getNormalizedHealth() < 0.5 or eventPlayer.getNormalizedHealth() < 0.5) and eventPlayer.getAbilityCooldown(Button.ABILITY_1) == 0 else false
-                            EXECUTE_ULTIMATE_ABILITY()
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                if eventPlayer.getMaxHealthOfType(Health.ARMOR) > 0:
+                    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+                    eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if eventPlayer.getNormalizedHealth() < 0.5 else false
+                    eventPlayer.BOT_ABILITY_1_ENABLED = false
+                else:
+                    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+                    eventPlayer.BOT_SECONDARY_FIRE_ENABLED = false
+                    eventPlayer.BOT_ABILITY_1_ENABLED = true if (eventPlayer.BOT_PLAYER.getNormalizedHealth() < 0.5 or eventPlayer.getNormalizedHealth() < 0.5) and eventPlayer.getAbilityCooldown(Button.ABILITY_1) == 0 else false
+                    EXECUTE_ULTIMATE_ABILITY()
 
-                        eventPlayer.BOT_ABILITY_2_ENABLED = true if eventPlayer.BOT_PLAYER.isInAir() else false
-
-                        break
-                break
+                eventPlayer.BOT_ABILITY_2_ENABLED = true if eventPlayer.BOT_PLAYER.isInAir() else false
+                
         waitThrottle(Wait.ABORT_WHEN_FALSE)
 
 rule "[bot/witch.opy]: Behavior":

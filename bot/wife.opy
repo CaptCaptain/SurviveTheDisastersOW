@@ -62,21 +62,20 @@ rule "[bot/wife.opy]: Apply Custom Health & Additional Behavior":
 
     while eventPlayer.isAlive():
         waitUntil(entityExists(eventPlayer.BOT_PLAYER) or eventPlayer.isDead(), 9999)
-        switch entityExists(eventPlayer.BOT_PLAYER):
-            case true:
-                switch eventPlayer.BOT_PLAYER.isAlive():
-                    case true:
-                        eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false if eventPlayer.getUltCharge() < 100 else true
-                        eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if eventPlayer.getUltCharge() < 100 else false
-                        
-                        if eventPlayer.getAbilityCooldown(Button.JUMP) > 1:
-                            eventPlayer.setAbilityCooldown(Button.JUMP, 1)
-                        eventPlayer.BOT_JUMP_ENABLED = true if eventPlayer.isOnGround() and eventPlayer.getNormalizedHealth() < 0.5 else false
-                        if eventPlayer.isInAir():
-                            eventPlayer.forceButtonPress(Button.JUMP)
-                        EXECUTE_DEFENSE_ABILITY_2()
-                        EXECUTE_ULTIMATE_ABILITY()
-                break
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false if eventPlayer.getUltCharge() < 100 else true
+                eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if eventPlayer.getUltCharge() < 100 else false
+                
+                if eventPlayer.getAbilityCooldown(Button.JUMP) > 1:
+                    eventPlayer.setAbilityCooldown(Button.JUMP, 1)
+                eventPlayer.BOT_JUMP_ENABLED = true if eventPlayer.isOnGround() and eventPlayer.getNormalizedHealth() < 0.5 else false
+
+                if eventPlayer.isInAir():
+                    eventPlayer.forceButtonPress(Button.JUMP)
+                    
+                EXECUTE_DEFENSE_ABILITY_2()
+                EXECUTE_ULTIMATE_ABILITY()
                 
         waitThrottle(Wait.IGNORE_CONDITION)
     
