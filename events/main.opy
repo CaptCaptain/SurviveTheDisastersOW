@@ -190,7 +190,7 @@ def addDisasterSub():
     activeDisasterEntityTypes += currentDisaster[disasterData.BOT_TYPES]
     if currentDisaster[disasterData.BOT_TYPES] > 0:
         activeDisasterEntitySpawning += 1
-    disasterRespawnable = currentDisaster[disasterData.RESPAWNABLE]
+    disasterRespawnable = currentDisaster[disasterData.RESPAWNABLE] if disasterRespawnable else false
     blacklistedDisasters.append(currentDisaster[disasterData.BLACKLIST])
 
 def queueDisaster():

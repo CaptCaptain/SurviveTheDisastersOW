@@ -103,7 +103,7 @@ rule "[events/simon.opy] Player Followed Simon Says":
             DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.isHoldingButton(Button.JUMP))
             break
         case disasterSimonInstructions.ULT:
-            DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.getUltCharge() < 100 or (eventPlayer.isUsingUltimate() and eventPlayer.isHoldingButton(Button.ULTIMATE)))
+            DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.getUltCharge() < 100 or (eventPlayer.getUltCharge() >= 100 and eventPlayer.isHoldingButton(Button.ULTIMATE)))
             break
         case disasterSimonInstructions.ABILITY:
             DISASTER_SIMON_SAYS_PLAYER_DOES(eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 0 or eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0 or eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) > 0)
