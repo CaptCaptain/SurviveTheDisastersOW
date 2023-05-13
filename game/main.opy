@@ -48,8 +48,8 @@ rule "[game/main.opy] Init":
     disableAnnouncer()
     disableScoring()
 
-    # Damage Scaling
-    startDamageModification(getPlayers(Team.1), getPlayers(Team.2).exclude([player for player in getPlayers(Team.2) if selectedDangerMode == dangerMode.BOSS_HUNT]), 10 / (getNumberOfPlayers(Team.2) / WS_SETTING_MAX_BOTS), DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
+    # Global Bot Damage
+    startDamageModification(getPlayers(Team.1), getPlayers(Team.2), (globalBotDamagePercentage * (1.5 if disasterFlags.HARDCORE in activeDisasterFlags else 1)) / ((getNumberOfPlayers(Team.2) / WS_SETTING_MAX_BOTS) if selectedDangerMode != dangerMode.BOSS_HUNT and not debugMode else 1), DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
 
     if not WS_SETTING_ENABLE_MUSIC:
         disableMusic()
