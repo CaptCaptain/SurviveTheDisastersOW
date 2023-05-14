@@ -18,7 +18,7 @@ rule "disable anti crash":
     @Condition antiCrashActivated == true
 
     while getServerLoad() > 200:
-        if getNumberOfPlayers(Team.2) > 6 and selectedDangerMode != dangerMode.BOSS_HUNT:
+        if getNumberOfPlayers(Team.2) > 5 and selectedDangerMode != dangerMode.BOSS_HUNT:
             if getNumberOfDeadPlayers(Team.1) > 0:
                 destroyDummy(Team.2, random.choice(getDeadPlayers(Team.2)).getSlot())
             else:
