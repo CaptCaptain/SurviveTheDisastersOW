@@ -177,6 +177,7 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/tiktok.opy"
 #!include "events/pharamercy.opy"
 #!include "events/vishkar.opy"
+#!include "events/death_trampoline.opy"
 #!include "events/bosses/galactic_sigma.opy"
 
 subroutine addDisasterSub
