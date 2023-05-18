@@ -10,3 +10,7 @@ rule "[events/ninja.opy] Disaster Initialization":
         createDummy([Hero.KIRIKO, Hero.GENJI], Team.2, -1, dummyBotSpawn(25), null)
         allocateDummyBotTag(disasters.NINJA[disasterData.ID])
         applyEntityFlag(allocatedDummyBot, botFlags.RESPAWNABLE_NO_LOS)
+
+    wait(1)
+    if disasterFlags.HARDCORE in activeDisasterFlags:
+        getPlayersOnHero(Hero.GENJI, Team.2).setUltCharge(95)

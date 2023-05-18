@@ -58,3 +58,12 @@ rule "[bot/ninja.opy]: Kiriko Behavior":
         UPDATE_BOT_TEAMMATE()
                 
         waitThrottle(Wait.IGNORE_CONDITION)
+
+rule "[bot/ninja.opy]: Cancel Genji Ult Voiceline":
+    @Event eachPlayer
+    @Hero genji
+    @Team 2
+    @Condition hasDisasterTag(getDisasterId(disasters.NINJA))
+    @Condition eventPlayer.isUsingUltimate()
+
+    eventPlayer.setStatusEffect(null, Status.FROZEN, 0.016)
