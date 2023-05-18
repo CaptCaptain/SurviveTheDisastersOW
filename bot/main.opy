@@ -4,6 +4,17 @@
 
 #!define botWaitUntilReady() waitUntil((entityExists(eventPlayer.BOT_PLAYER) or entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER)) and eventPlayer.isAlive(), 9999)
 
+#!define createBossName(player, Icon, IconString, color)\
+createIcon(localPlayer if not localPlayer.isInViewAngle(player.getEyePosition(), 90) and player.isAlive() else null, player, Icon, IconReeval.VISIBILITY, color, true)\
+allocateEffect()\
+\
+createInWorldText(localPlayer if localPlayer.isInViewAngle(player.getEyePosition(), 90) and player.isAlive() else null, "[{0}]\n".format(IconString), player, 2, Clip.NONE, WorldTextReeval.VISIBILITY, color, SpecVisibility.DEFAULT)\
+allocateText()\
+\
+createEffect(getAllPlayers(), Effect.RING, color, player, 3, EffectReeval.VISIBILITY)\
+allocateEffect()\
+allocatePlayerEffect(player)\
+
 #!include "bot/moth.opy"
 #!include "bot/wife.opy"
 #!include "bot/minefield.opy"
@@ -24,11 +35,13 @@
 #!include "bot/tiktok.opy"
 #!include "bot/pharamercy.opy"
 #!include "bot/vishkar.opy"
+#!include "bot/nuclear_bomb.opy"
 #!include "bot/bosses/galactic_sigma.opy"
 #!include "bot/bosses/seer_mercy.opy"
 #!include "bot/bosses/infinite_admiral.opy"
 #!include "bot/bosses/royal_captain.opy"
 #!include "bot/bosses/space_prince.opy"
+#!include "bot/bosses/zeus.opy"
 
 playervar dummyBotLosSpawnPos
 

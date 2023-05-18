@@ -45,9 +45,11 @@ enum disasterId:
     TIKTOK,
     PHARAMERCY,
     VISHKAR,
+    NUCLEAR_BOMB,
 
     #Bosses
     GALACTIC_SIGMA,
+    ZEUS,
 
     #TODO: Implement the following disasters:
     VOLCANO,
@@ -87,6 +89,8 @@ enum disasters:
     TIKTOK = [abilityIconString(Hero.MOIRA, Button.ABILITY_2), "DPS Moira", disasterId.TIKTOK, 30, true, [], 1],
     PHARAMERCY = ["{}{}".format(abilityIconString(Hero.PHARAH, Button.ULTIMATE), abilityIconString(Hero.MERCY, Button.ULTIMATE)), "Pharamercy", disasterId.PHARAMERCY, 30, true, [], 2],
     VISHKAR = ["{}{}".format(abilityIconString(Hero.SYMMETRA, Button.ULTIMATE), abilityIconString(Hero.LIFEWEAVER, Button.ULTIMATE)), "Vishkar Architects", disasterId.VISHKAR, 30, true, [], 2],
+    NUCLEAR_BOMB = ["{}".format(abilityIconString(Hero.DVA, Button.ULTIMATE)), "Nuclear Bomb", disasterId.NUCLEAR_BOMB, 10, true, [], 1],
 
     # Bosses
     GALACTIC_SIGMA = [abilityIconString(Hero.SIGMA, Button.ULTIMATE), "Galactic Emperor", disasterId.GALACTIC_SIGMA, 60, true, [], 1],
+    ZEUS = [iconString(Icon.BOLT), "Zeus: God of Thunder", disasterId.ZEUS, 60, true, [], 1],

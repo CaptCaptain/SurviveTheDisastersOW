@@ -111,6 +111,12 @@ for globalIndex in range(0, len(activeDisasters), 1):\
         case disasters.VISHKAR[disasterData.ID]:\
             appendDisasterString(disasters.VISHKAR, disasterLastEntryMacro)\
             break\
+        case disasters.ZEUS[disasterData.ID]:\
+            appendDisasterString(disasters.ZEUS, disasterLastEntryMacro)\
+            break\
+        case disasters.NUCLEAR_BOMB[disasterData.ID]:\
+            appendDisasterString(disasters.NUCLEAR_BOMB, disasterLastEntryMacro)\
+            break\
 
 #!define scoreboardPosition(slot) scoreboardPlayers.index(getPlayersInSlot(slot, Team.1)) * -1
 
