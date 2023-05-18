@@ -116,6 +116,9 @@ def displayDebugDisasterName():
         case disasters.NUCLEAR_BOMB[disasterData.ID]:
             displayDebugDisaster(disasters.NUCLEAR_BOMB)
             break
+        case disasters.CRUSADERS[disasterData.ID]:
+            displayDebugDisaster(disasters.CRUSADERS)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break

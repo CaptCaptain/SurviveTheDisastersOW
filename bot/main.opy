@@ -36,6 +36,7 @@ allocatePlayerEffect(player)\
 #!include "bot/pharamercy.opy"
 #!include "bot/vishkar.opy"
 #!include "bot/nuclear_bomb.opy"
+#!include "bot/crusaders.opy"
 #!include "bot/bosses/galactic_sigma.opy"
 #!include "bot/bosses/seer_mercy.opy"
 #!include "bot/bosses/infinite_admiral.opy"

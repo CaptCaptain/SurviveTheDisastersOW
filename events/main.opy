@@ -110,7 +110,7 @@ waitUntil(activeDisasters.index(disasterId) == entitySpawningIndex, 9999)
 #!define applyEntityFlag(player, flag) \
 player.BOT_DISASTER_FLAGS.append(flag)
 
-globalvar disasterPool = [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID], disasters.WITCH[disasterData.ID], disasters.PHARAMERCY[disasterData.ID], disasters.TIKTOK[disasterData.ID], disasters.VISHKAR[disasterData.ID], disasters.NUCLEAR_BOMB[disasterData.ID], disasters.DEATH_TRAMPOLINE[disasterData.ID]]
+globalvar disasterPool = [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID], disasters.WITCH[disasterData.ID], disasters.PHARAMERCY[disasterData.ID], disasters.TIKTOK[disasterData.ID], disasters.VISHKAR[disasterData.ID], disasters.NUCLEAR_BOMB[disasterData.ID], disasters.DEATH_TRAMPOLINE[disasterData.ID], disasters.CRUSADERS[disasterData.ID]]
 
 globalvar bossDisasterPool = [getDisasterId(disasters.GALACTIC_SIGMA)]
 
@@ -180,6 +180,7 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/vishkar.opy"
 #!include "events/death_trampoline.opy"
 #!include "events/nuclear_bomb.opy"
+#!include "events/crusaders.opy"
 #!include "events/bosses/galactic_sigma.opy"
 #!include "events/bosses/zeus.opy"
 
@@ -305,6 +306,9 @@ def queueDisaster():
             break
         case disasters.NUCLEAR_BOMB[disasterData.ID]:
             addDisaster(disasters.NUCLEAR_BOMB)
+            break
+        case disasters.CRUSADERS[disasterData.ID]:
+            addDisaster(disasters.CRUSADERS)
             break
 
 def selectDisaster():
