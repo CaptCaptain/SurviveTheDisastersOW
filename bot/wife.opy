@@ -28,10 +28,13 @@ rule "[bot/wife.opy]: Apply Custom Health & Additional Behavior":
     wait(1)
 
     applyCustomHealthFor(eventPlayer, 50, 0, 50)
+
+    if disasterFlags.HARDCORE in activeDisasterFlags:
+        goto hardcore_skip
     
     # Say Hello / Goodbye
     waitUntil(any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]), 9999)
-
+    
     while eventPlayer.getNormalizedHealth() >= 0.75:
         eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), getClosestPlayer(eventPlayer.getPosition(), Team.1)), Relativity.TO_WORLD)
         eventPlayer.communicate(Comms.HELLO)
@@ -39,6 +42,8 @@ rule "[bot/wife.opy]: Apply Custom Health & Additional Behavior":
 
         waitUntil(eventPlayer.getNormalizedHealth() < 0.75, 3)
         wait(0.016)
+        
+    hardcore_skip:
 
     eventPlayer.setSecondaryFireEnabled(true)
     eventPlayer.BOT_SECONDARY_FIRE_ENABLED = false

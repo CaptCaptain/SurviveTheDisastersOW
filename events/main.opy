@@ -114,7 +114,7 @@ globalvar disasterPool = [disasters.BOB[disasterData.ID], disasters.MINEFIELD[di
 
 globalvar bossDisasterPool = [getDisasterId(disasters.GALACTIC_SIGMA)]
 
-globalvar hardcoreDisasterPool = [getDisasterId(disasters.NINJA), getDisasterId(disasters.SNIPER), getDisasterId(disasters.MOTHS), getDisasterId(disasters.TIKTOK), getDisasterId(disasters.PHARAMERCY), getDisasterId(disasters.VISHKAR)]
+globalvar hardcoreDisasterPool = [getDisasterId(disasters.NINJA), getDisasterId(disasters.SNIPER), getDisasterId(disasters.MOTHS), getDisasterId(disasters.TIKTOK), getDisasterId(disasters.PHARAMERCY), getDisasterId(disasters.VISHKAR), getDisasterId(disasters.NUCLEAR_BOMB), getDisasterId(disasters.WIFELEAVER)]
 
 subroutine queueDisaster
 subroutine cleanupDisaster
