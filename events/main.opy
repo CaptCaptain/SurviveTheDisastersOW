@@ -3,7 +3,8 @@
 enum botFlags:
     NULL,
     RESPAWNABLE_NO_LOS,
-    BOSS
+    BOSS,
+    NO_DAMAGE_SCALING,
 
 enum disasterFlags:
     NULL,

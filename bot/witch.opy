@@ -59,7 +59,7 @@ rule "[bot/witch.opy]: Potion Behavior":
                 wait(1)
 
                 for DISASTER_WITCH_INDEX in range(0, 50, 1):
-                    createProjectile(Projectile.RAMATTRA_RAVENOUS_VORTEX_SPHERE, eventPlayer, DISASTER_WITCH_POTION_POS, Vector.UP + (Vector.LEFT * random.uniform(-1, 1)) + (Vector.FORWARD * random.uniform(-1, 1)), Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.ALL, 30, 1, 2, DynamicEffect.SIGMA_HYPERSPHERE_IMPLOSION, DynamicEffect.SIGMA_HYPERSPHERE_IMPLOSION_SOUND, 0, 10, 1, 0, 0, 30)
+                    createProjectile(Projectile.RAMATTRA_RAVENOUS_VORTEX_SPHERE, eventPlayer, DISASTER_WITCH_POTION_POS, Vector.UP + (Vector.LEFT * random.uniform(-1, 1)) + (Vector.FORWARD * random.uniform(-1, 1)), Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.ALL, 15, 1, 2, DynamicEffect.SIGMA_HYPERSPHERE_IMPLOSION, DynamicEffect.SIGMA_HYPERSPHERE_IMPLOSION_SOUND, 0, 10, 1, 0, 0, 30)
                     wait(0.016)
 
                 break
@@ -71,7 +71,7 @@ rule "[bot/witch.opy]: Potion Behavior":
                 wait(1)
 
                 for DISASTER_WITCH_INDEX in range(0, 50, 1):
-                    createProjectile(Projectile.MEI_ICICLE, eventPlayer, DISASTER_WITCH_POTION_POS + (Vector.UP * 4) + (Vector.LEFT * random.uniform(-3, 3)) + (Vector.FORWARD * random.uniform(-3, 3)), Vector.DOWN, Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.ALL, 30, 1, 2, DynamicEffect.TRACER_RECALL_DISAPPEAR, DynamicEffect.TRACER_RECALL_DISAPPEAR_SOUND, 0, 10, 1, 0, 0, 30)
+                    createProjectile(Projectile.MEI_ICICLE, eventPlayer, DISASTER_WITCH_POTION_POS + (Vector.UP * 4) + (Vector.LEFT * random.uniform(-3, 3)) + (Vector.FORWARD * random.uniform(-3, 3)), Vector.DOWN, Relativity.TO_WORLD, ModifyHealth.DAMAGE, Team.ALL, 15, 1, 2, DynamicEffect.TRACER_RECALL_DISAPPEAR, DynamicEffect.TRACER_RECALL_DISAPPEAR_SOUND, 0, 10, 1, 0, 0, 30)
                     wait(0.016)
 
                 break

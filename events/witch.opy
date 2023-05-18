@@ -8,3 +8,4 @@ rule "[events/witch.opy] Disaster Initialization":
 
     createDummy(Hero.RAMATTRA, Team.2, -1, random.choice(getSpawnPoints(Team.ALL)).getPosition(), null)
     allocateDummyBotTag(getDisasterId(disasters.WITCH))
+    applyEntityFlag(allocatedDummyBot, botFlags.NO_DAMAGE_SCALING)
