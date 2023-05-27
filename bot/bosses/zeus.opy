@@ -1,6 +1,7 @@
 #!mainFile "../../main.opy"
 
 globalvar DISASTER_ZEUS_ATK_POS = []
+globalvar DISASTER_ZEUS_ATKD_ONCE = []
 
 rule "[bot/zeus.opy]: Behavior":
     @Event eachPlayer
@@ -48,7 +49,7 @@ rule "[bot/zeus.opy]: Behavior":
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 
-rule "[bot/zeus.opy]: Kinetic Grasp Projectiles":
+rule "[bot/zeus.opy]: Shout Projectiles":
     @Event eachPlayer
     @Hero junkerQueen
     @Team 2
@@ -60,15 +61,44 @@ rule "[bot/zeus.opy]: Kinetic Grasp Projectiles":
         DISASTER_ZEUS_ATK_POS = [player.getPosition() for player in getPlayers(Team.1)]
 
         wait(1)
-        for eventPlayer.playerIndex in range(0, len(DISASTER_ZEUS_ATK_POS), 1):
-            getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).setStatusEffect(null, Status.BURNING, 1)
-            getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).startDoT(eventPlayer, 1, 75)
-
-            playEffect(getAllPlayers(), DynamicEffect.RING_EXPLOSION, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 10)
-            playEffect(getAllPlayers(), DynamicEffect.BAD_EXPLOSION, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 10)
-            playEffect(getAllPlayers(), DynamicEffect.DVA_MICRO_MISSILES_EXPLOSION_SOUND, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 50)
-            wait(0.016)
+        switch (DISASTER_ZEUS_PHASE):
+            case 0:
+                for eventPlayer.playerIndex in range(0, len(DISASTER_ZEUS_ATK_POS), 1):
+                    getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).setStatusEffect(null, Status.BURNING, 1)
+                    getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).startDoT(eventPlayer, 1, 75)
+        
+                    playEffect(getAllPlayers(), DynamicEffect.RING_EXPLOSION, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 10)
+                    playEffect(getAllPlayers(), DynamicEffect.BAD_EXPLOSION, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 10)
+                    playEffect(getAllPlayers(), DynamicEffect.DVA_MICRO_MISSILES_EXPLOSION_SOUND, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 50)
+                    wait(0.016)
+                break
+            case 1:
+                for eventPlayer.playerIndex in range(0, len(DISASTER_ZEUS_ATK_POS), 1):
+                    getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).setStatusEffect(null, Status.BURNING, 1)
+                    getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).setStatusEffect(null, Status.HACKED, 1)
+                    getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).startDoT(eventPlayer, 1, 75)
+        
+                    playEffect(getAllPlayers(), DynamicEffect.RING_EXPLOSION, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 10)
+                    playEffect(getAllPlayers(), DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 10)
+                    playEffect(getAllPlayers(), DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION_SOUND, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 50)
+                    wait(0.016)
+                break
 
         DISASTER_ZEUS_ATK_POS = []
 
         wait(3)
+
+rule "[bot/zeus.opy]: Stunned during Ultimate":
+    @Event playerDealtDamage
+    @Hero junkerQueen
+    @Team 2
+    @Condition hasDisasterTag(getDisasterId(disasters.ZEUS))
+    @Condition eventAbility == Button.ULTIMATE
+    
+    if not victim in DISASTER_ZEUS_ATKD_ONCE:
+        victim.setStatusEffect(null, Status.KNOCKED_DOWN, 2.5)
+        DISASTER_ZEUS_ATKD_ONCE.append(victim)
+
+    wait(4.5, Wait.RESTART_WHEN_TRUE)
+
+    DISASTER_ZEUS_ATKD_ONCE = []

@@ -1,5 +1,7 @@
 #!mainFile "../../main.opy"
 
+globalvar DISASTER_ZEUS_PHASE = 0
+
 rule "[events/zeus.opy] Disaster Initialization":
     @Condition getDisasterId(disasters.ZEUS) in activeDisasters
     @Condition disasterReady
@@ -7,6 +9,7 @@ rule "[events/zeus.opy] Disaster Initialization":
     setDialogueNames(["Zeus"])
     setDialogueHeroes([Hero.JUNKER_QUEEN])
     setDialogueHeroColors([rgb(255, 255, 255)])
+    DISASTER_ZEUS_PHASE = 0
 
     waitForEntitySpawnFlag(getDisasterId(disasters.ZEUS))
 
@@ -29,6 +32,7 @@ rule "[events/zeus.opy] Disaster Initialization":
     waitUntil(is_dialoguing == false, 9999)
 
     allocatedDummyBot.setUltCharge(100)
+    DISASTER_ZEUS_PHASE = 1
 
     while disasterReady:
         if allocatedDummyBot.getUltCharge() < 90:
