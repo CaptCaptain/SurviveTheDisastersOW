@@ -7,7 +7,9 @@ rule "[bot/vishkar.opy]: Symmetra Behavior":
     @Condition hasDisasterTag(getDisasterId(disasters.VISHKAR))
 
     eventPlayer.startForcingName("Satya Vaswani")
-    eventPlayer.setUltCharge(99)
+
+    if disasterFlags.HARDCORE in activeDisasterFlags:
+        eventPlayer.setUltCharge(99)
 
     while true:
         botWaitUntilReady()
