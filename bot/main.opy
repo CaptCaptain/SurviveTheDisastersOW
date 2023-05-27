@@ -43,6 +43,7 @@ allocatePlayerEffect(player)\
 #!include "bot/bosses/royal_captain.opy"
 #!include "bot/bosses/space_prince.opy"
 #!include "bot/bosses/zeus.opy"
+#!include "bot/bosses/orisa.opy"
 
 playervar dummyBotLosSpawnPos
 

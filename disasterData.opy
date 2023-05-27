@@ -51,6 +51,7 @@ enum disasterId:
     #Bosses
     GALACTIC_SIGMA,
     ZEUS,
+    ORISA_DEFENDER,
 
     #TODO: Implement the following disasters:
     VOLCANO,
@@ -96,3 +97,4 @@ enum disasters:
     # Bosses
     GALACTIC_SIGMA = [abilityIconString(Hero.SIGMA, Button.ULTIMATE), "Galactic Emperor", disasterId.GALACTIC_SIGMA, 60, true, [], 1],
     ZEUS = [iconString(Icon.BOLT), "Zeus: God of Thunder", disasterId.ZEUS, 60, true, [], 1],
+    ORISA_DEFENDER = [abilityIconString(Hero.ORISA, Button.ULTIMATE), "{0}'s Defender".format(getCurrentMap()), disasterId.ORISA_DEFENDER, 60, true, [], 1],

@@ -183,6 +183,7 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/crusaders.opy"
 #!include "events/bosses/galactic_sigma.opy"
 #!include "events/bosses/zeus.opy"
+#!include "events/bosses/orisa.opy"
 
 subroutine addDisasterSub
 globalvar currentDisaster
@@ -309,6 +310,9 @@ def queueDisaster():
             break
         case disasters.CRUSADERS[disasterData.ID]:
             addDisaster(disasters.CRUSADERS)
+            break
+        case disasters.ORISA_DEFENDER[disasterData.ID]:
+            addDisaster(disasters.ORISA_DEFENDER)
             break
 
 def selectDisaster():

@@ -45,6 +45,7 @@ globalvar WS_SETTING_LIMITED_STEALTH = createWorkshopSetting(bool, "Heroes", "So
 #!include "../overpy-modules/src/onScreenText.opy"
 #!include "../overpy-modules/src/restart.opy"
 #!include "../overpy-modules/src/rainbow.opy"
+#!include "../overpy-modules/src/alignHudText.opy"
 
 globalvar WS_DIFFICULTY = 1
 
