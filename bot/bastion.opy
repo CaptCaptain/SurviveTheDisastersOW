@@ -6,6 +6,8 @@ rule "[bot/bastion.opy]: Behavior":
     @Team 2
     @Condition hasDisasterTag(getDisasterId(disasters.FLYING_BASTION))
 
+    eventPlayer.setMaxHealth(75)
+
     while true:
         botWaitUntilReady()
 

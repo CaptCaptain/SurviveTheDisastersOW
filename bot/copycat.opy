@@ -11,7 +11,7 @@ def applyCopycatState():
         createEffect(getAllPlayers(), Effect.ECHO_CLONING, Team.2, eventPlayer, 1, EffectReeval.VISIBILITY_AND_COLOR)
         allocateEffect()
         allocatePlayerEffect(eventPlayer)
-        applyCustomHealthFor(eventPlayer, 25, 0, 125)
+        applyCustomHealthFor(eventPlayer, eventPlayer.getMaxHealth() / 2, 0, eventPlayer.getMaxHealth() / 2)
 
         if eventPlayer.getCurrentHero() in [Hero.MOIRA, Hero.KIRIKO, Hero.LIFEWEAVER]:
             while not eventPlayer.isFiringSecondaryFire() and entityExists(eventPlayer):
