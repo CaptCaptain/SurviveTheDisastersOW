@@ -126,6 +126,9 @@ for globalIndex in range(0, len(activeDisasters), 1):\
         case disasters.FLYING_BASTION[disasterData.ID]:\
             appendDisasterString(disasters.FLYING_BASTION, disasterLastEntryMacro)\
             break\
+        case disasters.COWBOY[disasterData.ID]:\
+            appendDisasterString(disasters.COWBOY, disasterLastEntryMacro)\
+            break\
 
 #!define scoreboardPosition(slot) scoreboardPlayers.index(getPlayersInSlot(slot, Team.1)) * -1
 

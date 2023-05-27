@@ -48,6 +48,7 @@ enum disasterId:
     NUCLEAR_BOMB,
     CRUSADERS,
     FLYING_BASTION,
+    COWBOY,
 
     #Bosses
     GALACTIC_SIGMA,
@@ -95,6 +96,7 @@ enum disasters:
     NUCLEAR_BOMB = ["{}".format(abilityIconString(Hero.DVA, Button.ULTIMATE)), "Nuclear Bomb", disasterId.NUCLEAR_BOMB, 10, true, [disasterId.DEATH_TRAMPOLINE], 1],
     CRUSADERS = [abilityIconString(Hero.REINHARDT, Button.SECONDARY_FIRE), "Crusaders", disasterId.CRUSADERS, 30, true, [], 1],
     FLYING_BASTION = [abilityIconString(Hero.BASTION, Button.ABILITY_1), "Flying Bastion", disasterId.FLYING_BASTION, 30, true, [], 1],
+    COWBOY = [abilityIconString(Hero.MCCREE, Button.ULTIMATE), "Cowboy", disasterId.COWBOY, 30, true, [], 1],
 
     # Bosses
     GALACTIC_SIGMA = [abilityIconString(Hero.SIGMA, Button.ULTIMATE), "Galactic Emperor", disasterId.GALACTIC_SIGMA, 60, true, [], 1],
