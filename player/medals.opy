@@ -19,7 +19,7 @@ enum Medals:
     NOT_TODAY = [abilityIconString(Hero.BAPTISTE, Button.ABILITY_2), "Not Today, Thank You", MedalSounds.GOOD[medalSoundData.ID]],
     SUPPORTER = [iconString(Icon.PLUS), "Supporter", MedalSounds.GOOD[medalSoundData.ID]],
     CLOSE_FINISH = [abilityIconString(Hero.LUCIO, Button.ABILITY_2), "Close Finish...!", MedalSounds.OKAY[medalSoundData.ID]],
-    PACIFIST = [iconString(Icon.HEART), "Pacifist", MedalSounds.GOOD[medalSoundData.ID]],
+    PACIFIST = [iconString(Icon.HEART), "Pacifist Challenge", MedalSounds.GOOD[medalSoundData.ID]],
     STREAK_3 = [iconString(Icon.FIRE), "3 Survival Streak!", MedalSounds.GOOD[medalSoundData.ID]],
     STREAK_7 = [iconString(Icon.FIRE), "7 Survival Streak!", MedalSounds.GOOD[medalSoundData.ID]],
     STREAK_13 = [iconString(Icon.FIRE), "13 Survival Streak!", MedalSounds.GOOD[medalSoundData.ID]],
@@ -32,7 +32,9 @@ enum Medals:
     VICTIM = [abilityIconString(Hero.JUNKER_QUEEN, Button.SECONDARY_FIRE), "Unwitting Victim", MedalSounds.OKAY[medalSoundData.ID]],
     LAST_ONE_STANDING = [iconString(Icon.SPADE), "Last One Standing", MedalSounds.GOOD[medalSoundData.ID]],
     NO_BP = [iconString(Icon.ASTERISK), "Too Good to Be True", MedalSounds.BAD[medalSoundData.ID]],
-    BOSS_HUNTER = [iconString(Icon.SKULL), "Boss Hunter", MedalSounds.GOOD[medalSoundData.ID]]
+    BOSS_HUNTER = [iconString(Icon.SKULL), "Boss Hunter", MedalSounds.GOOD[medalSoundData.ID]],
+    HACKED_BONUS = [abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE), "Hacked Challenge", MedalSounds.GOOD[medalSoundData.ID]],
+    HARDCORE_BONUS = [abilityIconString(Hero.MCCREE, Button.ULTIMATE), "Hardcore Challenge", MedalSounds.GOOD[medalSoundData.ID]]
 
 #!define queueMedal(player, medal) \
     if player.hasSpawned():\
@@ -47,6 +49,7 @@ enum Medals:
     queueMedal(player, medal) \
     player.array_medal_titles[player.array_medal_titles.index(player.array_medal_titles.last())] = "{0} [+{1} PTS]".format(player.array_medal_titles[player.array_medal_titles.index(player.array_medal_titles.last())], points)\
     player.survivalScore += points\
+    player.medalRoundPointsEarned += points\
 
 #!define createMedalSFX(player, dynamicEffect) playEffect(player, dynamicEffect, Color.WHITE, player, 50)
 
@@ -75,6 +78,7 @@ playervar array_medal_sounds = []
 playervar medalsEarned = []
 playervar medalsDisplayed = false
 playervar medalsDisplayLimit = 0
+playervar medalRoundPointsEarned = 0
 
 playervar damageStatistic
 playervar healingStatistic
@@ -119,6 +123,8 @@ rule "[player/medals.opy] Survival Streak Medals / MVP Medals / Teamwork Medal":
     @Team 1
     @Condition disasterReady == true
 
+    eventPlayer.medalRoundPointsEarned = 0
+
     waitUntil(disasterReady == false, 9999)
 
     if eventPlayer.isAlive:
@@ -142,6 +148,15 @@ rule "[player/medals.opy] Survival Streak Medals / MVP Medals / Teamwork Medal":
     if len([player for player in getPlayers(Team.1) if player.isAlive]) == 1 and eventPlayer.isAlive and getNumberOfPlayers(Team.1) > 3:
         queueMedalWithPoints(eventPlayer, Medals.LAST_ONE_STANDING, 100)
 
+    if shopChallengeOptions.PACIFIST[shopChallengeData.ID] in eventPlayer.SHOP_CHALLENGES_ACTIVE and eventPlayer.isAlive:
+        queueMedalWithPoints(eventPlayer, Medals.PACIFIST, round(eventPlayer.medalRoundPointsEarned * 0.25))
+
+    if shopChallengeOptions.HACKED[shopChallengeData.ID] in eventPlayer.SHOP_CHALLENGES_ACTIVE and eventPlayer.isAlive:
+        queueMedalWithPoints(eventPlayer, Medals.HACKED_BONUS, round(eventPlayer.medalRoundPointsEarned * 0.25))
+
+    if shopChallengeOptions.HARDCORE[shopChallengeData.ID] in eventPlayer.SHOP_CHALLENGES_ACTIVE and eventPlayer.isAlive:
+        queueMedalWithPoints(eventPlayer, Medals.HARDCORE_BONUS, round(eventPlayer.medalRoundPointsEarned * 0.25))
+
 rule "[player/medals.opy] Slayer Medal":
     @Event eachPlayer
     @Team 1
@@ -162,16 +177,6 @@ rule "[player/medals.opy] Boss Hunter Medal":
         queueMedalWithPoints(eventPlayer, Medals.BOSS_HUNTER, 75)
 
     waitUntil(disasterReady == false, 9999)
-
-rule "[player/medals.opy] Pacifist Medal":
-    @Event eachPlayer
-    @Team 1
-    @Condition disasterReady == true
-    @Condition getNumberOfPlayers(Team.2) > 0
-
-    waitUntil(disasterReady == false or eventPlayer.getStatistic(Stat.DAMAGE_DEALT) != evalOnce(eventPlayer.getStatistic(Stat.DAMAGE_DEALT)), 9999)
-    if disasterReady == false:
-        queueMedal(eventPlayer, Medals.PACIFIST)
 
 rule "[player/medals.opy] Supporter Medal":
     @Event eachPlayer

@@ -180,6 +180,7 @@ rule "[debug.opy] Toggle Debug Menu":
     eventPlayer.setSecondaryFireEnabled(not eventPlayer.debugMenuEnabled)
 
     if not eventPlayer.debugMenuEnabled and len(activeDisasters) > 0:
+        clearShopEffects()
         disasterReady = true
         displayDisaster()
         queueDisasterEntities()
@@ -206,6 +207,9 @@ rule "[debug.opy] Input":
         activeDisasterFlags.append(disasterFlags.HARDCORE)
     if eventPlayer.isHoldingButton(Button.RELOAD):
         cleanupDisaster()
+
+        if SHOP_EFFECTS == []:
+            createShopEffects()
 
     /* selectMultipleDisasters() */
     /* disasterReady = false

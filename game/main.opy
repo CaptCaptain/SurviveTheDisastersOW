@@ -68,6 +68,7 @@ rule "[game/main.opy] Game Loop":
     waitUntil(isGameInProgress(), 9999)
 
     if debugMode:
+        createShopEffects()
         return
 
     setTeamScore(Team.2, WS_SETTING_MAX_ROUNDS)
@@ -75,11 +76,14 @@ rule "[game/main.opy] Game Loop":
     # Break Time
     objectiveDescription = "Break Time"
     setMatchTime(60 if WS_SETTING_LONG_BREAK else 20)
+    createShopEffects()
 
     waitUntil(getMatchTime() == 0, 9999)
 
     # Game Loop
     while true:
+        clearShopEffects()
+        
         # Disaster
         switch (selectedDangerMode):
             case dangerMode.MULTI_DISASTER:
@@ -172,6 +176,7 @@ rule "[game/main.opy] Game Loop":
         heal(getPlayers(Team.1), null, Math.INFINITY)
 
         # Break
+        createShopEffects()
         if teamScore(Team.1) % [2, 5, 10][WS_SETTING_SPECIAL_EVENTS] == 0 and teamScore(Team.1) > 0:
             selectedDangerMode = random.choice([dangerMode.MULTI_DISASTER, dangerMode.MYSTERY, dangerMode.BOSS_HUNT, dangerMode.BOSS_HUNT, dangerMode.HARDCORE])
             

@@ -136,7 +136,7 @@ for globalIndex in range(0, len(activeDisasters), 1):\
 
 #!define lastOnScoreboardPosition() scoreboardPlayers.index(scoreboardPlayers.last())
 
-#!define createScoreboardText(slot) hudText(localPlayer if getPlayersInSlot(slot, Team.1) and localPlayer.toggleScoreboard else [], heroIcon(getPlayersInSlot(slot, Team.1).getCurrentHero()), "Score: {2} | Survival Streak: {0} | Achievements: {1}".format(getPlayersInSlot(slot, Team.1).survivalStreak, getPlayersInSlot(slot, Team.1).totalMedals, getPlayersInSlot(slot, Team.1).survivalScore), alignLeftString("[{0}]".format(getPlayersInSlot(slot, Team.1))), HudPosition.LEFT, scoreboardPosition(slot), Color.LIME_GREEN if getPlayersInSlot(slot, Team.1).isAlive else Color.RED, evalOnce(Color.ORANGE), evalOnce(Color.WHITE), HudReeval.VISIBILITY_SORT_ORDER_STRING_AND_COLOR)
+#!define createScoreboardText(slot) hudText(localPlayer if getPlayersInSlot(slot, Team.1) and localPlayer.toggleScoreboard else [], heroIcon(getPlayersInSlot(slot, Team.1).getCurrentHero()), "Score: {2} | Survival Streak: {0} | Achievements: {1}".format(getPlayersInSlot(slot, Team.1).survivalStreak, getPlayersInSlot(slot, Team.1).totalMedals, getPlayersInSlot(slot, Team.1).survivalScore), alignLeftString("[{0}] {1}".format(getPlayersInSlot(slot, Team.1), getPlayersInSlot(slot, Team.1).scoreboardChallenges)), HudPosition.LEFT, scoreboardPosition(slot), Color.LIME_GREEN if getPlayersInSlot(slot, Team.1).isAlive else Color.RED, evalOnce(Color.ORANGE), evalOnce(Color.WHITE), HudReeval.VISIBILITY_SORT_ORDER_STRING_AND_COLOR)
 
 #!define createPlayerAttributeText(player, text, sort_order) hudSubheader(player if (player.toggleScoreboard) else [], text, HudPosition.LEFT, lastOnScoreboardPosition() + sort_order, Color.ORANGE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
 
@@ -147,6 +147,7 @@ playervar totalMedals = 0
 playervar isAlive = true
 playervar timeJoined = 0
 playervar toggleScoreboard = true
+playervar scoreboardChallenges = ""
 
 globalvar scoreboardPlayers = []
 
