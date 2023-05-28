@@ -169,6 +169,7 @@ rule "[game/main.opy] Game Loop":
 
         addToTeamScore(Team.1, 1)
         addToTeamScore(Team.2, -1)
+        heal(getPlayers(Team.1), null, Math.INFINITY)
 
         # Break
         if teamScore(Team.1) % [2, 5, 10][WS_SETTING_SPECIAL_EVENTS] == 0 and teamScore(Team.1) > 0:

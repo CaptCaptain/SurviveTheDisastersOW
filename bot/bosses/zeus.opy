@@ -46,6 +46,15 @@ rule "[bot/zeus.opy]: Behavior":
                 EXECUTE_DEFENSE_ABILITY_1()
                 EXECUTE_OFFENSE_ABILITY_2()
                 EXECUTE_ULTIMATE_ABILITY()
+
+                # Teleport player to nearest walkable position after ultimate
+                if eventPlayer.isUsingUltimate():
+                    waitUntil(eventPlayer.isUsingUltimate(), 4.5)
+
+                    eventPlayer.teleport(nearestWalkablePosition(eventPlayer.getPosition()))
+
+                    playEffect(getAllPlayers(), DynamicEffect.BAD_EXPLOSION, Color.ORANGE, eventPlayer.getPosition(), 10)
+                    playEffect(getAllPlayers(), DynamicEffect.DVA_MICRO_MISSILES_EXPLOSION_SOUND, Color.ORANGE, eventPlayer.getPosition(), 50)
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 
