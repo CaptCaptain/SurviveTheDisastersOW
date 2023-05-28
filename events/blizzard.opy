@@ -50,9 +50,9 @@ rule "[events/blizzard.opy] Disaster Initialization":
 
     while disasterReady:
         for DISASTER_BLIZZARD_INDEX in range(0, len(DISASTER_BLIZZARD_FIRES), 1):
-            getPlayersInRadius(DISASTER_BLIZZARD_FIRES[DISASTER_BLIZZARD_INDEX], 3, Team.1, LosCheck.OFF).DISASTER_BLIZZARD_HEAT += 10
+            getPlayersInRadius(DISASTER_BLIZZARD_FIRES[DISASTER_BLIZZARD_INDEX], 3, Team.1, LosCheck.OFF).DISASTER_BLIZZARD_HEAT += 20 if disasterFlags.HARDCORE in activeDisasterFlags else 10
 
-        getPlayers(Team.1).DISASTER_BLIZZARD_HEAT -= 5
+        getPlayers(Team.1).DISASTER_BLIZZARD_HEAT -= 10 if disasterFlags.HARDCORE in activeDisasterFlags else 5
         
         ([player for player in getPlayers(Team.1) if player.DISASTER_BLIZZARD_HEAT > 100]).DISASTER_BLIZZARD_HEAT = 100
 

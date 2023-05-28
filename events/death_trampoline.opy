@@ -1,6 +1,7 @@
 #!mainFile "../main.opy"
 
 globalvar DISASTER_TRAMPOLINE_Y_POS
+playervar DISASTER_TRAMPOLINED
 
 rule "[events/death_trampoline.opy] Disaster Initialization":
     @Condition getDisasterId(disasters.DEATH_TRAMPOLINE) in activeDisasters
@@ -14,9 +15,11 @@ rule "[events/death_trampoline.opy] Disaster Initialization":
     while disasterReady:
         [player for player in getPlayersInMatch() if player.isOnGround()].enableEnvironmentCollision()
 
-        wait(0.25)
+        waitUntil(not disasterReady, 0.25)
 
         [player for player in getPlayersAlive() if playerIsBelowWaterLevel(player, DISASTER_TRAMPOLINE_Y_POS, -1.5)].startAcceleration(Vector.UP, 500, Math.INFINITY, Relativity.TO_WORLD, AccelReeval.NONE)
+
+        [player for player in getPlayersAlive() if playerIsBelowWaterLevel(player, DISASTER_TRAMPOLINE_Y_POS, -1.5)].DISASTER_TRAMPOLINED = true
 
         [player for player in getPlayersAlive() if playerIsBelowWaterLevel(player, DISASTER_TRAMPOLINE_Y_POS, -1.5)].disableEnvironmentCollision(false)
 
@@ -24,10 +27,12 @@ rule "[events/death_trampoline.opy] Disaster Initialization":
 
         [player for player in getPlayersInMatch() if player.isDead()].enableEnvironmentCollision()
 
-        wait(0.25)
+        waitUntil(not disasterReady, 0.25)
+        wait(0.016)
     
-    getPlayers(Team.1).enableEnvironmentCollision()
     getPlayers(Team.1).stopAcceleration()
+    getPlayers(Team.1).enableEnvironmentCollision()
+    [player for player in getPlayers(Team.1) if player.DISASTER_TRAMPOLINED].respawn()
 
 rule "[events/death_trampoline.opy] Launch Player / Kill Player":
     @Event eachPlayer

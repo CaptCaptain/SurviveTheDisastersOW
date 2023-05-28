@@ -119,6 +119,15 @@ def displayDebugDisasterName():
         case disasters.CRUSADERS[disasterData.ID]:
             displayDebugDisaster(disasters.CRUSADERS)
             break
+        case disasters.ORISA_DEFENDER[disasterData.ID]:
+            displayDebugDisaster(disasters.ORISA_DEFENDER)
+            break
+        case disasters.FLYING_BASTION[disasterData.ID]:
+            displayDebugDisaster(disasters.FLYING_BASTION)
+            break
+        case disasters.COWBOY[disasterData.ID]:
+            displayDebugDisaster(disasters.COWBOY)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break

@@ -120,6 +120,15 @@ for globalIndex in range(0, len(activeDisasters), 1):\
         case disasters.CRUSADERS[disasterData.ID]:\
             appendDisasterString(disasters.CRUSADERS, disasterLastEntryMacro)\
             break\
+        case disasters.ORISA_DEFENDER[disasterData.ID]:\
+            appendDisasterString(disasters.ORISA_DEFENDER, disasterLastEntryMacro)\
+            break\
+        case disasters.FLYING_BASTION[disasterData.ID]:\
+            appendDisasterString(disasters.FLYING_BASTION, disasterLastEntryMacro)\
+            break\
+        case disasters.COWBOY[disasterData.ID]:\
+            appendDisasterString(disasters.COWBOY, disasterLastEntryMacro)\
+            break\
 
 #!define scoreboardPosition(slot) scoreboardPlayers.index(getPlayersInSlot(slot, Team.1)) * -1
 
@@ -127,7 +136,7 @@ for globalIndex in range(0, len(activeDisasters), 1):\
 
 #!define lastOnScoreboardPosition() scoreboardPlayers.index(scoreboardPlayers.last())
 
-#!define createScoreboardText(slot) hudText(localPlayer if getPlayersInSlot(slot, Team.1) and localPlayer.toggleScoreboard else [], heroIcon(getPlayersInSlot(slot, Team.1).getCurrentHero()), "Score: {2} | Survival Streak: {0} | Achievements: {1}".format(getPlayersInSlot(slot, Team.1).survivalStreak, getPlayersInSlot(slot, Team.1).totalMedals, getPlayersInSlot(slot, Team.1).survivalScore), "[{0}]".format(getPlayersInSlot(slot, Team.1)), HudPosition.LEFT, scoreboardPosition(slot), Color.LIME_GREEN if getPlayersInSlot(slot, Team.1).isAlive else Color.RED, evalOnce(Color.ORANGE), evalOnce(Color.WHITE), HudReeval.VISIBILITY_SORT_ORDER_STRING_AND_COLOR)
+#!define createScoreboardText(slot) hudText(localPlayer if getPlayersInSlot(slot, Team.1) and localPlayer.toggleScoreboard else [], heroIcon(getPlayersInSlot(slot, Team.1).getCurrentHero()), "Score: {2} | Survival Streak: {0} | Achievements: {1}".format(getPlayersInSlot(slot, Team.1).survivalStreak, getPlayersInSlot(slot, Team.1).totalMedals, getPlayersInSlot(slot, Team.1).survivalScore), alignLeftString("[{0}]".format(getPlayersInSlot(slot, Team.1))), HudPosition.LEFT, scoreboardPosition(slot), Color.LIME_GREEN if getPlayersInSlot(slot, Team.1).isAlive else Color.RED, evalOnce(Color.ORANGE), evalOnce(Color.WHITE), HudReeval.VISIBILITY_SORT_ORDER_STRING_AND_COLOR)
 
 #!define createPlayerAttributeText(player, text, sort_order) hudSubheader(player if (player.toggleScoreboard) else [], text, HudPosition.LEFT, lastOnScoreboardPosition() + sort_order, Color.ORANGE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
 
@@ -157,7 +166,7 @@ def displayDisaster():
     displayDisasterMacro()
 
 rule "[player/main.opy] Hud":
-    hudSubtext(localPlayer if localPlayer.toggleScoreboard else [], "▼ Scoreboard ▼", HudPosition.LEFT, -7, Color.GREEN, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if localPlayer.toggleScoreboard else [], alignLeftString("▼ Scoreboard ▼"), HudPosition.LEFT, -7, Color.GREEN, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.DEFAULT)
     createScoreboardText(0)
     createScoreboardText(1)
     createScoreboardText(2)
@@ -169,22 +178,22 @@ rule "[player/main.opy] Hud":
     hudSubheader(getAllPlayers(), " ", HudPosition.LEFT, lastOnScoreboardPosition() + 1, Color.ORANGE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
 
     # Co-op Changes
-    hudSubtext(localPlayer if localPlayer.toggleScoreboard else [], "▼ Notable Co-Op Changes ▼", HudPosition.LEFT, lastOnScoreboardPosition() + 2, Color.ROSE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
+    hudSubtext(localPlayer if localPlayer.toggleScoreboard else [], alignLeftString("▼ Notable Co-Op Changes ▼"), HudPosition.LEFT, lastOnScoreboardPosition() + 2, Color.ROSE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
 
         # Limited Tank Health
-    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() in getTankHeroes() and evalOnce(WS_SETTING_LIMITED_TANK_HEALTH) else []), "| Tank Health Limited to 300", 3)
+    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() in getTankHeroes() and evalOnce(WS_SETTING_LIMITED_TANK_HEALTH) else []), alignLeftString("| Tank Health Limited to 300"), 3)
 
         # Limited Stealth
-    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.SOMBRA and evalOnce(WS_SETTING_LIMITED_STEALTH) else []), "| Limited Duration on Stealth (Ability 1)", 3)
+    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.SOMBRA and evalOnce(WS_SETTING_LIMITED_STEALTH) else []), alignLeftString("| Limited Duration on Stealth (Ability 1)"), 3)
 
         # Limited Lifegrip
-    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.LIFEWEAVER and evalOnce(WS_SETTING_LIFE_GRIP_LIMITED) else []), "| {0} Life Grip / {1} Petal Platform restricted\n| during certain disasters".format(abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_2), abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_1)), 4)
+    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.LIFEWEAVER and evalOnce(WS_SETTING_LIFE_GRIP_LIMITED) else []), alignLeftString("| {0} Life Grip / {1} Petal Platform limited\n| during certain disasters".format(abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_2), abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_1))), 4)
 
         # Buffed Resurrect
-    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.MERCY else []), "| {0} Resurrect cooldown reduced".format(abilityIconString(Hero.MERCY, Button.ABILITY_2)), 5)
+    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.MERCY else []), alignLeftString("| {0} Resurrect cooldown reduced".format(abilityIconString(Hero.MERCY, Button.ABILITY_2))), 5)
 
     # Hide Scoreboard
-    hudSubheader(getAllPlayers(), "{1} [Hold {0}]".format(buttonString(Button.RELOAD), "Hide" if localPlayer.toggleScoreboard else "Show Scoreboard"), HudPosition.LEFT, -8, Color.TURQUOISE, HudReeval.VISIBILITY_SORT_ORDER_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(getAllPlayers(), alignLeftString("{1} [Hold {0}]".format(buttonString(Button.RELOAD), "Hide" if localPlayer.toggleScoreboard else "Show Scoreboard")), HudPosition.LEFT, -8, Color.TURQUOISE, HudReeval.VISIBILITY_SORT_ORDER_AND_STRING, SpecVisibility.NEVER)
 
     # Disaster Type
     onScreenText(localPlayer if localPlayer.isAlive() and disasterTypeShown else [], disasterTypeDescription, 0, 1, 3, WorldTextReeval.VISIBILITY_POSITION_STRING_AND_COLOR, disasterTypeColor, SpecVisibility.DEFAULT)

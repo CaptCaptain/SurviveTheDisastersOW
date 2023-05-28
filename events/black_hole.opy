@@ -22,6 +22,14 @@ rule "[events/black_hole.opy] Disaster Initialization":
     @Condition disasters.BLACK_HOLE[disasterData.ID] in activeDisasters
     @Condition disasterReady
 
+    waitForEntitySpawnFlag(getDisasterId(disasters.BLACK_HOLE))
+
+    if disasterFlags.HARDCORE in activeDisasterFlags:
+        activeDisasterEntitySpawning += 1
+        for disasterIndex in range(0, dummyBotLimit / 2, 1):
+            createDummy(Hero.ZARYA, Team.2, -1, dummyBotSpawn(25), null)
+            allocateDummyBotTag(getDisasterId(disasters.BLACK_HOLE))
+
     DISASTER_BLACK_HOLE_CENTER = random.choice(getSpawnPoints(Team.ALL)).getPosition()
 
     DISASTER_BLACK_HOLE_EFFECT()

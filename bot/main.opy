@@ -37,12 +37,16 @@ allocatePlayerEffect(player)\
 #!include "bot/vishkar.opy"
 #!include "bot/nuclear_bomb.opy"
 #!include "bot/crusaders.opy"
+#!include "bot/black_hole.opy"
+#!include "bot/bastion.opy"
+#!include "bot/cowboy.opy"
 #!include "bot/bosses/galactic_sigma.opy"
 #!include "bot/bosses/seer_mercy.opy"
 #!include "bot/bosses/infinite_admiral.opy"
 #!include "bot/bosses/royal_captain.opy"
 #!include "bot/bosses/space_prince.opy"
 #!include "bot/bosses/zeus.opy"
+#!include "bot/bosses/orisa.opy"
 
 playervar dummyBotLosSpawnPos
 
