@@ -33,7 +33,7 @@ waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getP
 #!define setMatchTimeWaitUntilAllDeadOrBossDead(time) \
 setMatchTime(time)\
 wait(0.032)\
-waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getPlayersInMatch()]) or all([player.isDead() for player in getPlayers(Team.2)]), 9999)
+waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getPlayersInMatch()]) or all([player.isDead() for player in getPlayers(Team.2).exclude(dialogue_bot)]), 9999)
 
 #!define getHighestScoredPlayer() sorted(getPlayersInMatch(), lambda player: player.survivalScore).last()
 

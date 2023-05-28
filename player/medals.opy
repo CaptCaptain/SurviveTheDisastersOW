@@ -62,8 +62,10 @@ enum Medals:
             createMedalSFX(player, MedalSounds.OKAY[medalSoundData.EFFECT])\
             break\
 
-#!define getDamagePoints(player) ceil((player.getStatistic(Stat.FINAL_BLOWS) - player.damageStatistic) * 5)
-#!define getHealingPoints(player) ceil((player.getStatistic(Stat.HEALING_DEALT) - player.healingStatistic) / 10)
+#!define damagePointsMultiplier (0.5 if eventPlayer.getCurrentHero() in getSupportHeroes() else 1)
+#!define healingPointsMultiplier (0.5 if not eventPlayer.getCurrentHero() in getSupportHeroes() else 1)
+#!define getDamagePoints(player) ceil(((player.getStatistic(Stat.FINAL_BLOWS) - player.damageStatistic) * 10) * damagePointsMultiplier)
+#!define getHealingPoints(player) ceil(((player.getStatistic(Stat.HEALING_DEALT) - player.healingStatistic) / 10) * healingPointsMultiplier)
 
 subroutine displayEarnedMedals
 
