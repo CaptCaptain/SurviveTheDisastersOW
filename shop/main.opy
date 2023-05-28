@@ -7,14 +7,14 @@ globalvar SHOP_DISASTER_INFO_POSITION
 #!define getShopPosition(slot) getSpawnPoints(Team.ALL)[slot].getPosition()
 
 #!define createShop(position, color, text, icon)\
-createEffect(getAllPlayers() if not disasterReady else null, Effect.RING, color, position, 3.25, EffectReeval.VISIBILITY_AND_COLOR)\
-createInWorldText(getAllPlayers() if not disasterReady else null, text if distance(position, localPlayer.getPosition()) < 15 else "〔{0}〕".format(icon), position + (Vector.UP * 2.25), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, color, SpecVisibility.DEFAULT)\
+createEffect(getAllPlayers() if not disasterReady else [], Effect.RING, color, evalOnce(position), evalOnce(3.25), EffectReeval.VISIBILITY_AND_COLOR)\
+createInWorldText(getAllPlayers() if not disasterReady else [], text if distance(evalOnce(position), localPlayer.getPosition()) < 15 else "〔{0}〕".format(icon), evalOnce(position) + evalOnce(Vector.UP * 2.25), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, color, SpecVisibility.DEFAULT)\
 \
-createBeam(getAllPlayers() if not disasterReady else null, Beam.GOOD, position + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), position + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
-createBeam(getAllPlayers() if not disasterReady else null, Beam.GOOD, position + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), position + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
-createBeam(getAllPlayers() if not disasterReady else null, Beam.GOOD, position + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.UP * 3), position + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
-createBeam(getAllPlayers() if not disasterReady else null, Beam.GOOD, position + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.UP * 2), position + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.UP * 2), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
-createBeam(getAllPlayers() if not disasterReady else null, Beam.GOOD, position + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), position + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers() if not disasterReady else [], Beam.GOOD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers() if not disasterReady else [], Beam.GOOD, evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers() if not disasterReady else [], Beam.GOOD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers() if not disasterReady else [], Beam.GOOD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 2), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 2), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers() if not disasterReady else [], Beam.GOOD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
 
 rule "[shop/main.opy] Shop Init":
     waitUntil(any([player.hasSpawned() for player in getPlayers(Team.1)]), 9999)
@@ -24,7 +24,7 @@ rule "[shop/main.opy] Shop Init":
     SHOP_DISASTER_INFO_POSITION = getShopPosition(2)
 
     createShop(SHOP_HERO_SWITCH_POSITION, Color.LIME_GREEN, "Hero Switching / Hold [{0}]".format(buttonString(Button.INTERACT)), iconString(Icon.RECYCLE))
-    createEffect(getAllPlayers() if not disasterReady else null, Effect.LUCIO_SOUND_BARRIER_PROTECTED, Team.1, SHOP_HERO_SWITCH_POSITION, 1, EffectReeval.VISIBILITY_AND_COLOR)
+    createEffect(getAllPlayers() if not disasterReady else [], Effect.LUCIO_SOUND_BARRIER_PROTECTED, Team.1, SHOP_HERO_SWITCH_POSITION, 1, EffectReeval.VISIBILITY_AND_COLOR)
 
     /* createShop(SHOP_HERO_UPGRADES_POSITION, Color.PURPLE, "Coming Soon", iconString(Icon.BOLT))
 

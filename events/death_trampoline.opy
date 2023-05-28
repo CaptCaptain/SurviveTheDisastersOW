@@ -33,6 +33,7 @@ rule "[events/death_trampoline.opy] Disaster Initialization":
     getPlayers(Team.1).stopAcceleration()
     getPlayers(Team.1).enableEnvironmentCollision()
     [player for player in getPlayers(Team.1) if player.DISASTER_TRAMPOLINED].respawn()
+    getPlayers(Team.1).DISASTER_TRAMPOLINED = false
 
 rule "[events/death_trampoline.opy] Launch Player / Kill Player":
     @Event eachPlayer
@@ -43,9 +44,7 @@ rule "[events/death_trampoline.opy] Launch Player / Kill Player":
     waitUntil(eventPlayer.getPosition().y > getHighestLevel() + 100 or not disasterReady, 9999)
     if eventPlayer.getPosition().y > getHighestLevel() + 100:
         kill(eventPlayer, null)
-    else:
-        waitUntil(eventPlayer.isAlive(), 9999)
-        eventPlayer.stopAcceleration()
-        eventPlayer.teleport(raycast(eventPlayer.getPosition(), eventPlayer.getPosition() + (Vector.DOWN * 9999), null, null, false).getHitPosition())
-        eventPlayer.applyImpulse(Vector.DOWN, 1, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION_XYZ)
-        eventPlayer.enableEnvironmentCollision()
+
+    waitUntil(eventPlayer.isAlive(), 9999)
+    eventPlayer.stopAcceleration()
+    eventPlayer.enableEnvironmentCollision()

@@ -20,10 +20,10 @@ rule "[events/button.opy] Disaster Initialization":
 
     DISASTER_BUTTON_POS = random.choice(getSpawnPoints(Team.ALL)).getPosition()
 
-    createIcon(localPlayer if not localPlayer.isInViewAngle(DISASTER_BUTTON_POS, 90) and localPlayer.isAlive() else null, DISASTER_BUTTON_POS, Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.GREEN, true)
+    createIcon(localPlayer if not localPlayer.isInViewAngle(DISASTER_BUTTON_POS, 90) and localPlayer.isAlive() else [], DISASTER_BUTTON_POS, Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.GREEN, true)
     allocateEffect()
 
-    createInWorldText(localPlayer if localPlayer.isInViewAngle(DISASTER_BUTTON_POS, 90) and localPlayer.isAlive() else null, "> {0} <\n".format(abilityIconString(Hero.KIRIKO, Button.ABILITY_1)), DISASTER_BUTTON_POS, 2, Clip.NONE, WorldTextReeval.VISIBILITY, Color.GREEN, SpecVisibility.DEFAULT)
+    createInWorldText(localPlayer if localPlayer.isInViewAngle(DISASTER_BUTTON_POS, 90) and localPlayer.isAlive() else [], "> {0} <\n".format(abilityIconString(Hero.KIRIKO, Button.ABILITY_1)), DISASTER_BUTTON_POS, 2, Clip.NONE, WorldTextReeval.VISIBILITY, Color.GREEN, SpecVisibility.DEFAULT)
     allocateText()
 
     createEffect(getAllPlayers(), Effect.RING, Color.GRAY, DISASTER_BUTTON_POS, 3, EffectReeval.VISIBILITY)

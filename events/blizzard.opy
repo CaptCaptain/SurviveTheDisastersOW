@@ -5,9 +5,9 @@ globalvar DISASTER_BLIZZARD_FIRES = []
 globalvar DISASTER_BLIZZARD_INDEX = 0
 
 #!define DISASTER_BLIZZARD_CREATE_FIRE(position) \
-createIcon(localPlayer if not localPlayer.isInViewAngle(evalOnce(position), 90) and localPlayer.isAlive() else null, evalOnce(position), Icon.FIRE, IconReeval.VISIBILITY_AND_POSITION, Color.ORANGE, true)\
+createIcon(localPlayer if not localPlayer.isInViewAngle(evalOnce(position), 90) and localPlayer.isAlive() else [], evalOnce(position), Icon.FIRE, IconReeval.VISIBILITY_AND_POSITION, Color.ORANGE, true)\
 allocateEffect()\
-createInWorldText(localPlayer if localPlayer.isInViewAngle(evalOnce(position), 90) and localPlayer.isAlive() else null, "{0}\n".format(iconString(Icon.FIRE)), evalOnce(position), 2, Clip.NONE, WorldTextReeval.VISIBILITY, Color.GREEN, SpecVisibility.DEFAULT)\
+createInWorldText(localPlayer if localPlayer.isInViewAngle(evalOnce(position), 90) and localPlayer.isAlive() else [], "{0}\n".format(iconString(Icon.FIRE)), evalOnce(position), 2, Clip.NONE, WorldTextReeval.VISIBILITY, Color.GREEN, SpecVisibility.DEFAULT)\
 allocateText()\
 createEffect(getAllPlayers(), Effect.RING, Color.ORANGE, evalOnce(position), 3, EffectReeval.VISIBILITY)\
 allocateEffect()\
@@ -39,7 +39,7 @@ rule "[events/blizzard.opy] Disaster Initialization":
     createEffect(localPlayer, Effect.MEI_FROZEN_SOUND, Team.2, localPlayer, 500, EffectReeval.VISIBILITY)
     allocateEffect()
 
-    createEffect(localPlayer if localPlayer.DISASTER_BLIZZARD_HEAT <= 0 else null, Effect.DECAL_SOUND, Team.1, localPlayer, 100, EffectReeval.VISIBILITY)
+    createEffect(localPlayer if localPlayer.DISASTER_BLIZZARD_HEAT <= 0 else [], Effect.DECAL_SOUND, Team.1, localPlayer, 100, EffectReeval.VISIBILITY)
     allocateEffect()
 
     for disasterIndex in range(0, 3, 1):
