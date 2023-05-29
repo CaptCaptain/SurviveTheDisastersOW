@@ -77,7 +77,7 @@ rule "[shop/challenges.opy] Update Challenge Status":
         # Applying
         [player for player in getPlayers(Team.1) if shopChallengeOptions.HACKED[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE and not player.hasStatusEffect(Status.HACKED)].setStatusEffect(null, Status.HACKED, Math.INFINITY)
 
-        [player for player in getPlayers(Team.1) if shopChallengeOptions.HARDCORE[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setDamageReceived(150)
+        [player for player in getPlayers(Team.1) if shopChallengeOptions.HARDCORE[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setDamageReceived(175)
 
         [player for player in getPlayers(Team.1) if shopChallengeOptions.PACIFIST[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setPrimaryFireEnabled(false)
         [player for player in getPlayers(Team.1) if shopChallengeOptions.PACIFIST[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setSecondaryFireEnabled(false)
