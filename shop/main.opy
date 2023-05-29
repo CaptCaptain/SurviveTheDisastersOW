@@ -4,11 +4,14 @@ globalvar SHOP_HERO_SWITCH_POSITION
 globalvar SHOP_CHALLENGES_POSITION
 globalvar SHOP_EFFECTS_INDEX = 0
 globalvar SHOP_EFFECTS = []
+globalvar SHOP_TEXTS = []
 globalvar SHOP_CREATION_READY = false
 
 #!define allocateShopEffect() \
 SHOP_EFFECTS.append(getLastCreatedEntity()) \
-SHOP_EFFECTS.append(getLastCreatedText()) \
+
+#!define allocateShopText() \
+SHOP_TEXTS.append(getLastCreatedText()) \
 
 #!define getShopPosition(slot) getSpawnPoints(Team.ALL)[slot].getPosition()
 
@@ -17,7 +20,7 @@ createEffect(getAllPlayers() , Effect.RING, color, evalOnce(position), evalOnce(
 allocateShopEffect()\
 \
 createInWorldText(getAllPlayers(), text if distance(evalOnce(position), localPlayer.getPosition()) < 15 else "〔{0}〕".format(icon), evalOnce(position) + evalOnce(Vector.UP * 2.25), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, color, SpecVisibility.DEFAULT)\
-allocateShopEffect()\
+allocateShopText()\
 \
 createBeam(getAllPlayers(), Beam.GOOD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
 allocateShopEffect()\
@@ -54,31 +57,36 @@ def createShopEffects():
     allocateShopEffect()
 
     createInWorldText(getAllPlayers(), "{1}{3} {0} {4}{2}\n\n\n".format(SHOP_CHALLENGES_ALL_OPTIONS[localPlayer.SHOP_CHALLENGES_OPTION], iconString(Icon.ARROW_LEFT), iconString(Icon.ARROW_RIGHT), buttonString(Button.PRIMARY_FIRE), buttonString(Button.SECONDARY_FIRE)) if distance(evalOnce(SHOP_CHALLENGES_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_CHALLENGES_POSITION) + evalOnce(Vector.UP * 0.9), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
-    allocateShopEffect()
+    allocateShopText()
 
     createInWorldText(getAllPlayers(), ("[{0}Active]\n".format(iconString(Icon.CHECKMARK)) if localPlayer.SHOP_CHALLENGES_OPTION in localPlayer.SHOP_CHALLENGES_ACTIVE else "") if distance(evalOnce(SHOP_CHALLENGES_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_CHALLENGES_POSITION) + evalOnce(Vector.UP * 0.9), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
-    allocateShopEffect()
+    allocateShopText()
 
     createInWorldText(getAllPlayers(), "[{0}] Activate [{0}]\n\n".format(buttonString(Button.INTERACT)) if distance(evalOnce(SHOP_CHALLENGES_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_CHALLENGES_POSITION) + evalOnce(Vector.UP * 0.9), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
-    allocateShopEffect()
+    allocateShopText()
 
     createInWorldText(getAllPlayers(), "{0}".format(SHOP_CHALLENGES_ALL_DESC[localPlayer.SHOP_CHALLENGES_OPTION]) if distance(evalOnce(SHOP_CHALLENGES_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_CHALLENGES_POSITION) + evalOnce(Vector.UP * 0.9), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
-    allocateShopEffect()
+    allocateShopText()
 
     createInWorldText(getAllPlayers(), "{0}\n\n\n".format(SHOP_CHALLENGES_ALL_ICONS[localPlayer.SHOP_CHALLENGES_OPTION]) if distance(evalOnce(SHOP_CHALLENGES_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_CHALLENGES_POSITION) + evalOnce(Vector.UP * 0.9), 2.5, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
-    allocateShopEffect()
+    allocateShopText()
 
     createInWorldText(getAllPlayers(), "{0} Toggling any challenge will reset survival streak {0}\n\n\n\n\n\n\n".format(iconString(Icon.WARNING)) if distance(evalOnce(SHOP_CHALLENGES_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_CHALLENGES_POSITION) + evalOnce(Vector.UP * 0.9), 1.5, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
-    allocateShopEffect()
+    allocateShopText()
 
 subroutine clearShopEffects
 def clearShopEffects():
     for SHOP_EFFECTS_INDEX in range(0, len(SHOP_EFFECTS), 1):
         destroyEffect(SHOP_EFFECTS[SHOP_EFFECTS_INDEX])
         destroyIcon(SHOP_EFFECTS[SHOP_EFFECTS_INDEX])
-        destroyInWorldText(SHOP_EFFECTS[SHOP_EFFECTS_INDEX])
-        wait(0.016)
+    wait(0.016)
+
+    for SHOP_EFFECTS_INDEX in range(0, len(SHOP_TEXTS), 1):
+        destroyInWorldText(SHOP_TEXTS[SHOP_EFFECTS_INDEX])
+    wait(0.016)
+
     SHOP_EFFECTS = []
+    SHOP_TEXTS = []
 
 rule "[shop/main.opy] Shop Init":
     waitUntil(any([player.hasSpawned() for player in getPlayers(Team.1)]), 9999)

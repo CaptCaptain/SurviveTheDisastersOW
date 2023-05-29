@@ -77,11 +77,13 @@ rule "[game/main.opy] Game Loop":
     objectiveDescription = "Break Time"
     setMatchTime(60 if WS_SETTING_LONG_BREAK else 20)
     createShopEffects()
+    toggleCredits = true
 
     waitUntil(getMatchTime() == 0, 9999)
 
     # Game Loop
     while true:
+        toggleCredits = false
         clearShopEffects()
         
         # Disaster
@@ -174,9 +176,11 @@ rule "[game/main.opy] Game Loop":
         addToTeamScore(Team.1, 1)
         addToTeamScore(Team.2, -1)
         heal(getPlayers(Team.1), null, Math.INFINITY)
+        getPlayers(Team.1).isAlive = true
 
         # Break
         createShopEffects()
+        toggleCredits = true
         if teamScore(Team.1) % [2, 5, 10][WS_SETTING_SPECIAL_EVENTS] == 0 and teamScore(Team.1) > 0:
             selectedDangerMode = random.choice([dangerMode.MULTI_DISASTER, dangerMode.MYSTERY, dangerMode.BOSS_HUNT, dangerMode.BOSS_HUNT, dangerMode.HARDCORE])
             

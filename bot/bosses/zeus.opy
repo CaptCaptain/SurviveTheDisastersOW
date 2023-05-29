@@ -84,7 +84,7 @@ rule "[bot/zeus.opy]: Shout Projectiles":
             case 1:
                 for eventPlayer.playerIndex in range(0, len(DISASTER_ZEUS_ATK_POS), 1):
                     getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).setStatusEffect(null, Status.BURNING, 1)
-                    getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).setStatusEffect(null, Status.HACKED, 1)
+                    getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).exclude([player for player in getPlayers(Team.1) if player.hasStatusEffect(Status.HACKED)]).setStatusEffect(null, Status.HACKED, 1)
                     getPlayersInRadius(DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 5, Team.1, LosCheck.SURFACES_AND_ENEMY_BARRIERS).startDoT(eventPlayer, 1, 75)
         
                     playEffect(getAllPlayers(), DynamicEffect.RING_EXPLOSION, Color.ORANGE, DISASTER_ZEUS_ATK_POS[eventPlayer.playerIndex], 10)

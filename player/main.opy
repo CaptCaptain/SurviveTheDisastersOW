@@ -140,6 +140,18 @@ for globalIndex in range(0, len(activeDisasters), 1):\
 
 #!define createPlayerAttributeText(player, text, sort_order) hudSubheader(player if (player.toggleScoreboard) else [], text, HudPosition.LEFT, lastOnScoreboardPosition() + sort_order, Color.ORANGE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
 
+#!define allocate(array, lastCreated) \
+array.append(lastCreated) \
+
+#!define allocateHudText(array) \
+array.append(getLastCreatedText()) \
+
+#!define cleanupHudTextFor(array) \
+for hudIndex in range(0, len(array), 1): \
+    destroyInWorldText(array[hudIndex]) \
+wait(0.016) \
+array = [] \
+
 playervar playerIndex = 0
 playervar survivalScore = 0
 playervar survivalStreak = 0
@@ -149,6 +161,11 @@ playervar timeJoined = 0
 playervar toggleScoreboard = true
 playervar scoreboardChallenges = ""
 
+globalvar hudIndex = 0
+
+globalvar toggleCredits = false
+globalvar creditsTexts = []
+
 globalvar scoreboardPlayers = []
 
 globalvar objectiveDescription = ""
@@ -156,6 +173,7 @@ globalvar objectiveDescription = ""
 globalvar disasterTypeShown = false
 globalvar disasterTypeDescription = ""
 globalvar disasterTypeColor = ""
+globalvar disasterTypeTexts = []
 
 #!include "player/dialogue.opy"
 #!include "player/tank.opy"
@@ -196,20 +214,40 @@ rule "[player/main.opy] Hud":
     # Hide Scoreboard
     hudSubheader(getAllPlayers(), alignLeftString("{1} [Hold {0}]".format(buttonString(Button.RELOAD), "Hide" if localPlayer.toggleScoreboard else "Show Scoreboard")), HudPosition.LEFT, -8, Color.TURQUOISE, HudReeval.VISIBILITY_SORT_ORDER_AND_STRING, SpecVisibility.NEVER)
 
-    # Disaster Type
-    onScreenText(localPlayer if localPlayer.isAlive() and disasterTypeShown else [], disasterTypeDescription, 0, 1, 3, WorldTextReeval.VISIBILITY_POSITION_STRING_AND_COLOR, disasterTypeColor, SpecVisibility.DEFAULT)
-
+rule "[player/main.opy] Credits Hud":
+    @Condition toggleCredits
+    
     # Credits
 
-    onScreenText(localPlayer if localPlayer.isAlive() else [], "https://workshop.codes/discord", 1.1, 2.12, 1.25, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
+    onScreenText(localPlayer, "https://workshop.codes/discord", 1.1, 2.12, 1.25, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
+    allocateHudText(creditsTexts)
 
-    onScreenText(localPlayer if localPlayer.isAlive() else [], "Mode by CaptCaptain ▶ {}".format(WORKSHOP_CODE), -1.1, 2.12, 1.25, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
+    onScreenText(localPlayer, "Mode by CaptCaptain ▶ {}".format(WORKSHOP_CODE), -1.1, 2.12, 1.25, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
+    allocateHudText(creditsTexts)
 
-    onScreenText(localPlayer if localPlayer.isAlive() else [], "{0} Join Workshop Creators! {0}".format(iconString(Icon.ARROW_UP)), 1.1, 2.02, 1, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
+    onScreenText(localPlayer, "{0} Join Workshop Creators! {0}".format(iconString(Icon.ARROW_UP)), 1.1, 2.02, 1, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
+    allocateHudText(creditsTexts)
 
-    onScreenText(localPlayer if localPlayer.isAlive() else [], "https://workshop.codes/survive-disasters".format(WORKSHOP_CODE), -1.1, 2.02, 1, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
+    onScreenText(localPlayer, "https://workshop.codes/survive-disasters".format(WORKSHOP_CODE), -1.1, 2.02, 1, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
+    allocateHudText(creditsTexts)
 
-    onScreenText(localPlayer if localPlayer.isAlive() else [], "★ Import code {} to ensure you always play on the latest version".format(WORKSHOP_CODE), 0, 2.22, 1, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, Color.WHITE, SpecVisibility.DEFAULT)
+    onScreenText(localPlayer, "★ Import code {} to ensure you always play on the latest version".format(WORKSHOP_CODE), 0, 2.22, 1, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, Color.WHITE, SpecVisibility.DEFAULT)
+    allocateHudText(creditsTexts)
+
+    waitUntil(not toggleCredits, 9999)
+
+    cleanupHudTextFor(creditsTexts)
+
+rule "[player/main.opy] Disaster Type Hud":
+    @Condition disasterTypeShown
+    
+    # Disaster Type
+    onScreenText(localPlayer, disasterTypeDescription, 0, 1, 3, WorldTextReeval.VISIBILITY_POSITION_STRING_AND_COLOR, disasterTypeColor, SpecVisibility.DEFAULT)
+    allocateHudText(disasterTypeTexts)
+
+    waitUntil(not disasterTypeShown, 9999)
+
+    cleanupHudTextFor(disasterTypeTexts)
     
 
 rule "[player/main.opy] Init":
@@ -240,23 +278,19 @@ rule "[player/main.opy] Toggle Scoreboard":
     else:
         fixedSmallMessageWithIcon(eventPlayer, iconString(Icon.NO), "Scoreboard Hidden")
 
-rule "[player/main.opy] Reset Survival Streak on Death":
-    @Event eachPlayer
-    @Condition eventPlayer.isDead()
+rule "[player/main.opy] Update Death State":
+    while true:
+        waitUntil(getDeadPlayers(Team.1) != evalOnce(getDeadPlayers(Team.1)), 0.5)
+        getDeadPlayers(Team.1).isAlive = false
+        getDeadPlayers(Team.1).survivalStreak = 0
 
-    eventPlayer.isAlive = false
+        if objectiveDescription == "":
+            getPlayers(Team.1).isAlive = true
 
-    # We don't want to use the playerDied event as it won't trigger with Acid Rain
-
-    eventPlayer.survivalStreak = 0
-
-    waitUntil(objectiveDescription == "", 9999)
-
-    wait(1)
-
-    eventPlayer.isAlive = true
+        wait(0.5)
 
 rule "[player/main.opy] Update Scoreboard":
     while true:
+        waitUntil(getPlayers(Team.1) != evalOnce(getPlayers(Team.1)), 0.5)
         scoreboardPlayers = sorted(getPlayers(Team.1), lambda player: player.survivalScore)
-        wait(1)
+        wait(0.5)
