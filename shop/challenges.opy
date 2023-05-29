@@ -2,7 +2,7 @@
 
 enum shopChallengeOptions:
     HACKED = [0, "Hacked", "Cannot use any abilities (1.25x PTS)", abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE)],
-    HARDCORE = [1, "Hardcore", "Increased damage taken (1.25x PTS)", abilityIconString(Hero.MCCREE, Button.ULTIMATE)],
+    HARDCORE = [1, "Hardcore", "Increased damage taken (1.1x PTS)", abilityIconString(Hero.MCCREE, Button.ULTIMATE)],
     PACIFIST = [2, "Pacifist", "Cannot use weapon (1.25x PTS)", iconString(Icon.HEART)]
 
 enum shopChallengeData:
@@ -77,7 +77,7 @@ rule "[shop/challenges.opy] Update Challenge Status":
         # Applying
         [player for player in getPlayers(Team.1) if shopChallengeOptions.HACKED[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE and not player.hasStatusEffect(Status.HACKED)].setStatusEffect(null, Status.HACKED, Math.INFINITY)
 
-        [player for player in getPlayers(Team.1) if shopChallengeOptions.HARDCORE[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setDamageReceived(175)
+        [player for player in getPlayers(Team.1) if shopChallengeOptions.HARDCORE[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setDamageReceived(150)
 
         [player for player in getPlayers(Team.1) if shopChallengeOptions.PACIFIST[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setPrimaryFireEnabled(false)
         [player for player in getPlayers(Team.1) if shopChallengeOptions.PACIFIST[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setSecondaryFireEnabled(false)

@@ -155,7 +155,7 @@ rule "[player/medals.opy] Survival Streak Medals / MVP Medals / Teamwork Medal":
         queueMedalWithPoints(eventPlayer, Medals.HACKED_BONUS, round(eventPlayer.medalRoundPointsEarned * 0.25))
 
     if shopChallengeOptions.HARDCORE[shopChallengeData.ID] in eventPlayer.SHOP_CHALLENGES_ACTIVE and eventPlayer.isAlive:
-        queueMedalWithPoints(eventPlayer, Medals.HARDCORE_BONUS, round(eventPlayer.medalRoundPointsEarned * 0.25))
+        queueMedalWithPoints(eventPlayer, Medals.HARDCORE_BONUS, round(eventPlayer.medalRoundPointsEarned * 0.1))
 
 rule "[player/medals.opy] Slayer Medal":
     @Event eachPlayer
