@@ -72,6 +72,7 @@ rule "[shop/challenges.opy] Buttons":
     eventPlayer.allowButton(Button.SECONDARY_FIRE)
 
 rule "[shop/challenges.opy] Update Challenge Status":
+    wait(2)
     while true:
         # Applying
         [player for player in getPlayers(Team.1) if shopChallengeOptions.HACKED[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE and not player.hasStatusEffect(Status.HACKED)].setStatusEffect(null, Status.HACKED, Math.INFINITY)

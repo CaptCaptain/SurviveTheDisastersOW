@@ -85,6 +85,7 @@ rule "[game/main.opy] Game Loop":
     while true:
         toggleCredits = false
         clearShopEffects()
+        getPlayers(Team.1).isAlive = true
         
         # Disaster
         switch (selectedDangerMode):
@@ -176,7 +177,6 @@ rule "[game/main.opy] Game Loop":
         addToTeamScore(Team.1, 1)
         addToTeamScore(Team.2, -1)
         heal(getPlayers(Team.1), null, Math.INFINITY)
-        getPlayers(Team.1).isAlive = true
 
         # Break
         createShopEffects()
@@ -202,3 +202,15 @@ rule "[game/main.opy] Game Loop":
 
         objectiveDescription = "Next Disaster In"
         setMatchTimeAndWait(20)
+
+rule "[game/main.opy] Update Player Death State":
+    while true:
+        if disasterReady:
+            waitUntil(getDeadPlayers(Team.1) != evalOnce(getDeadPlayers(Team.1)), 0.5)
+            getDeadPlayers(Team.1).isAlive = false
+            getDeadPlayers(Team.1).survivalStreak = 0
+        else:
+            wait(1.5)
+            getLivingPlayers(Team.1).isAlive = true
+
+        wait(0.5)

@@ -278,18 +278,8 @@ rule "[player/main.opy] Toggle Scoreboard":
     else:
         fixedSmallMessageWithIcon(eventPlayer, iconString(Icon.NO), "Scoreboard Hidden")
 
-rule "[player/main.opy] Update Death State":
-    while true:
-        waitUntil(getDeadPlayers(Team.1) != evalOnce(getDeadPlayers(Team.1)), 0.5)
-        getDeadPlayers(Team.1).isAlive = false
-        getDeadPlayers(Team.1).survivalStreak = 0
-
-        if objectiveDescription == "":
-            getPlayers(Team.1).isAlive = true
-
-        wait(0.5)
-
 rule "[player/main.opy] Update Scoreboard":
+    wait(1)
     while true:
         waitUntil(getPlayers(Team.1) != evalOnce(getPlayers(Team.1)), 0.5)
         scoreboardPlayers = sorted(getPlayers(Team.1), lambda player: player.survivalScore)
