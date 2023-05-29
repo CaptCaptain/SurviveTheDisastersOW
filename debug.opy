@@ -207,7 +207,6 @@ rule "[debug.opy] Input":
         activeDisasterFlags.append(disasterFlags.HARDCORE)
     if eventPlayer.isHoldingButton(Button.RELOAD):
         cleanupDisaster()
-        cleanupDialogue()
 
         if SHOP_EFFECTS == []:
             createShopEffects()
