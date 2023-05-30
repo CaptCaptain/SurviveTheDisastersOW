@@ -168,16 +168,6 @@ rule "[player/medals.opy] Slayer Medal":
     if getDamagePoints(eventPlayer) > 1:
         queueMedalWithPoints(eventPlayer, Medals.SLAYER, getDamagePoints(eventPlayer))
 
-rule "[player/medals.opy] Boss Hunter Medal":
-    @Event playerEarnedElimination
-    @Team 1
-    @Condition disasterReady == true
-
-    if botFlags.BOSS in victim.BOT_DISASTER_FLAGS:
-        queueMedalWithPoints(eventPlayer, Medals.BOSS_HUNTER, 75)
-
-    waitUntil(disasterReady == false, 9999)
-
 rule "[player/medals.opy] Supporter Medal":
     @Event eachPlayer
     @Team 1

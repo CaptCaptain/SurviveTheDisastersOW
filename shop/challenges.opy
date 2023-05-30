@@ -90,5 +90,5 @@ rule "[shop/challenges.opy] Update Challenge Status":
         [player for player in getPlayers(Team.1) if not shopChallengeOptions.PACIFIST[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setPrimaryFireEnabled(true)
         [player for player in getPlayers(Team.1) if not shopChallengeOptions.PACIFIST[shopChallengeData.ID] in player.SHOP_CHALLENGES_ACTIVE].setSecondaryFireEnabled(true)
 
-        waitUntil(any([player for player in getPlayers(Team.1) if player.SHOP_CHALLENGES_ACTIVE != evalOnce(player.SHOP_CHALLENGES_ACTIVE)]), 0.5)
+        waitUntil(any([player for player in getPlayers(Team.1) if player.SHOP_CHALLENGES_ACTIVE != evalOnce(player.SHOP_CHALLENGES_ACTIVE)]), 9999)
         wait(0.5)

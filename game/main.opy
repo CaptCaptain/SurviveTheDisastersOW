@@ -123,7 +123,8 @@ rule "[game/main.opy] Game Loop":
                 wait(0.016)
                 setMatchTimeWaitUntilAllDeadOrBossDead(activeDisasterDuration)
 
-                if all([player.isDead() for player in getPlayers(Team.2)]):
+                if all([player.isDead() for player in getPlayers(Team.2).exclude(dialogue_bot)]):
+                    queueMedalWithPoints(getPlayers(Team.1), Medals.BOSS_HUNTER, 75)
                     wait(1)
                     bigMessage([player for player in getPlayers(Team.1) if player.isAlive and Medals.BOSS_HUNTER[medalData.TITLE] in player.medalsEarned], "{0} Boss Defeat!  {0}".format(abilityIconString(Hero.ECHO, Button.SECONDARY_FIRE)))
 
