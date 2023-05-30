@@ -112,13 +112,13 @@ player.BOT_DISASTER_FLAGS.append(flag)
 
 #!define cleanupDialogue() \
 is_dialoguing = true \
-waitUntil(not main_dialogue, 1) \
+wait(0.016) \
 main_dialogue = null \
 is_dialoguing = false \
 
 globalvar disasterPool = [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID], disasters.WITCH[disasterData.ID], disasters.PHARAMERCY[disasterData.ID], disasters.TIKTOK[disasterData.ID], disasters.VISHKAR[disasterData.ID], disasters.NUCLEAR_BOMB[disasterData.ID], disasters.DEATH_TRAMPOLINE[disasterData.ID], disasters.CRUSADERS[disasterData.ID], disasters.FLYING_BASTION[disasterData.ID], disasters.COWBOY[disasterData.ID]]
 
-globalvar bossDisasterPool = [getDisasterId(disasters.GALACTIC_SIGMA)]
+globalvar bossDisasterPool = [getDisasterId(disasters.GALACTIC_SIGMA), getDisasterId(disasters.ZEUS), getDisasterId(disasters.ZEUS)]
 
 globalvar hardcoreDisasterPool = [getDisasterId(disasters.NINJA), getDisasterId(disasters.SNIPER), getDisasterId(disasters.MOTHS), getDisasterId(disasters.TIKTOK), getDisasterId(disasters.PHARAMERCY), getDisasterId(disasters.VISHKAR), getDisasterId(disasters.NUCLEAR_BOMB), getDisasterId(disasters.WIFELEAVER), getDisasterId(disasters.MURDERERS), getDisasterId(disasters.WINTON), getDisasterId(disasters.KAME), getDisasterId(disasters.BLACK_HOLE), getDisasterId(disasters.BLIZZARD), getDisasterId(disasters.FLYING_BASTION), disasters.COWBOY[disasterData.ID]]
 

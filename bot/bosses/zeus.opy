@@ -18,7 +18,7 @@ rule "[bot/zeus.opy]: Behavior":
     eventPlayer.disableRespawn()
     eventPlayer.BOT_CROUCH_SPAM = false
 
-    for eventPlayer.playerIndex in range(0, 5, 1):
+    for eventPlayer.playerIndex in range(0, 6, 1):
         createEffect(getAllPlayers() if DISASTER_ZEUS_ATK_POS != [] else [], Effect.RING, Color.ORANGE, DISASTER_ZEUS_ATK_POS[evalOnce(eventPlayer.playerIndex)], evalOnce(4), EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
         allocateEffect()
 
