@@ -50,17 +50,11 @@ allocatePlayerEffect(player)\
 
 playervar dummyBotLosSpawnPos
 
-rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
-    @Event eachPlayer
-    @Team 2
-    @Condition botFlags.RESPAWNABLE_NO_LOS in eventPlayer.BOT_DISASTER_FLAGS
-    @Condition all([not isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)])
-
-    waitUntil(any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]), random.uniform(5, 10))
-    if any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]):
-        return
-
-    eventPlayer.dummyBotLosSpawnPos = dummyBotSpawn(15)
+subroutine respawnNearPlayer
+def respawnNearPlayer():
+    eventPlayer.dummyBotLosSpawnPos = sorted(getPlayersAlive().exclude([player for player in getPlayers(Team.1) if len(getPlayersInRadius(player.getEyePosition(), 15, Team.2, LosCheck.OFF)) >= player.survivalStreak + 1]), lambda player: player.survivalStreak).last()
+    eventPlayer.dummyBotLosSpawnPos = [spawn for spawn in dummyBotSpawnArray if distance(eventPlayer.dummyBotLosSpawnPos, spawn) < 15 and (spawn.y < eventPlayer.dummyBotLosSpawnPos.y + 1 or spawn.y > eventPlayer.dummyBotLosSpawnPos.y - 1)]
+    eventPlayer.dummyBotLosSpawnPos = random.choice(eventPlayer.dummyBotLosSpawnPos)
 
     if eventPlayer.dummyBotLosSpawnPos == null or eventPlayer.dummyBotLosSpawnPos == vect(0, 0, 0) or eventPlayer.dummyBotLosSpawnPos == []:
         eventPlayer.respawn()
@@ -76,6 +70,18 @@ rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
     eventPlayer.setStatusEffect(null, Status.ROOTED, 1)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1)
 
+rule "[bot/main.opy] Respawn Bot When Not Within Line Of Sight Once":
+    @Event eachPlayer
+    @Team 2
+    @Condition botFlags.RESPAWNABLE_NO_LOS in eventPlayer.BOT_DISASTER_FLAGS
+    @Condition all([not isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)])
+
+    waitUntil(any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]), random.uniform(5, 10))
+    if any([isInLoS(player.getEyePosition(), eventPlayer.getEyePosition(), BarrierLos.PASS_THROUGH_BARRIERS) for player in getPlayers(Team.1)]):
+        return
+
+    respawnNearPlayer()
+
     wait(5)
 
     if RULE_CONDITION: goto RULE_START
@@ -89,7 +95,7 @@ rule "[bot/main.opy] Prevent Bot Respawn Clumping":
 
     wait(0.032)
 
-    eventPlayer.teleport(dummyBotSpawn(15))
+    respawnNearPlayer()
 
 rule "[bot/main.opy] Track Player Positions":
     dummyBotSpawnArray.append([player.getPosition() for player in getPlayersInMatch() if player.isOnGround() and player.isMoving()])
