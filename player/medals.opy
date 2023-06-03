@@ -183,6 +183,9 @@ rule "[player/medals.opy] Supporter Medal":
     @Team 1
     @Condition disasterReady == true
 
+    if not eventPlayer.getCurrentHero() in getSupportHeroes() or not eventPlayer.getHeroOfDuplication() in getSupportHeroes():
+        return
+
     eventPlayer.healingStatistic = eventPlayer.getStatistic(Stat.HEALING_DEALT)
 
     waitUntil(disasterReady == false, 9999)
