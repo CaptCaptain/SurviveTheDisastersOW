@@ -52,21 +52,11 @@ playervar dummyBotLosSpawnPos
 
 subroutine respawnNearPlayer
 def respawnNearPlayer():
-    eventPlayer.dummyBotLosSpawnPos = sorted(getPlayersAlive().exclude([player for player in getPlayers(Team.1) if len(getPlayersInRadius(player.getEyePosition(), 15, Team.2, LosCheck.OFF)) >= player.survivalStreak + 1]), lambda player: player.survivalStreak).last()
-    eventPlayer.dummyBotLosSpawnPos = [spawn for spawn in dummyBotSpawnArray if distance(eventPlayer.dummyBotLosSpawnPos, spawn) < 15 and (spawn.y < eventPlayer.dummyBotLosSpawnPos.y + 1 or spawn.y > eventPlayer.dummyBotLosSpawnPos.y - 1)]
-    eventPlayer.dummyBotLosSpawnPos = random.choice(eventPlayer.dummyBotLosSpawnPos)
-
-    if eventPlayer.dummyBotLosSpawnPos == null or eventPlayer.dummyBotLosSpawnPos == vect(0, 0, 0) or eventPlayer.dummyBotLosSpawnPos == []:
-        eventPlayer.respawn()
-        wait(0.25)
-        eventPlayer.teleport(dummyBotSpawn(15))
-        return
-
     eventPlayer.respawn()
 
     wait(0.25)
 
-    eventPlayer.teleport(eventPlayer.dummyBotLosSpawnPos)
+    eventPlayer.teleport(dummyBotSpawn(15))
     eventPlayer.setStatusEffect(null, Status.ROOTED, 1)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1)
 
