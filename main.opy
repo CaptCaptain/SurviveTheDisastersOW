@@ -14,8 +14,7 @@ settings "lobby.opy.json"
 
 #!define globalBotDamagePercentage min(1, (getNumberOfPlayers(Team.1) / 4)) * (0.35 * WS_SETTING_GLOBAL_BOT_DAMAGE)
 
-#!define WS_SETTING_MAX_ROUNDS \
-createWorkshopSetting(int[10:30], "Gameplay", "Max Rounds", 20, 2)
+globalvar WS_SETTING_MAX_ROUNDS = createWorkshopSetting(int[0:30], "Gameplay", "Max Rounds", 20, 2)
 
 #!define WS_SETTING_SPECIAL_EVENTS \
 createWorkshopSetting(enum["Every 2 rounds", "Every 5 Rounds", "Every 10 Rounds"], "Gameplay", "Special Events", 1, 2)

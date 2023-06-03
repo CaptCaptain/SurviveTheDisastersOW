@@ -39,13 +39,8 @@ waitUntil(getMatchTime() == 0 or all([player.isAlive == false for player in getP
 if all([player.isAlive == false for player in getPlayersInMatch()]): \
     wait(0.5) \
 
-#!define getHighestScoredPlayer() sorted(getPlayersInMatch(), lambda player: player.survivalScore).last()
-
-#!define getHighestAchievingPlayer() sorted(getPlayersInMatch(), lambda player: player.totalMedals).last()
-
-#!define getTeamScore() getPlayersInSlot(0, Team.1).survivalScore + getPlayersInSlot(1, Team.1).survivalScore + getPlayersInSlot(2, Team.1).survivalScore + getPlayersInSlot(3, Team.1).survivalScore + getPlayersInSlot(4, Team.1).survivalScore + getPlayersInSlot(5, Team.1).survivalScore
-
 globalvar selectedDangerMode
+globalvar teamSurvivalRate
 
 rule "[game/main.opy] Init":
     disableGamemodeCompletion()
@@ -158,7 +153,26 @@ rule "[game/main.opy] Game Loop":
 
             getAllPlayers().disableGamemodeHud()
 
+            #!define getHighestScoredPlayer() sorted(getPlayersInMatch(), lambda player: player.survivalScore).last()
+
+            #!define getHighestAchievingPlayer() sorted(getPlayersInMatch(), lambda player: player.totalMedals).last()
+
+            #!define getTeamScore() getPlayersInSlot(0, Team.1).survivalScore + getPlayersInSlot(1, Team.1).survivalScore + getPlayersInSlot(2, Team.1).survivalScore + getPlayersInSlot(3, Team.1).survivalScore + getPlayersInSlot(4, Team.1).survivalScore + getPlayersInSlot(5, Team.1).survivalScore
+
+            #!define getHighestSurvivalStreakPlayer() sorted(getPlayersInMatch(), lambda player: player.survivalStreak).last()
+
+            #!define getChallengingPlayers() sorted(getPlayersInMatch().exclude([player for player in getPlayers(Team.1) if len(player.SHOP_CHALLENGES_ACTIVE) == 0]), lambda player: len(player.SHOP_CHALLENGES_ACTIVE)).last()
+
+            #!define getPlayerDeaths(slot) max(1, getPlayersInSlot(slot, Team.1).getStatistic(Stat.DEATHS))
+
             # Create end results
+                # Background
+            #!define backgroundPlayer getPlayers(Team.1)[globalIndex]
+            createEffect(localPlayer, Effect.ORB, Color.BLACK, updateEveryTick(localPlayer.getEyePosition() + localPlayer.getFacingDirection() * -0.305), 1, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+            for globalIndex in range(0, len(getPlayers(Team.1)), 1):
+                backgroundPlayer.startCamera(updateEveryTick(evalOnce(backgroundPlayer).getEyePosition()), updateEveryTick(evalOnce(backgroundPlayer).getEyePosition() + evalOnce(backgroundPlayer).getFacingDirection()), 0)
+                backgroundPlayer.setInvisibility(Invis.ENEMIES)
+
                 # Results
             onScreenText(getAllPlayers(), "End Results", 0, 1.8, 3, WorldTextReeval.VISIBILITY_AND_POSITION, Color.LIME_GREEN, SpecVisibility.DEFAULT)
 
@@ -173,6 +187,28 @@ rule "[game/main.opy] Game Loop":
                 # Team Score
             onScreenText(getAllPlayers(), "Team Score", 1.1, 1.65, 1.5, WorldTextReeval.VISIBILITY_AND_POSITION, Color.ORANGE, SpecVisibility.DEFAULT)
             onScreenText(getAllPlayers(), "{0} PTS".format(getTeamScore()), 1.1, 1.55, 1.25, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
+
+                # Survivalist
+            onScreenText(getAllPlayers(), "Survivalist", -1.1, 1.35, 1.5, WorldTextReeval.VISIBILITY_AND_POSITION, Color.ORANGE, SpecVisibility.DEFAULT)
+            onScreenText(getAllPlayers(), "{0} ({1} Streak)".format(getHighestSurvivalStreakPlayer(), getHighestSurvivalStreakPlayer().survivalStreak), -1.1, 1.25, 1.25, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
+
+                # Challengers
+            onScreenText(getAllPlayers(), "Challenger", 0, 1.35, 1.5, WorldTextReeval.VISIBILITY_AND_POSITION, Color.ORANGE, SpecVisibility.DEFAULT)
+
+            if getChallengingPlayers():
+                onScreenText(getAllPlayers(), "{0} ({1})".format(getChallengingPlayers(), [SHOP_CHALLENGES_ALL_ICONS[challenge] for challenge in getChallengingPlayers().SHOP_CHALLENGES_ACTIVE].split("")), 0, 1.25, 1.25, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
+            else:
+                onScreenText(getAllPlayers(), "None", 0, 1.25, 1.25, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
+
+                # Survival Rate
+                    # Calculate survival rate
+            for globalIndex in range(0, len(getPlayers(Team.1)), 1):
+                teamSurvivalRate += getPlayers(Team.1)[globalIndex].getStatistic(Stat.DEATHS)
+            teamSurvivalRate /= len(getPlayers(Team.1))
+            teamSurvivalRate = ((WS_SETTING_MAX_ROUNDS - teamSurvivalRate) / WS_SETTING_MAX_ROUNDS) * 100
+
+            onScreenText(getAllPlayers(), "Team Survival Rate", 1.1, 1.35, 1.5, WorldTextReeval.VISIBILITY_AND_POSITION, Color.ORANGE, SpecVisibility.DEFAULT)
+            onScreenText(getAllPlayers(), "{0}%".format(teamSurvivalRate), 1.1, 1.25, 1.25, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
 
             wait(2)
 
