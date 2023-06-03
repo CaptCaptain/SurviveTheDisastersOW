@@ -16,8 +16,8 @@ rule "[bot/crusaders.opy]: Behavior":
             if eventPlayer.BOT_PLAYER.isAlive():
                 eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
                 eventPlayer.BOT_SECONDARY_FIRE_ENABLED = true if distance(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()) > 5 else false     
-                eventPlayer.BOT_ABILITY_1_ENABLED = true if eventPlayer.BOT_PLAYER.hasStatusEffect(Status.KNOCKED_DOWN) else false
-                EXECUTE_OFFENSE_ABILITY_2()
+                eventPlayer.BOT_ABILITY_1_ENABLED = true if eventPlayer.BOT_PLAYER.hasStatusEffect(Status.KNOCKED_DOWN) or distance(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()) > 10 else false
+                eventPlayer.BOT_ABILITY_2_ENABLED = true if eventPlayer.BOT_PLAYER.getNormalizedHealth() < 0.5 or distance(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()) > 5 else false
                 EXECUTE_ULTIMATE_ABILITY()
 
                 eventPlayer.startThrottleInDirection(directionTowards(eventPlayer.getPosition(), eventPlayer.BOT_PLAYER.getPosition()), 1, Relativity.TO_WORLD, Throttle.REPLACE_EXISTING, ThrottleReeval.NONE)
