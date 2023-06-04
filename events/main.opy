@@ -97,12 +97,10 @@ allocateDummyBot()\
 wait(0.016)\
 allocatedDummyBot.BOT_DISASTER_TAG = tag
 
-#!define excludedPositions(range) [spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn, range, Team.2, LosCheck.OFF)) > 5]
-
 #!define dummyBotLimit floor(WS_SETTING_MAX_BOTS / activeDisasterEntitySpawning)
 #!define dummyBotSpawnAny(range) random.choice(getPlayersAlive()).getPosition() + vect(random.randint(-range, range), sorted(getPlayersInMatch(), lambda player: player.getPosition().y).last().getPosition().y, random.randint(-range, range))
 #!define dummyBotSpawnAnyHeight(range) vect(dummyBotSpawn(range).x, dummyBotSpawnAny(range).y, dummyBotSpawn(range).z)
-#!define dummyBotSpawn(range) random.choice([random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.OFF)) == 0]).exclude(excludedPositions(range))), random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.SURFACES)) == 0]).exclude(excludedPositions(range))), nearestWalkablePosition(dummyBotSpawnAny(range)), random.choice(getSpawnPoints(Team.ALL)).getPosition()].exclude([null, 0, vect(0, 0, 0), []]))
+#!define dummyBotSpawn(range) random.choice([random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.OFF)) > max(5, (getNumberOfPlayers(Team.1) * 2))])), random.choice(dummyBotSpawnArray.exclude([spawn for spawn in dummyBotSpawnArray if len(getPlayersInRadius(spawn + Vector.UP, range, Team.1, LosCheck.SURFACES)) > max(5, (getNumberOfPlayers(Team.1) * 2))])), nearestWalkablePosition(dummyBotSpawnAny(range)), random.choice(getSpawnPoints(Team.ALL)).getPosition()].exclude([null, 0, vect(0, 0, 0), []]))
 
 #!define getBossHealth() 500 + (len(getPlayersInMatch()) * 500)
 

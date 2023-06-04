@@ -1,5 +1,11 @@
 #!mainFile "../main.opy"
 
+subroutine EXECUTE_HANZO_ARROW
+def EXECUTE_HANZO_ARROW():
+    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
+    wait(0.75)
+    eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
+
 rule "[bot/ninja.opy]: Genji Behavior":
     @Event eachPlayer
     @Hero genji
@@ -24,6 +30,37 @@ rule "[bot/ninja.opy]: Genji Behavior":
                 eventPlayer.DEFLECT_BUTTON = Button.ABILITY_2
                 EXECUTE_ULTIMATE_DEFLECT()
                 EXECUTE_ULTIMATE_ABILITY()
+
+                if eventPlayer.isInAir():
+                    eventPlayer.forceButtonPress(Button.JUMP)
+                
+        waitThrottle(Wait.IGNORE_CONDITION)
+
+rule "[bot/ninja.opy]: Hanzo Behavior":
+    @Event eachPlayer
+    @Hero hanzo
+    @Team 2
+    @Condition hasDisasterTag(getDisasterId(disasters.NINJA))
+
+    eventPlayer.startForcingName(random.choice(["Ninja", "Ninja", "Ninja", "Spirit Dragon"]))
+
+    wait(1)
+
+    applyCustomHealthFor(eventPlayer, 150, 0, 0)
+
+    while true:
+        botWaitUntilReady()
+        if entityExists(eventPlayer.BOT_PLAYER):
+            if eventPlayer.BOT_PLAYER.isAlive():
+                async(EXECUTE_HANZO_ARROW, AsyncBehavior.NOOP)
+                EXECUTE_OFFENSE_ABILITY_2()
+
+                eventPlayer.BOT_JUMP_ENABLED = true if eventPlayer.isOnGround() and eventPlayer.getNormalizedHealth() < 0.5 else false
+
+                if eventPlayer.isInAir():
+                    eventPlayer.forceButtonPress(Button.JUMP)
+        else:
+            EXECUTE_ULTIMATE_ABILITY()
                 
         waitThrottle(Wait.IGNORE_CONDITION)
 

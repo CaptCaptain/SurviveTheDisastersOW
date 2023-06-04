@@ -48,7 +48,7 @@ rule "[game/main.opy] Init":
     disableScoring()
 
     # Global Bot Damage
-    startDamageModification(getPlayers(Team.1), getPlayers(Team.2).exclude([player for player in getPlayers(Team.2) if botFlags.NO_DAMAGE_SCALING in player.BOT_DISASTER_FLAGS]), (globalBotDamagePercentage * (2 if disasterFlags.HARDCORE in activeDisasterFlags else 1)) / ((getNumberOfPlayers(Team.2) / WS_SETTING_MAX_BOTS) if selectedDangerMode != dangerMode.BOSS_HUNT and not debugMode else 1), DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
+    startDamageModification(getPlayers(Team.1), getPlayers(Team.2).exclude([player for player in getPlayers(Team.2) if botFlags.NO_DAMAGE_SCALING in player.BOT_DISASTER_FLAGS]), (globalBotDamagePercentage * (1.75 if disasterFlags.HARDCORE in activeDisasterFlags else 1)) / ((getNumberOfPlayers(Team.2) / WS_SETTING_MAX_BOTS) if selectedDangerMode != dangerMode.BOSS_HUNT and not debugMode else 1), DamageReeval.RECEIVERS_DAMAGERS_AND_DMGPERCENT)
 
     if not WS_SETTING_ENABLE_MUSIC:
         disableMusic()

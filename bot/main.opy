@@ -48,15 +48,33 @@ allocatePlayerEffect(player)\
 #!include "bot/bosses/zeus.opy"
 #!include "bot/bosses/orisa.opy"
 
+playervar dummyBotSpawnPlayer
 playervar dummyBotLosSpawnPos
 
 subroutine respawnNearPlayer
 def respawnNearPlayer():
+    eventPlayer.dummyBotSpawnPlayer = sorted(getPlayersAlive(), lambda player: len(getPlayersInRadius(player.getEyePosition(), 15, Team.2, LosCheck.SURFACES)))[0]
+
+    if getPlayersInRadius(eventPlayer.dummyBotLosSpawnPos.getEyePosition(), 15, Team.2, LosCheck.SURFACES) >= max(5, len(getPlayersInRadius(eventPlayer.dummyBotLosSpawnPos.getEyePosition(), 15, Team.1, LosCheck.SURFACES)) * 2):
+        eventPlayer.dummyBotLosSpawnPos = dummyBotSpawn(15)
+        printLog("Too many players around {}".format(eventPlayer.dummyBotSpawnPlayer))
+        goto skip_spawn_los
+
+    eventPlayer.dummyBotLosSpawnPos = [spawn for spawn in dummyBotSpawnArray if distance(eventPlayer.dummyBotSpawnPlayer.getEyePosition(), spawn) < 15 and isInLoS(eventPlayer.dummyBotSpawnPlayer.getEyePosition(), spawn + Vector.UP, BarrierLos.PASS_THROUGH_BARRIERS)]
+    eventPlayer.dummyBotLosSpawnPos = random.choice(eventPlayer.dummyBotLosSpawnPos)
+
+    skip_spawn_los:
+    
+    if not eventPlayer.dummyBotLosSpawnPos or eventPlayer.dummyBotLosSpawnPos == [] or eventPlayer.dummyBotLosSpawnPos == 0 or eventPlayer.dummyBotLosSpawnPos == vect(0, 0, 0):
+        eventPlayer.dummyBotLosSpawnPos = dummyBotSpawn(15)
+
+        printLog("Invalid spawn")
+
     eventPlayer.respawn()
 
     wait(0.25)
 
-    eventPlayer.teleport(dummyBotSpawn(15))
+    eventPlayer.teleport(eventPlayer.dummyBotLosSpawnPos)
     eventPlayer.setStatusEffect(null, Status.ROOTED, 1)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1)
 
