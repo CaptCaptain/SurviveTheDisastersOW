@@ -41,6 +41,7 @@ allocatePlayerEffect(player)\
 #!include "bot/bastion.opy"
 #!include "bot/cowboy.opy"
 #!include "bot/junkers.opy"
+#!include "bot/climatologist.opy"
 #!include "bot/bosses/galactic_sigma.opy"
 #!include "bot/bosses/seer_mercy.opy"
 #!include "bot/bosses/infinite_admiral.opy"

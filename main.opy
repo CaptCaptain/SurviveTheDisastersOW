@@ -54,7 +54,7 @@ globalvar WS_DIFFICULTY = 1
 #!include "../Bot-Playground/src/bot/heroes/all.opy"
 
 globalvar globalIndex
-globalvar debugMode = createWorkshopSetting(bool, "General", "Debug Mode", false, 3)
+globalvar debugMode = false
 globalvar WORKSHOP_CODE = "GWZB4"
 
 globalvar CREDITS_THERISTER = createWorkshopSetting(enum["Therister"], "Credits", "Dialogue System", 0, 1)

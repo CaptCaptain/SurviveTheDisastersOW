@@ -50,6 +50,7 @@ enum disasterId:
     FLYING_BASTION,
     COWBOY,
     JUNKERS,
+    CLIMATOLOGIST,
 
     #Bosses
     GALACTIC_SIGMA,
@@ -99,6 +100,7 @@ enum disasters:
     FLYING_BASTION = [abilityIconString(Hero.BASTION, Button.ABILITY_1), "Flying Bastion", disasterId.FLYING_BASTION, 30, true, [], 1],
     COWBOY = [abilityIconString(Hero.MCCREE, Button.ULTIMATE), "Cowboy", disasterId.COWBOY, 30, true, [], 1],
     JUNKERS = [abilityIconString(Hero.ROADHOG, Button.ULTIMATE), "Junkers", disasterId.JUNKERS, 30, true, [], 1],
+    CLIMATOLOGIST = [abilityIconString(Hero.MEI, Button.ULTIMATE), "Climatologist", disasterId.CLIMATOLOGIST, 30, true, [], 1],
 
     # Bosses
     GALACTIC_SIGMA = [abilityIconString(Hero.SIGMA, Button.ULTIMATE), "Galactic Emperor", disasterId.GALACTIC_SIGMA, 60, true, [], 1],

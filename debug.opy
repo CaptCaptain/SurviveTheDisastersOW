@@ -131,12 +131,17 @@ def displayDebugDisasterName():
         case disasters.JUNKERS[disasterData.ID]:
             displayDebugDisaster(disasters.JUNKERS)
             break
+        case disasters.CLIMATOLOGIST[disasterData.ID]:
+            displayDebugDisaster(disasters.CLIMATOLOGIST)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break
 
 rule "[debug.opy] Enable Inspector / Create Debug Header":
-    @Condition debugMode
+    @Condition createWorkshopSetting(bool, "General", "Debug Mode", false, 3) == true
+
+    debugMode = true
     
     hudText(localPlayer if localPlayer.debugMenuEnabled else [], localPlayer.debugDisasterId, "Disaster Id", localPlayer.debugDisasterName, HudPosition.TOP, 69, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
 

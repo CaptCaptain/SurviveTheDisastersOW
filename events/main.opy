@@ -190,6 +190,7 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/bastion.opy"
 #!include "events/cowboy.opy"
 #!include "events/junkers.opy"
+#!include "events/climatologist.opy"
 #!include "events/bosses/galactic_sigma.opy"
 #!include "events/bosses/zeus.opy"
 #!include "events/bosses/orisa.opy"
@@ -331,6 +332,9 @@ def queueDisaster():
             break
         case disasters.JUNKERS[disasterData.ID]:
             addDisaster(disasters.JUNKERS)
+            break
+        case disasters.CLIMATOLOGIST[disasterData.ID]:
+            addDisaster(disasters.CLIMATOLOGIST)
             break
 
 def selectDisaster():
