@@ -108,7 +108,7 @@ playervar SHOP_CHALLENGES_ACTIVE = []
 #!include "game/main.opy"
 #!include "game/anti-crash.opy"
 
-#!include "debug.opy"
+##!include "debug.opy"
 
 rule "[main.opy] Disable Inspector":
     disableInspector()
