@@ -107,7 +107,7 @@ def displayEarnedMedals():
     eventPlayer.medalsDisplayLimit = 0
 
 rule "[player/medals.opy] Init":
-    onScreenText(localPlayer if localPlayer.medalsDisplayed else [], "Achievements", 0, -0.6, 1.2, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.NEVER)
+    onScreenTextCustomRender(localPlayer if localPlayer.medalsDisplayed else [], "Achievements", getOnScreenTextEyePosition(localPlayer), getOnScreenTextFacingPosition(localPlayer), 0, -0.6, 1.2, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.NEVER)
 
 rule "[player/medals.opy] Queue Medal Messages":
     @Event eachPlayer

@@ -7,7 +7,7 @@ rule "[bot/wisp.opy]: Behavior":
     @Condition hasDisasterTag(getDisasterId(disasters.WISP))
 
     eventPlayer.startForcingName("Will-o'-wisp")
-    eventPlayer.setDamageReceived(Math.INFINITY)
+    eventPlayer.setMaxHealth((30 / 150) * 100)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 1)
     eventPlayer.setDamageDealt(100)
 
@@ -27,14 +27,10 @@ rule "[bot/wisp.opy]: Behavior":
         if entityExists(eventPlayer.BOT_PLAYER):
             if eventPlayer.BOT_PLAYER.isAlive():
                 eventPlayer.BOT_PRIMARY_FIRE_ENABLED = true
-                eventPlayer.setAbilityCharge(Button.ABILITY_1, 3)
+                
+                eventPlayer.setAbilityCharge(Button.ABILITY_1, 1)
 
-                if distance(eventPlayer.BOT_PLAYER.getPosition(), eventPlayer.getPosition()) > 7.5:
-                    eventPlayer.forceButtonPress(Button.ABILITY_1)
-                    eventPlayer.teleport(nearestWalkablePosition(eventPlayer.getPosition()))
-                else:
-                    eventPlayer.forceButtonPress(Button.ABILITY_1)
-                    eventPlayer.teleport(eventPlayer.BOT_PLAYER.getPosition())
+                eventPlayer.forceButtonPress(Button.ABILITY_1)
 
                 if eventPlayer.BOT_PLAYER.isMeleeing() or eventPlayer.BOT_PLAYER.isFiringPrimaryFire() or eventPlayer.BOT_PLAYER.isFiringSecondaryFire():
                     eventPlayer.forceButtonPress(Button.ABILITY_2)

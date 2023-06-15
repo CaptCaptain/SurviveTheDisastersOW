@@ -1,22 +1,5 @@
 #!mainFile "../main.opy"
 
-enum shopChallengeOptions:
-    HACKED = [0, "Hacked", "Cannot use any abilities (1.25x PTS)", abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE)],
-    HARDCORE = [1, "Hardcore", "Increased damage taken (1.1x PTS)", abilityIconString(Hero.MCCREE, Button.ULTIMATE)],
-    PACIFIST = [2, "Pacifist", "Cannot use weapon (1.25x PTS)", iconString(Icon.HEART)]
-
-enum shopChallengeData:
-    ID,
-    NAME,
-    DESCRIPTION,
-    ICON,
-
-globalvar SHOP_CHALLENGES_ALL_OPTIONS = [shopChallengeOptions.HACKED[shopChallengeData.NAME], shopChallengeOptions.HARDCORE[shopChallengeData.NAME], shopChallengeOptions.PACIFIST[shopChallengeData.NAME]]
-globalvar SHOP_CHALLENGES_ALL_DESC = [shopChallengeOptions.HACKED[shopChallengeData.DESCRIPTION], shopChallengeOptions.HARDCORE[shopChallengeData.DESCRIPTION], shopChallengeOptions.PACIFIST[shopChallengeData.DESCRIPTION]]
-globalvar SHOP_CHALLENGES_ALL_ICONS = [shopChallengeOptions.HACKED[shopChallengeData.ICON], shopChallengeOptions.HARDCORE[shopChallengeData.ICON], shopChallengeOptions.PACIFIST[shopChallengeData.ICON]]
-playervar SHOP_CHALLENGES_OPTION = 0
-playervar SHOP_CHALLENGES_ACTIVE = []
-
 #!define addScoreboardIcon(player, iconString) \
 player.scoreboardChallenges = "{0}{1}".format(player.scoreboardChallenges, iconString)
 

@@ -7,6 +7,7 @@ rule "[events/flood.opy] Disaster Initialization":
     @Condition disasterReady
 
     DISASTER_FLOOD_Y_POS = getGroundLevel()
+    FLOOD_TIME = getTotalTimeElapsed()
 
     createEffect(localPlayer, Effect.SPHERE, Color.BLUE, vect(localPlayer.getPosition().x, DISASTER_FLOOD_Y_POS - 198, localPlayer.getPosition().z), 500, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     allocateEffect()
@@ -25,7 +26,7 @@ rule "[events/flood.opy] Disaster Damage":
 
     wait(0.032, Wait.ABORT_WHEN_FALSE)
 
-    damage(eventPlayer, null, 50)
+    damage(eventPlayer, null, 50 + getFloodDamageBonus())
 
     wait(1)
 

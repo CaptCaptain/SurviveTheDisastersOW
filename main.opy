@@ -2,6 +2,8 @@ settings "lobby.opy.json"
 
 #!suppressWarnings w_wait_until w_ow2_communicate_bug
 
+#!optimizeForSize
+
 #!extension projectiles
 #!extension spawnMoreDummyBots
 #!extension buffStatusEffects
@@ -57,6 +59,42 @@ globalvar WORKSHOP_CODE = "GWZB4"
 
 globalvar CREDITS_THERISTER = createWorkshopSetting(enum["Therister"], "Credits", "Dialogue System", 0, 1)
 globalvar CREDITS_ZEZOMBYE = createWorkshopSetting(enum["Zezombye"], "Credits", "Anti-Crash System & Overpy", 0, 1)
+
+# Shop Variables
+
+enum shopAccessibilityOptions:
+    3PC = [0, "Third Person Camera", "View the world in third person.", iconString(Icon.EYE)],
+
+enum shopAccessibilityData:
+    ID,
+    NAME,
+    DESCRIPTION,
+    ICON,
+
+globalvar SHOP_ACCESSIBILITY_ALL_OPTIONS = [shopAccessibilityOptions.3PC[shopAccessibilityData.NAME]]
+globalvar SHOP_ACCESSIBILITY_ALL_DESC = [shopAccessibilityOptions.3PC[shopAccessibilityData.DESCRIPTION]]
+globalvar SHOP_ACCESSIBILITY_ALL_ICONS = [shopAccessibilityOptions.3PC[shopAccessibilityData.ICON]]
+playervar SHOP_ACCESSIBILITY_OPTION = 0
+playervar SHOP_ACCESSIBILITY_ACTIVE = []
+
+enum shopChallengeOptions:
+    HACKED = [0, "Hacked", "Cannot use any abilities (1.25x PTS)", abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE)],
+    HARDCORE = [1, "Hardcore", "Increased damage taken (1.1x PTS)", abilityIconString(Hero.MCCREE, Button.ULTIMATE)],
+    PACIFIST = [2, "Pacifist", "Cannot use weapon (1.25x PTS)", iconString(Icon.HEART)]
+
+enum shopChallengeData:
+    ID,
+    NAME,
+    DESCRIPTION,
+    ICON,
+
+globalvar SHOP_CHALLENGES_ALL_OPTIONS = [shopChallengeOptions.HACKED[shopChallengeData.NAME], shopChallengeOptions.HARDCORE[shopChallengeData.NAME], shopChallengeOptions.PACIFIST[shopChallengeData.NAME]]
+globalvar SHOP_CHALLENGES_ALL_DESC = [shopChallengeOptions.HACKED[shopChallengeData.DESCRIPTION], shopChallengeOptions.HARDCORE[shopChallengeData.DESCRIPTION], shopChallengeOptions.PACIFIST[shopChallengeData.DESCRIPTION]]
+globalvar SHOP_CHALLENGES_ALL_ICONS = [shopChallengeOptions.HACKED[shopChallengeData.ICON], shopChallengeOptions.HARDCORE[shopChallengeData.ICON], shopChallengeOptions.PACIFIST[shopChallengeData.ICON]]
+playervar SHOP_CHALLENGES_OPTION = 0
+playervar SHOP_CHALLENGES_ACTIVE = []
+
+# Imports
 
 #!include "disasterData.opy"
 #!include "player/main.opy"

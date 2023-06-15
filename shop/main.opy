@@ -2,6 +2,7 @@
 
 globalvar SHOP_HERO_SWITCH_POSITION
 globalvar SHOP_CHALLENGES_POSITION
+globalvar SHOP_ACCESSIBILITY_POSITION
 globalvar SHOP_EFFECTS_INDEX = 0
 globalvar SHOP_EFFECTS = []
 globalvar SHOP_TEXTS = []
@@ -39,6 +40,7 @@ allocateShopEffect()\
 \
 
 #!include "shop/challenges.opy"
+#!include "shop/accessibility.opy"
 
 subroutine createShopEffects
 def createShopEffects():
@@ -74,6 +76,27 @@ def createShopEffects():
     createInWorldText(getAllPlayers(), "{0} Toggling any challenge will reset survival streak {0}\n\n\n\n\n\n\n".format(iconString(Icon.WARNING)) if distance(evalOnce(SHOP_CHALLENGES_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_CHALLENGES_POSITION) + evalOnce(Vector.UP * 0.9), 1.5, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
     allocateShopText()
 
+    # Accessibility
+    createShop(SHOP_ACCESSIBILITY_POSITION, Color.SKY_BLUE, "Accessibility".format(buttonString(Button.INTERACT)), abilityIconString(Hero.TORBJORN, Button.ABILITY_2))
+    
+    createEffect(getAllPlayers(), Effect.SPARKLES, Color.SKY_BLUE, SHOP_ACCESSIBILITY_POSITION, 1, EffectReeval.VISIBILITY_AND_COLOR)
+    allocateShopEffect()
+
+    createInWorldText(getAllPlayers(), "{1}{3} {0} {4}{2}\n\n\n".format(SHOP_ACCESSIBILITY_ALL_OPTIONS[localPlayer.SHOP_ACCESSIBILITY_OPTION], iconString(Icon.ARROW_LEFT), iconString(Icon.ARROW_RIGHT), buttonString(Button.PRIMARY_FIRE), buttonString(Button.SECONDARY_FIRE)) if distance(evalOnce(SHOP_ACCESSIBILITY_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_ACCESSIBILITY_POSITION) + evalOnce(Vector.UP * 0.9), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
+    allocateShopText()
+
+    createInWorldText(getAllPlayers(), ("[{0}Active]\n".format(iconString(Icon.CHECKMARK)) if localPlayer.SHOP_ACCESSIBILITY_OPTION in localPlayer.SHOP_ACCESSIBILITY_ACTIVE else "") if distance(evalOnce(SHOP_ACCESSIBILITY_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_ACCESSIBILITY_POSITION) + evalOnce(Vector.UP * 0.9), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
+    allocateShopText()
+
+    createInWorldText(getAllPlayers(), "[{0}] Activate [{0}]\n\n".format(buttonString(Button.INTERACT)) if distance(evalOnce(SHOP_ACCESSIBILITY_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_ACCESSIBILITY_POSITION) + evalOnce(Vector.UP * 0.9), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
+    allocateShopText()
+
+    createInWorldText(getAllPlayers(), "{0}".format(SHOP_ACCESSIBILITY_ALL_DESC[localPlayer.SHOP_ACCESSIBILITY_OPTION]) if distance(evalOnce(SHOP_ACCESSIBILITY_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_ACCESSIBILITY_POSITION) + evalOnce(Vector.UP * 0.9), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
+    allocateShopText()
+
+    createInWorldText(getAllPlayers(), "{0}\n\n\n".format(SHOP_ACCESSIBILITY_ALL_ICONS[localPlayer.SHOP_ACCESSIBILITY_OPTION]) if distance(evalOnce(SHOP_ACCESSIBILITY_POSITION), localPlayer.getPosition()) < 3 else "", evalOnce(SHOP_ACCESSIBILITY_POSITION) + evalOnce(Vector.UP * 0.9), 2.5, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, Color.WHITE, SpecVisibility.DEFAULT)
+    allocateShopText()
+
 subroutine clearShopEffects
 def clearShopEffects():
     for SHOP_EFFECTS_INDEX in range(0, len(SHOP_EFFECTS), 1):
@@ -93,6 +116,7 @@ rule "[shop/main.opy] Shop Init":
 
     SHOP_HERO_SWITCH_POSITION = getShopPosition(0)
     SHOP_CHALLENGES_POSITION = getShopPosition(2)
+    SHOP_ACCESSIBILITY_POSITION = getShopPosition(3)
 
     SHOP_CREATION_READY = true
 

@@ -128,6 +128,9 @@ def displayDebugDisasterName():
         case disasters.COWBOY[disasterData.ID]:
             displayDebugDisaster(disasters.COWBOY)
             break
+        case disasters.JUNKERS[disasterData.ID]:
+            displayDebugDisaster(disasters.JUNKERS)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break

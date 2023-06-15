@@ -7,6 +7,7 @@ rule "[events/acid.opy] Disaster Initialization":
     @Condition disasterReady
 
     DISASTER_ACID_Y_POS = getGroundLevel()
+    FLOOD_TIME = getTotalTimeElapsed()
 
     createEffect(localPlayer, Effect.SPHERE, Color.GREEN, vect(localPlayer.getPosition().x, DISASTER_ACID_Y_POS - 198, localPlayer.getPosition().z), 500, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     allocateEffect()
@@ -30,7 +31,7 @@ rule "[events/acid.opy] Disaster Damage":
 
     wait(0.032, Wait.ABORT_WHEN_FALSE)
 
-    eventPlayer.startDoT(null, 1, 50)
+    eventPlayer.startDoT(null, 1, 50 + getFloodDamageBonus())
 
     wait(1)
 

@@ -7,6 +7,7 @@ rule "[events/lava.opy] Disaster Initialization":
     @Condition disasterReady
 
     DISASTER_LAVA_Y_POS = getGroundLevel()
+    FLOOD_TIME = getTotalTimeElapsed()
 
     createEffect(localPlayer, Effect.SPHERE, Color.RED, vect(localPlayer.getPosition().x, DISASTER_LAVA_Y_POS - 198, localPlayer.getPosition().z), 500, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     allocateEffect()
@@ -26,7 +27,7 @@ rule "[events/lava.opy] Disaster Damage":
 
     eventPlayer.setStatusEffect(null, Status.BURNING, 9999)
 
-    eventPlayer.startDoT(null, 1, 50)
+    eventPlayer.startDoT(null, 1, 50 + getFloodDamageBonus())
 
     wait(1)
 

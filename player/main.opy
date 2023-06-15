@@ -129,6 +129,13 @@ for globalIndex in range(0, len(activeDisasters), 1):\
         case disasters.COWBOY[disasterData.ID]:\
             appendDisasterString(disasters.COWBOY, disasterLastEntryMacro)\
             break\
+        case disasters.JUNKERS[disasterData.ID]:\
+            appendDisasterString(disasters.JUNKERS, disasterLastEntryMacro)\
+            break\
+
+#!define getOnScreenTextEyePosition(player) (player.onScreenTextEyePosition if player.onScreenTextEyePosition else player.getEyePosition())
+
+#!define getOnScreenTextFacingPosition(player) (player.onScreenTextFacingDirection if player.onScreenTextFacingDirection else player.getFacingDirection())
 
 #!define scoreboardPosition(slot) scoreboardPlayers.index(getPlayersInSlot(slot, Team.1)) * -1
 
@@ -175,6 +182,9 @@ globalvar disasterTypeDescription = ""
 globalvar disasterTypeColor = ""
 globalvar disasterTypeTexts = []
 
+playervar onScreenTextEyePosition
+playervar onScreenTextFacingDirection
+
 #!include "player/dialogue.opy"
 #!include "player/tank.opy"
 #!include "player/sombra.opy"
@@ -219,19 +229,10 @@ rule "[player/main.opy] Credits Hud":
     
     # Credits
 
-    onScreenText(localPlayer, "https://workshop.codes/discord", 1.1, 2.12, 1.25, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
+    onScreenTextCustomRender(getPlayers(Team.1), "         Mode by CaptCaptain ▶ {}\nworkshop.codes/survive-disasters".format(WORKSHOP_CODE), getOnScreenTextEyePosition(localPlayer), getOnScreenTextFacingPosition(localPlayer), -1.1, 2.04, 1.25, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
     allocateHudText(creditsTexts)
 
-    onScreenText(localPlayer, "Mode by CaptCaptain ▶ {}".format(WORKSHOP_CODE), -1.1, 2.12, 1.25, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
-    allocateHudText(creditsTexts)
-
-    onScreenText(localPlayer, "{0} Join Workshop Creators! {0}".format(iconString(Icon.ARROW_UP)), 1.1, 2.02, 1, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
-    allocateHudText(creditsTexts)
-
-    onScreenText(localPlayer, "https://workshop.codes/survive-disasters".format(WORKSHOP_CODE), -1.1, 2.02, 1, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
-    allocateHudText(creditsTexts)
-
-    onScreenText(localPlayer, "★ Import code {} to ensure you always play on the latest version".format(WORKSHOP_CODE), 0, 2.22, 1, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, Color.WHITE, SpecVisibility.DEFAULT)
+    onScreenTextCustomRender(getPlayers(Team.1), "   {0} Join Workshop Creators! {0}\nhttps://workshop.codes/discord".format(iconString(Icon.ARROW_DOWN)), getOnScreenTextEyePosition(localPlayer), getOnScreenTextFacingPosition(localPlayer), 1.1, 2.04, 1.25, WorldTextReeval.VISIBILITY_POSITION_AND_COLOR, rgb(rainbow(getTotalTimeElapsed() * 50)), SpecVisibility.DEFAULT)
     allocateHudText(creditsTexts)
 
     waitUntil(not toggleCredits, 9999)
