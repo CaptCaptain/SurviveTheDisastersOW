@@ -135,6 +135,9 @@ for globalIndex in range(0, len(activeDisasters), 1):\
         case disasters.CLIMATOLOGIST[disasterData.ID]:\
             appendDisasterString(disasters.CLIMATOLOGIST, disasterLastEntryMacro)\
             break\
+        case disasters.LIFE_GRIP[disasterData.ID]:\
+            appendDisasterString(disasters.LIFE_GRIP, disasterLastEntryMacro)\
+            break\
 
 #!define getOnScreenTextEyePosition(player) (player.onScreenTextEyePosition if player.onScreenTextEyePosition else player.getEyePosition())
 

@@ -107,6 +107,8 @@ allocatedDummyBot.BOT_DISASTER_TAG = tag
 #!define waitForEntitySpawnFlag(disasterId) \
 waitUntil(activeDisasters.index(disasterId) == entitySpawningIndex, 9999)
 
+#!define hasDisasterTag(player, tag) player.BOT_DISASTER_TAG == tag
+
 #!define applyEntityFlag(player, flag) \
 player.BOT_DISASTER_FLAGS.append(flag)
 
@@ -195,6 +197,7 @@ playervar BOT_DISASTER_FLAGS = []
 #!include "events/bastion.opy"
 #!include "events/cowboy.opy"
 #!include "events/junkers.opy"
+#!include "events/life_grip.opy"
 #!include "events/climatologist.opy"
 #!include "events/bosses/galactic_sigma.opy"
 #!include "events/bosses/zeus.opy"
@@ -340,6 +343,9 @@ def queueDisaster():
             break
         case disasters.CLIMATOLOGIST[disasterData.ID]:
             addDisaster(disasters.CLIMATOLOGIST)
+            break
+        case disasters.LIFE_GRIP[disasterData.ID]:
+            addDisaster(disasters.LIFE_GRIP)
             break
 
 def selectDisaster():

@@ -134,6 +134,9 @@ def displayDebugDisasterName():
         case disasters.CLIMATOLOGIST[disasterData.ID]:
             displayDebugDisaster(disasters.CLIMATOLOGIST)
             break
+        case disasters.LIFE_GRIP[disasterData.ID]:
+            displayDebugDisaster(disasters.LIFE_GRIP)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break
