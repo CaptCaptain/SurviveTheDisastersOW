@@ -1,6 +1,6 @@
 #!mainFile "../main.opy"
 
-globalvar DISASTER_BLACK_HOLE_CENTER
+#!define DISASTER_BLACK_HOLE_CENTER (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.BLACK_HOLE)))
 
 #!define DISASTER_BLACK_HOLE_EFFECT() \
 createProjectileEffect(getAllPlayers(), Projectile.ZARYA_GRAVITON, getPlayers(Team.1), DISASTER_BLACK_HOLE_CENTER + (Vector.UP * 3), getClosestPlayer(DISASTER_BLACK_HOLE_CENTER, Team.1), evalOnce(0.25), ProjectileEffectReeval.VISIBILITY_POSITION_DIRECTION_AND_SIZE)\

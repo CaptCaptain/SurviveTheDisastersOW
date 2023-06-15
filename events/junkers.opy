@@ -1,6 +1,6 @@
 #!mainFile "../main.opy"
 
-globalvar DISASTER_JUNKERS_POOL
+#!define DISASTER_JUNKERS_POOL (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.JUNKERS)))
 
 rule "[events/junkers.opy] Disaster Initialization":
     @Condition getDisasterId(disasters.JUNKERS) in activeDisasters

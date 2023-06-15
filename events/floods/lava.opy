@@ -1,6 +1,6 @@
 #!mainFile "../../main.opy"
 
-globalvar DISASTER_LAVA_Y_POS
+#!define DISASTER_LAVA_Y_POS (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.LAVA)))
 
 rule "[events/lava.opy] Disaster Initialization":
     @Condition disasters.LAVA[disasterData.ID] in activeDisasters

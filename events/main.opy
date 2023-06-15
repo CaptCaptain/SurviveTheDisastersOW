@@ -116,6 +116,8 @@ wait(0.016) \
 main_dialogue = null \
 is_dialoguing = false \
 
+#!define getDisasterVariable(array, disasterId) array[activeDisasters.index(disasterId)]
+
 globalvar disasterPool = [disasters.BOB[disasterData.ID], disasters.MINEFIELD[disasterData.ID], disasters.MOTHS[disasterData.ID], disasters.WIFELEAVER[disasterData.ID], disasters.ACID_RAIN[disasterData.ID], disasters.SOMBRA[disasterData.ID], disasters.WINTON[disasterData.ID], disasters.KAME[disasterData.ID], disasters.FLOOD[disasterData.ID], disasters.GET_DOWN[disasterData.ID], disasters.GREEN_ZONE[disasterData.ID], disasters.MURDERERS[disasterData.ID], disasters.NULL_SECTOR[disasterData.ID], disasters.TALON[disasterData.ID], disasters.BUTTON[disasterData.ID], disasters.NINJA[disasterData.ID], disasters.COPYCAT[disasterData.ID], disasters.BLACK_HOLE[disasterData.ID], disasters.LAVA[disasterData.ID], disasters.ACID[disasterData.ID], disasters.SNIPER[disasterData.ID], disasters.BOMBS[disasterData.ID], disasters.FAKE_BP[disasterData.ID], disasters.WISP[disasterData.ID], disasters.BLIZZARD[disasterData.ID], disasters.SIMON[disasterData.ID], disasters.WITCH[disasterData.ID], disasters.PHARAMERCY[disasterData.ID], disasters.TIKTOK[disasterData.ID], disasters.VISHKAR[disasterData.ID], disasters.NUCLEAR_BOMB[disasterData.ID], disasters.DEATH_TRAMPOLINE[disasterData.ID], disasters.CRUSADERS[disasterData.ID], disasters.FLYING_BASTION[disasterData.ID], disasters.COWBOY[disasterData.ID]]
 
 globalvar bossDisasterPool = [getDisasterId(disasters.GALACTIC_SIGMA), getDisasterId(disasters.ZEUS), getDisasterId(disasters.ZEUS)]
@@ -146,6 +148,9 @@ globalvar disasterIndex = 0
 globalvar disasterReady = false
 globalvar disasterRespawnable = true
 globalvar multipleDisastersMax = 1
+globalvar disasterVariables_1 = []
+globalvar disasterVariables_2 = []
+globalvar disasterVariables_3 = []
 
 globalvar tempDummyBotSpawnArray = []
 globalvar dummyBotSpawnArray = []
@@ -456,6 +461,9 @@ def cleanupDisaster():
     activeDisasterEntityTypes = 0
     activeDisasterEntitySpawning = 0
     entitySpawningIndex = 0
+    disasterVariables_1 = []
+    disasterVariables_2 = []
+    disasterVariables_3 = []
     getDeadPlayers(Team.1).respawn()
     getAllPlayers().enableRespawn()
 

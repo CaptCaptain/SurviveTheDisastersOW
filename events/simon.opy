@@ -23,8 +23,8 @@ if (condition):\
         fixedSmallMessageWithIcon(eventPlayer, iconString(Icon.NO), "You didn't do as Simon Says...")\
         printLog("{0} did not pass Simon Says!".format(eventPlayer))\
 
-globalvar DISASTER_SIMON_INSTRUCTION = 0
-globalvar DISASTER_SIMON_DO = true
+#!define DISASTER_SIMON_INSTRUCTION (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.SIMON)))
+#!define DISASTER_SIMON_DO (getDisasterVariable(disasterVariables_2, getDisasterId(disasters.SIMON)))
 
 playervar DISASTER_SIMON_PASSED = true
 

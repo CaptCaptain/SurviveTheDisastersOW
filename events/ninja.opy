@@ -1,6 +1,6 @@
 #!mainFile "../main.opy"
 
-globalvar DISASTER_NINJA_POOL
+#!define DISASTER_NINJA_POOL (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.NINJA)))
 
 rule "[events/ninja.opy] Disaster Initialization":
     @Condition disasters.NINJA[disasterData.ID] in activeDisasters

@@ -1,6 +1,6 @@
 #!mainFile "../main.opy"
 
-globalvar DISASTER_FAKE_BP_POS
+#!define DISASTER_FAKE_BP_POS (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.FAKE_BP)))
 
 rule "[events/button.opy] Disaster Initialization":
     @Condition disasters.FAKE_BP[disasterData.ID] in activeDisasters

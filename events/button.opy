@@ -10,7 +10,7 @@ allocateEffect()\
 createEffect(getAllPlayers(), Effect.LIGHT_SHAFT, Color.RED, DISASTER_BUTTON_POS + (Vector.DOWN * 25), 10, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
 allocateEffect()\
 
-globalvar DISASTER_BUTTON_POS
+#!define DISASTER_BUTTON_POS (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.BUTTON)))
 
 rule "[events/button.opy] Disaster Initialization":
     @Condition disasters.BUTTON[disasterData.ID] in activeDisasters

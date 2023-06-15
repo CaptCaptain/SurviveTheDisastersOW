@@ -1,6 +1,6 @@
 #!mainFile "../main.opy"
 
-globalvar DISASTER_COPYCAT_DUPLICATE_HERO
+#!define DISASTER_COPYCAT_DUPLICATE_HERO (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.COPYCAT)))
 
 rule "[events/copycat.opy] Disaster Initialization":
     @Condition disasters.COPYCAT[disasterData.ID] in activeDisasters

@@ -1,6 +1,6 @@
 #!mainFile "../main.opy"
 
-globalvar DISASTER_TRAMPOLINE_Y_POS
+#!define DISASTER_TRAMPOLINE_Y_POS (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.DEATH_TRAMPOLINE)))
 playervar DISASTER_TRAMPOLINED
 
 rule "[events/death_trampoline.opy] Disaster Initialization":

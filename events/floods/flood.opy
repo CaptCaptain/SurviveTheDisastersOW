@@ -1,6 +1,6 @@
 #!mainFile "../../main.opy"
 
-globalvar DISASTER_FLOOD_Y_POS
+#!define DISASTER_FLOOD_Y_POS (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.FLOOD)))
 
 rule "[events/flood.opy] Disaster Initialization":
     @Condition disasters.FLOOD[disasterData.ID] in activeDisasters

@@ -1,6 +1,6 @@
 #!mainFile "../../main.opy"
 
-globalvar DISASTER_ACID_Y_POS
+#!define DISASTER_ACID_Y_POS (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.ACID)))
 
 rule "[events/acid.opy] Disaster Initialization":
     @Condition disasters.ACID[disasterData.ID] in activeDisasters

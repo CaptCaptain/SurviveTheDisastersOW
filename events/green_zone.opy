@@ -1,8 +1,8 @@
 #!mainFile "../main.opy"
 
-globalvar DISASTER_GREEN_ZONE_CENTER
-globalvar DISASTER_GREEN_ZONE_RADIUS
-globalvar DISASTER_GREEN_ZONE_TIME
+#!define DISASTER_GREEN_ZONE_CENTER (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.GREEN_ZONE)))
+#!define DISASTER_GREEN_ZONE_RADIUS (getDisasterVariable(disasterVariables_2, getDisasterId(disasters.GREEN_ZONE)))
+#!define DISASTER_GREEN_ZONE_TIME (getDisasterVariable(disasterVariables_3, getDisasterId(disasters.GREEN_ZONE)))
 
 #!define DISASTER_GREEN_ZONE_EFFECT() \
 createEffect(getAllPlayers(), Effect.LIGHT_SHAFT, Color.LIME_GREEN, DISASTER_GREEN_ZONE_CENTER + (Vector.UP * 25), DISASTER_GREEN_ZONE_RADIUS, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\

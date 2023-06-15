@@ -1,6 +1,6 @@
 #!mainFile "../main.opy"
 
-globalvar DISASTER_SNIPER_POOL
+#!define DISASTER_SNIPER_POOL (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.SNIPER)))
 
 rule "[events/sniper.opy] Disaster Initialization":
     @Condition disasters.SNIPER[disasterData.ID] in activeDisasters

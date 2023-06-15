@@ -1,7 +1,7 @@
 #!mainFile "../main.opy"
 
-globalvar DISASTER_GET_DOWN_Y_POS
-globalvar DISASTER_GET_DOWN_RZ_POS
+#!define DISASTER_GET_DOWN_Y_POS (getDisasterVariable(disasterVariables_1, getDisasterId(disasters.GET_DOWN)))
+#!define DISASTER_GET_DOWN_RZ_POS (getDisasterVariable(disasterVariables_2, getDisasterId(disasters.GET_DOWN)))
 
 #!define DISASTER_GET_DOWN_WORLD_VECTOR worldVector(vect(0, 0, DISASTER_GET_DOWN_RZ_POS), localPlayer, Transform.ROTATION_AND_TRANSLATION)
 
