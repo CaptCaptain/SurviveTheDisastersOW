@@ -4,7 +4,7 @@ rule "[bot/crusaders.opy]: Behavior":
     @Event eachPlayer
     @Hero reinhardt
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.CRUSADERS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.CRUSADERS))
 
     eventPlayer.startForcingName(random.choice(["Crusader", "Reinhardt Wilhelm", "Balderich von Adler"]))
     eventPlayer.setDamageDealt(200)

@@ -7,7 +7,7 @@ rule "[bot/zeus.opy]: Behavior":
     @Event eachPlayer
     @Hero junkerQueen
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.ZEUS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.ZEUS))
 
     createBossName(eventPlayer, Icon.BOLT, iconString(Icon.BOLT), Color.ORANGE)
 
@@ -62,7 +62,7 @@ rule "[bot/zeus.opy]: Shout Projectiles":
     @Event eachPlayer
     @Hero junkerQueen
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.ZEUS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.ZEUS))
 
     while eventPlayer.isAlive():
         waitUntil(eventPlayer.isUsingAbility1() or not entityExists(eventPlayer.BOT_PLAYER), 9999)
@@ -101,7 +101,7 @@ rule "[bot/zeus.opy]: Stunned during Ultimate":
     @Event playerDealtDamage
     @Hero junkerQueen
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.ZEUS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.ZEUS))
     @Condition eventAbility == Button.ULTIMATE
     
     if not victim in DISASTER_ZEUS_ATKD_ONCE:

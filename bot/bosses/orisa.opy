@@ -6,7 +6,7 @@ rule "[bot/orisa.opy]: Behavior":
     @Event eachPlayer
     @Hero orisa
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.ORISA_DEFENDER))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.ORISA_DEFENDER))
 
     createBossName(eventPlayer, Icon.EXCLAMATION_MARK, abilityIconString(Hero.ORISA, Button.ULTIMATE), Color.LIME_GREEN)
 
@@ -50,7 +50,7 @@ rule "[bot/zeus.opy]: Javelin Spin Projectiles":
     @Event eachPlayer
     @Hero orisa
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.ORISA_DEFENDER))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.ORISA_DEFENDER))
 
     while eventPlayer.isAlive():
         waitUntil(eventPlayer.isUsingAbility2() or not entityExists(eventPlayer.BOT_PLAYER), 9999)

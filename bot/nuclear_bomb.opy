@@ -4,7 +4,7 @@ rule "[bot/nuclear_bomb.opy]: Behavior":
     @Event eachPlayer
     @Hero dva
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NUCLEAR_BOMB))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NUCLEAR_BOMB))
 
     eventPlayer.startForcingName("Nuclear Bomb")
     eventPlayer.setDamageDealt(Math.INFINITY)

@@ -4,7 +4,7 @@ rule "[bot/seer_mercy.opy]: Mercy Behavior":
     @Event eachPlayer
     @Hero mercy
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
 
     createIcon(localPlayer if not localPlayer.isInViewAngle(eventPlayer.getEyePosition(), 90) and eventPlayer.isAlive() else null, eventPlayer, Icon.EXCLAMATION_MARK, IconReeval.VISIBILITY, Color.RED, true)
     allocateEffect()
@@ -54,7 +54,7 @@ rule "[bot/seer_mercy.opy]: Mercy Death Behavior":
     @Event playerDied
     @Hero mercy
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
 
     startDialogueOnce(1, [[Hero.MERCY, random.choice(["I have failed, your excellency...", "(dying sounds)"]), 1]], sky)
     waitUntil(is_dialoguing == false, 9999)

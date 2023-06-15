@@ -4,7 +4,7 @@ rule "[bot/bastion.opy]: Behavior":
     @Event eachPlayer
     @Hero bastion
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.FLYING_BASTION))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.FLYING_BASTION))
 
     eventPlayer.setMaxHealth(75)
 
@@ -31,7 +31,7 @@ rule "[bot/bastion.opy]: Flying Behavior":
     @Event eachPlayer
     @Hero bastion
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.FLYING_BASTION))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.FLYING_BASTION))
     @Condition eventPlayer.isInAlternateForm()
 
     eventPlayer.setGravity(0)

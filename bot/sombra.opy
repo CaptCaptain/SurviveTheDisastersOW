@@ -4,7 +4,7 @@ rule "[bot/sombra.opy]: Behavior":
     @Event eachPlayer
     @Hero sombra
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.SOMBRA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.SOMBRA))
 
     eventPlayer.startForcingName("Hacker")
 

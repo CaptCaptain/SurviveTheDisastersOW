@@ -4,7 +4,7 @@ rule "[bot/climatologist.opy]: Behavior":
     @Event eachPlayer
     @Hero mei
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.CLIMATOLOGIST))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.CLIMATOLOGIST))
 
     eventPlayer.startForcingName(random.choice(["Mei", "Dr. Zhou", "周美灵", "Mei-Ling Zhou", "Devil", "Climatologist"]))
 

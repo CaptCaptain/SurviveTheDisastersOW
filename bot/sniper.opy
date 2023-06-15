@@ -11,7 +11,7 @@ rule "[bot/sniper.opy]: Ashe Behavior":
     @Event eachPlayer
     @Hero ashe
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.SNIPER))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.SNIPER))
 
     eventPlayer.startForcingName("Sniper")
 
@@ -31,7 +31,7 @@ rule "[bot/sniper.opy]: Ana Behavior":
     @Event eachPlayer
     @Hero ana
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.SNIPER))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.SNIPER))
 
     eventPlayer.startForcingName("Sniper")
 
@@ -58,7 +58,7 @@ rule "[bot/sniper.opy]: Widow Behavior":
     @Event eachPlayer
     @Hero widowmaker
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.SNIPER))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.SNIPER))
 
     eventPlayer.startForcingName("Sniper")
 

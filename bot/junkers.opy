@@ -4,7 +4,7 @@ rule "[bot/junkers.opy]: Junkrat Behavior":
     @Event eachPlayer
     @Hero junkrat
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.JUNKERS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.JUNKERS))
 
     eventPlayer.startForcingName("Junker")
 
@@ -27,7 +27,7 @@ rule "[bot/junkers.opy]: Roadhog Behavior":
     @Event eachPlayer
     @Hero roadhog
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.JUNKERS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.JUNKERS))
 
     eventPlayer.startForcingName("Junker")
 
@@ -48,7 +48,7 @@ rule "[bot/junkers.opy]: Junker Queen Behavior":
     @Event eachPlayer
     @Hero junkerQueen
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.JUNKERS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.JUNKERS))
 
     eventPlayer.startForcingName("Junker")
 

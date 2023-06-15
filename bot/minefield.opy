@@ -4,7 +4,7 @@ rule "[bot/minefield.opy]: Behavior":
     @Event eachPlayer
     @Hero hammond
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.MINEFIELD))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.MINEFIELD))
 
     eventPlayer.setInvisibility(Invis.ENEMIES)
     eventPlayer.setUltCharge(100)

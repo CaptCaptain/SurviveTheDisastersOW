@@ -26,7 +26,7 @@ rule "[bot/echo.opy]: Echo Behavior":
     @Event eachPlayer
     @Hero echo
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.COPYCAT))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.COPYCAT))
 
     eventPlayer.preloadHero(DISASTER_COPYCAT_DUPLICATE_HERO)
 
@@ -62,7 +62,7 @@ rule "[bot/echo.opy]: Echo Behavior":
 rule "[bot/copycat.opy] Switch to Duplicated Character":
     @Event eachPlayer
     @Hero echo
-    @Condition hasDisasterTag(getDisasterId(disasters.COPYCAT))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.COPYCAT))
     @Condition eventPlayer.getHeroOfDuplication() != null
 
     RESET_TO_IDLE()

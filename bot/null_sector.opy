@@ -4,7 +4,7 @@ rule "[bot/null_sector.opy]: Ramattra Behavior":
     @Event eachPlayer
     @Hero ramattra
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NULL_SECTOR))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NULL_SECTOR))
 
     eventPlayer.HEALTH_NORMAL = getNumberOfLivingPlayers(Team.1) * 250
     eventPlayer.HEALTH_ARMOR = getNumberOfLivingPlayers(Team.1) * 250
@@ -62,7 +62,7 @@ rule "[bot/null_sector.opy]: Ramattra Ult":
     @Event eachPlayer
     @Hero ramattra
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NULL_SECTOR))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NULL_SECTOR))
     @Condition eventPlayer.getNormalizedHealth() < 0.3
 
     wait(0.1, Wait.ABORT_WHEN_FALSE)
@@ -75,7 +75,7 @@ rule "[bot/null_sector.opy]: Orisa Behavior":
     @Event eachPlayer
     @Hero orisa
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NULL_SECTOR))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NULL_SECTOR))
 
     eventPlayer.startForcingName("OR13-A")
     eventPlayer.HEALTH_NORMAL = 200
@@ -109,7 +109,7 @@ rule "[bot/null_sector.opy]: Bastion Behavior":
     @Event eachPlayer
     @Hero bastion
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NULL_SECTOR))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NULL_SECTOR))
 
     eventPlayer.startForcingName("E-54")
     eventPlayer.HEALTH_NORMAL = 100
@@ -138,7 +138,7 @@ rule "[bot/null_sector.opy]: Nulltrooper Behavior":
     @Event eachPlayer
     @Hero baptiste
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NULL_SECTOR))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NULL_SECTOR))
 
     eventPlayer.startForcingName("Nulltrooper")
     eventPlayer.HEALTH_NORMAL = 200

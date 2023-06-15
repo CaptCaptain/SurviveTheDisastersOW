@@ -4,7 +4,7 @@ rule "[bot/kamehameha.opy]: Behavior":
     @Event eachPlayer
     @Hero moira
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.KAME))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.KAME))
 
     eventPlayer.startForcingName("Kamehameha")
     eventPlayer.setDamageDealt(Math.INFINITY)

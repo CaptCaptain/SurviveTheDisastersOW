@@ -4,7 +4,7 @@ rule "[bot/royal_captain.opy]: Sojourn Behavior":
     @Event eachPlayer
     @Hero brigitte
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
 
     createIcon(localPlayer if not localPlayer.isInViewAngle(eventPlayer.getEyePosition(), 90) and eventPlayer.isAlive() else null, eventPlayer, Icon.EXCLAMATION_MARK, IconReeval.VISIBILITY, Color.ORANGE, true)
     allocateEffect()
@@ -55,7 +55,7 @@ rule "[bot/royal_captain.opy]: Brigitte Death Behavior":
     @Event playerDied
     @Hero brigitte
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
 
     startDialogueOnce(1, [[Hero.BRIGITTE, random.choice(["I have failed my duty...", "(dying sounds)"]), 1]], sky)
     waitUntil(is_dialoguing == false, 9999)

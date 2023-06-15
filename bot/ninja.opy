@@ -10,7 +10,7 @@ rule "[bot/ninja.opy]: Genji Behavior":
     @Event eachPlayer
     @Hero genji
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NINJA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NINJA))
 
     eventPlayer.startForcingName("Ninja")
 
@@ -40,7 +40,7 @@ rule "[bot/ninja.opy]: Hanzo Behavior":
     @Event eachPlayer
     @Hero hanzo
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NINJA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NINJA))
 
     eventPlayer.startForcingName(random.choice(["Ninja", "Ninja", "Ninja", "Spirit Dragon"]))
 
@@ -68,7 +68,7 @@ rule "[bot/ninja.opy]: Kiriko Behavior":
     @Event eachPlayer
     @Hero kiriko
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NINJA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NINJA))
 
     eventPlayer.startForcingName(random.choice(["Ninja", "Ninja", "Ninja", "Believe It", "Dattebayo"]))
 
@@ -100,7 +100,7 @@ rule "[bot/ninja.opy]: Cancel Genji Ult Voiceline":
     @Event eachPlayer
     @Hero genji
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.NINJA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NINJA))
     @Condition eventPlayer.isUsingUltimate()
 
     eventPlayer.setStatusEffect(null, Status.FROZEN, 0.016)

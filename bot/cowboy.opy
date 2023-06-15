@@ -4,7 +4,7 @@ rule "[bot/crusaders.opy]: Behavior":
     @Event eachPlayer
     @Hero mccree
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.COWBOY))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.COWBOY))
 
     eventPlayer.startForcingName(random.choice(["Huckleberry", "Cassidy", "Cole Casserole", "13:37", "2:00", "4:20"]))
 

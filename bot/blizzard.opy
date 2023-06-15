@@ -4,7 +4,7 @@ rule "[bot/blizzard.opy]: Behavior":
     @Event eachPlayer
     @Hero mei
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.BLIZZARD))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.BLIZZARD))
 
     eventPlayer.startForcingName("Blizzard")
 

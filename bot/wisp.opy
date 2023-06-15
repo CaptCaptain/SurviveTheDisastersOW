@@ -4,7 +4,7 @@ rule "[bot/wisp.opy]: Behavior":
     @Event eachPlayer
     @Hero tracer
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.WISP))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.WISP))
 
     eventPlayer.startForcingName("Will-o'-wisp")
     eventPlayer.setMaxHealth((30 / 150) * 100)

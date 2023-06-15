@@ -4,7 +4,7 @@ rule "[bot/murderer.opy]: Behavior":
     @Event eachPlayer
     @Hero junkerQueen
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.MURDERERS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.MURDERERS))
 
     eventPlayer.startForcingName("Murderer")
     eventPlayer.setDamageDealt(200)

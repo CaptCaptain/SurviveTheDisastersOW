@@ -4,7 +4,7 @@ rule "[bot/vishkar.opy]: Symmetra Behavior":
     @Event eachPlayer
     @Hero symmetra
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.VISHKAR))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.VISHKAR))
 
     eventPlayer.startForcingName("Satya Vaswani")
 
@@ -26,7 +26,7 @@ rule "[bot/vishkar.opy]: Lifeweaver Behavior":
     @Event eachPlayer
     @Hero lifeweaver
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.VISHKAR))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.VISHKAR))
 
     eventPlayer.startForcingName("Niran Pruksamanee")
 
@@ -54,7 +54,7 @@ rule "[bot/vishkar.opy]: Lifeweaver Behavior":
     @Event eachPlayer
     @Hero lifeweaver
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.VISHKAR))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.VISHKAR))
 
     wait(1)
     eventPlayer.stopForcingButton(Button.PRIMARY_FIRE)

@@ -4,7 +4,7 @@ rule "[bot/bob.opy]: Behavior":
     @Event eachPlayer
     @Hero ashe
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.BOB))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.BOB))
 
     eventPlayer.setInvisibility(Invis.ENEMIES)
     eventPlayer.setUltCharge(100)

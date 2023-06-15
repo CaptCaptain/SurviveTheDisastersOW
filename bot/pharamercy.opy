@@ -14,7 +14,7 @@ rule "[bot/pharamercy.opy]: Pharah Behavior":
     @Event eachPlayer
     @Hero pharah
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.PHARAMERCY))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.PHARAMERCY))
 
     eventPlayer.startForcingName(random.choice(["Pharah", "Her Pharah"]))
 
@@ -35,7 +35,7 @@ rule "[bot/pharamercy.opy]: Pharah Death Behavior":
     @Event playerDied
     @Hero pharah
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.PHARAMERCY))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.PHARAMERCY))
 
     eventPlayer.disableRespawn()
 
@@ -43,7 +43,7 @@ rule "[bot/pharamercy.opy]: Mercy Behavior":
     @Event eachPlayer
     @Hero mercy
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.PHARAMERCY))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.PHARAMERCY))
 
     eventPlayer.startForcingName(random.choice(["Mercy", "His Mercy"]))
 

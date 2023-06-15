@@ -4,7 +4,7 @@ rule "[bot/space_prince.opy]: Space Prince Behavior":
     @Event eachPlayer
     @Hero lucio
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
 
     createIcon(localPlayer if not localPlayer.isInViewAngle(eventPlayer.getEyePosition(), 90) and eventPlayer.isAlive() else null, eventPlayer, Icon.EXCLAMATION_MARK, IconReeval.VISIBILITY, Color.GREEN, true)
     allocateEffect()
@@ -52,7 +52,7 @@ rule "[bot/space_prince.opy]: Beat Charge":
     @Event eachPlayer
     @Hero lucio
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
     
     while true:
         eventPlayer.setUltCharge(eventPlayer.getUltCharge() + 5)
@@ -62,7 +62,7 @@ rule "[bot/space_prince.opy]: Lucio Death Behavior":
     @Event playerDied
     @Hero lucio
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
 
     wait(1)
 

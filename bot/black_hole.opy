@@ -4,7 +4,7 @@ rule "[bot/black_hole.opy]: Behavior":
     @Event eachPlayer
     @Hero zarya
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.BLACK_HOLE))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.BLACK_HOLE))
 
     eventPlayer.BOT_DISABLE_AI = true
     eventPlayer.setInvisibility(Invis.ALL)

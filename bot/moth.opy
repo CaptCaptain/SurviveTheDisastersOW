@@ -4,7 +4,7 @@ rule "[bot/moth.opy]: Behavior":
     @Event eachPlayer
     @Hero mercy
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.MOTHS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.MOTHS))
 
     eventPlayer.startForcingName("Moth")
 
@@ -21,7 +21,7 @@ rule "[bot/moth.opy]: Force Valk":
     @Event eachPlayer
     @Hero mercy
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.MOTHS))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.MOTHS))
 
     eventPlayer.setUltCharge(100)
 

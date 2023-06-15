@@ -4,7 +4,7 @@ rule "[bot/infinite_admiral.opy]: Sojourn Behavior":
     @Event eachPlayer
     @Hero sojourn
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
 
     createIcon(localPlayer if not localPlayer.isInViewAngle(eventPlayer.getEyePosition(), 90) and eventPlayer.isAlive() else null, eventPlayer, Icon.EXCLAMATION_MARK, IconReeval.VISIBILITY, Color.RED, true)
     allocateEffect()
@@ -47,7 +47,7 @@ rule "[bot/infinite_admiral.opy]: Overclock Charge":
     @Event eachPlayer
     @Hero sojourn
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
     
     while true:
         eventPlayer.setUltCharge(eventPlayer.getUltCharge() + 5)
@@ -57,7 +57,7 @@ rule "[bot/infinite_admiral.opy]: Sojourn Death Behavior":
     @Event playerDied
     @Hero sojourn
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
 
     startDialogueOnce(1, [[Hero.SOJOURN, random.choice(["This won't be the end...", "(dying sounds)"]), 1]], sky)
     waitUntil(is_dialoguing == false, 9999)

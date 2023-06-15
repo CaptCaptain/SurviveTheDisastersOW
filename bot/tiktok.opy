@@ -4,7 +4,7 @@ rule "[bot/tiktok.opy]: Behavior":
     @Event eachPlayer
     @Hero moira
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.TIKTOK))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.TIKTOK))
 
     eventPlayer.startForcingName(random.choice(["DPSMoira", "TiktokMoira", "NotHealer", "DPSOnly"]))
 

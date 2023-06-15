@@ -4,7 +4,7 @@ rule "[bot/winton.opy]: Behavior":
     @Event eachPlayer
     @Hero winston
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.WINTON))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.WINTON))
 
     eventPlayer.startForcingName(random.choice(["Winton", "Bogur", "Monke", "Winston", "Monkey"]))
     eventPlayer.setDamageDealt(300)
@@ -23,7 +23,7 @@ rule "[bot/winton.opy]: Force Primal":
     @Event eachPlayer
     @Hero winston
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.WINTON))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.WINTON))
 
     eventPlayer.setUltCharge(100)
 

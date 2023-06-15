@@ -6,7 +6,7 @@ rule "[bot/galactic_sigma.opy]: Behavior":
     @Event eachPlayer
     @Hero sigma
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
 
     createIcon(localPlayer if not localPlayer.isInViewAngle(eventPlayer.getEyePosition(), 90) and eventPlayer.isAlive() else null, eventPlayer, Icon.EXCLAMATION_MARK, IconReeval.VISIBILITY, Color.VIOLET, true)
     allocateEffect()
@@ -48,7 +48,7 @@ rule "[bot/galactic_sigma.opy]: Kinetic Grasp Projectiles":
     @Event eachPlayer
     @Hero sigma
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
     @Condition eventPlayer.isUsingAbility1()
 
     for eventPlayer.playerIndex in range(0, 5, 1):
@@ -76,7 +76,7 @@ rule "[bot/galactic_sigma.opy]: Gravitic Flux Charge / Kinetic Grasp Behavior":
     @Event eachPlayer
     @Hero sigma
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
     
     while true:
         waitUntil(not eventPlayer.isUsingUltimate(), 9999)
@@ -92,7 +92,7 @@ rule "[bot/galactic_sigma.opy]: Gravitic Flux":
     @Event playerDealtDamage
     @Hero sigma
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.GALACTIC_SIGMA))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.GALACTIC_SIGMA))
     @Condition eventAbility == Button.ULTIMATE
 
     if victim.hasStatusEffect(Status.HACKED):

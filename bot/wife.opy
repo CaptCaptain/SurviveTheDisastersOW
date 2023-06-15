@@ -4,7 +4,7 @@ rule "[bot/wife.opy]: Behavior":
     @Event eachPlayer
     @Hero lifeweaver
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.WIFELEAVER))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.WIFELEAVER))
 
     eventPlayer.startForcingName(random.choice(["Rizzweaver", "Lifeweaver", "Wifeleaver", "Peacemaker", "Lifeleaver"]))
 
@@ -12,7 +12,7 @@ rule "[bot/wife.opy]: Apply Custom Health & Additional Behavior":
     @Event eachPlayer
     @Hero lifeweaver
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.WIFELEAVER))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.WIFELEAVER))
 
     clearCustomHealth()
     eventPlayer.setSecondaryFireEnabled(false)

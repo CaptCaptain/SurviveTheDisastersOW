@@ -15,7 +15,7 @@ rule "[bot/witch.opy]: Potion Behavior":
     @Event eachPlayer
     @Hero ramattra
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.WITCH))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.WITCH))
 
     eventPlayer.startForcingName("Witch")
     eventPlayer.setMaxHealth(500)
@@ -110,7 +110,7 @@ rule "[bot/witch.opy]: Behavior":
     @Event eachPlayer
     @Hero ramattra
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.WITCH))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.WITCH))
     
     waitUntil(eventPlayer.getNormalizedHealth() < 0.75, 9999)
     eventPlayer.BOT_DISABLE_AI = false
@@ -138,7 +138,7 @@ rule "[bot/witch.opy]: Behavior":
     @Event playerDealtDamage
     @Hero ramattra
     @Team 2
-    @Condition hasDisasterTag(getDisasterId(disasters.WITCH))
+    @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.WITCH))
 
     switch (DISASTER_WITCH_POTION):
         case disasterWitchPotionType.FREEZE:

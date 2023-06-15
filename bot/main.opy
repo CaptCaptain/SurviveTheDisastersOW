@@ -1,7 +1,5 @@
 #!mainFile "../main.opy"
 
-#!define hasDisasterTag(tag) eventPlayer.BOT_DISASTER_TAG == tag
-
 #!define botWaitUntilReady() waitUntil((entityExists(eventPlayer.BOT_PLAYER) or entityExists(eventPlayer.BOT_OVERRIDE_FACING_PLAYER)) and eventPlayer.isAlive(), 9999)
 
 #!define createBossName(player, Icon, IconString, color)\
