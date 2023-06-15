@@ -12,6 +12,8 @@ rule "[events/galactic_sigma.opy] Disaster Initialization":
     @Condition disasters.GALACTIC_SIGMA[disasterData.ID] in activeDisasters
     @Condition disasterReady
 
+    createDialogueEffects()
+
     DISASTER_GALACTIC_SIGMA_SUPPORT = random.choice([disasterGalacticEmperorSupport.MERCY, disasterGalacticEmperorSupport.SOJOURN, disasterGalacticEmperorSupport.BRIGITTE])
 
     setDialogueNames(["Infinite Seer", "Infinite Admiral", "Royal Captain", "Space Prince", "Galactic Emperor"])

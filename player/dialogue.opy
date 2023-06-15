@@ -70,13 +70,6 @@ hero_colours = array
     wait(0.25)\
     startDialogueOnce(dialoguePriority, activeDialogue, skipCutscenePosition)
 
-#!define createDialogueEffects() \
-onScreenText(localPlayer, "{0}{1}{2}".format("[{0} {1}]: ".format(heroIcon(main_speaker), names_array[heroes_array.index(main_speaker)]), main_dialogue.substring(0, letter_scroll), fullwidth_spaces.substring(0, strLen(main_dialogue) - letter_scroll + true)) if main_dialogue else " ", 0, -0.9, 1.5, WorldTextReeval.VISIBILITY_POSITION_STRING_AND_COLOR, hero_colours[heroes_array.index(main_speaker)], SpecVisibility.NEVER) \
-\
-createEffect(getAllPlayers(), Effect.RING, Color.AQUA, skip_cutscene_pos, 2, EffectReeval.VISIBILITY_POSITION_AND_RADIUS) \
-\
-createInWorldText(getAllPlayers() if skip_cutscene_pos.y < 900 else [], "Group up here to skip the dialogue!", skip_cutscene_pos, 1.2, Clip.NONE, WorldTextReeval.VISIBILITY_POSITION_AND_STRING, Color.AQUA, SpecVisibility.DEFAULT) \
-
 rule "global init":
     subtitle_speed = createWorkshopSetting(float[1:10], "General", "Subtitle speed", 4, 1)
     newline = "\n"
@@ -88,32 +81,9 @@ rule "global init":
     #input your character colours here in the same order!
     hero_colours = []
     fullwidth_spaces = "                                                                                                                                "
-    createDialogueEffects()
     sky = vect(9999, 9999, 9999)
     skip_cutscene_pos = sky
     #hudText(getAllPlayers(), null, "Dialogue System by Therister#1251", "  {0} bit.ly/therister".format(iconString(Icon.HEART)), HudPosition.RIGHT, -0.8, Color.WHITE, rgb(174, 158, 255), rgb(196, 102, 255), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-
-rule "dialogue effects":
-    @Condition is_dialoguing
-    @Disabled
-
-    printLog("Dialoguing")
-
-    createDialogueEffects()
-
-    waitUntil(not is_dialoguing, 9999)
-
-    for hudIndex in range(0, len(dialogue_effects), 1):
-        destroyEffect(dialogue_effects[hudIndex])
-    wait(0.016)
-
-    for hudIndex in range(0, len(dialogue_texts), 1):
-        destroyInWorldText(dialogue_texts[hudIndex])
-    wait(0.016)
-
-    dialogue_effects = []
-    dialogue_texts = []
-
 
 def spawnDialogueBot():    
     createDummy(random.choice([player.getCurrentHero() for player in getPlayers(Team.2)]), Team.2, -1, sky, Vector.UP)

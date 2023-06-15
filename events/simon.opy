@@ -31,6 +31,8 @@ playervar DISASTER_SIMON_PASSED = true
 rule "[events/simon.opy] Disaster Initialization":
     @Condition disasters.SIMON[disasterData.ID] in activeDisasters
     @Condition disasterReady
+
+    createDialogueEffects()
     
     getPlayers(Team.1).DISASTER_SIMON_PASSED = true
 

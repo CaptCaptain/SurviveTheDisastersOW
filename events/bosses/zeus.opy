@@ -6,6 +6,8 @@ rule "[events/zeus.opy] Disaster Initialization":
     @Condition getDisasterId(disasters.ZEUS) in activeDisasters
     @Condition disasterReady
 
+    createDialogueEffects()
+
     setDialogueNames(["Zeus"])
     setDialogueHeroes([Hero.JUNKER_QUEEN])
     setDialogueHeroColors([rgb(255, 255, 255)])

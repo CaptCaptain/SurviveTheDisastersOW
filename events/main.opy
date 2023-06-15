@@ -162,6 +162,17 @@ playervar activeDisasterPlayerTexts = []
 playervar BOT_DISASTER_TAG = ""
 playervar BOT_DISASTER_FLAGS = []
 
+subroutine createDialogueEffects
+def createDialogueEffects():
+    onScreenTextCustomRender(localPlayer, "{0}{1}{2}".format("[{0} {1}]: ".format(heroIcon(main_speaker), names_array[heroes_array.index(main_speaker)]), main_dialogue.substring(0, letter_scroll), fullwidth_spaces.substring(0, strLen(main_dialogue) - letter_scroll + true)) if main_dialogue else " ", getOnScreenTextEyePosition(localPlayer), getOnScreenTextFacingPosition(localPlayer), 0, -0.9, 1.5, WorldTextReeval.VISIBILITY_POSITION_STRING_AND_COLOR, hero_colours[heroes_array.index(main_speaker)], SpecVisibility.NEVER) 
+    allocateText() 
+    
+    createEffect(getAllPlayers(), Effect.RING, Color.AQUA, skip_cutscene_pos, 2, EffectReeval.VISIBILITY_POSITION_AND_RADIUS) 
+    allocateEffect() 
+    
+    createInWorldText(getAllPlayers() if skip_cutscene_pos.y < 900 else [], "Group up here to skip the dialogue!", skip_cutscene_pos, 1.2, Clip.NONE, WorldTextReeval.VISIBILITY_POSITION_AND_STRING, Color.AQUA, SpecVisibility.DEFAULT) 
+    allocateText() 
+
 #!include "events/moth.opy"
 #!include "events/wife.opy"
 #!include "events/minefield.opy"

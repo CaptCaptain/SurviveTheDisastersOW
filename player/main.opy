@@ -249,7 +249,7 @@ rule "[player/main.opy] Disaster Type Hud":
     @Condition disasterTypeShown
     
     # Disaster Type
-    onScreenText(localPlayer, disasterTypeDescription, 0, 1, 3, WorldTextReeval.VISIBILITY_POSITION_STRING_AND_COLOR, disasterTypeColor, SpecVisibility.DEFAULT)
+    onScreenTextCustomRender(localPlayer, disasterTypeDescription, getOnScreenTextEyePosition(localPlayer), getOnScreenTextFacingPosition(localPlayer), 0, 1, 3, WorldTextReeval.VISIBILITY_POSITION_STRING_AND_COLOR, disasterTypeColor, SpecVisibility.DEFAULT)
     allocateHudText(disasterTypeTexts)
 
     waitUntil(not disasterTypeShown, 9999)
