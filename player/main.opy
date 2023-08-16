@@ -149,13 +149,13 @@ for globalIndex in range(0, len(activeDisasters), 1):\
 
 #!define getOnScreenTextFacingPosition(player) (player.onScreenTextFacingDirection if player.onScreenTextFacingDirection else player.getFacingDirection())
 
-#!define scoreboardPosition(slot) scoreboardPlayers.index(getPlayersInSlot(slot, Team.1)) * -1
+#!define scoreboardPosition(slot) scoreboardPlayers.index(evalOnce(getPlayersInSlot(slot, Team.1))) * -1
 
 #!define firstOnScoreboardPosition() scoreboardPlayers.index(scoreboardPlayers[0])
 
 #!define lastOnScoreboardPosition() scoreboardPlayers.index(scoreboardPlayers.last())
 
-#!define createScoreboardText(slot) hudText(localPlayer if getPlayersInSlot(slot, Team.1) and localPlayer.toggleScoreboard else [], heroIcon(getPlayersInSlot(slot, Team.1).getCurrentHero()), "Score: {2} | Survival Streak: {0} | Achievements: {1}".format(getPlayersInSlot(slot, Team.1).survivalStreak, getPlayersInSlot(slot, Team.1).totalMedals, getPlayersInSlot(slot, Team.1).survivalScore), alignLeftString("[{0}] {1}".format(getPlayersInSlot(slot, Team.1), getPlayersInSlot(slot, Team.1).scoreboardChallenges)), HudPosition.LEFT, scoreboardPosition(slot), Color.LIME_GREEN if getPlayersInSlot(slot, Team.1).isAlive else Color.RED, evalOnce(Color.ORANGE), evalOnce(Color.WHITE), HudReeval.VISIBILITY_SORT_ORDER_STRING_AND_COLOR)
+#!define createScoreboardText(slot) hudText([player for player in getPlayers(Team.1) if player.toggleScoreboard], heroIcon(evalOnce(getPlayersInSlot(slot, Team.1)).getCurrentHero()), "Score: {2} | Survival Streak: {0} | Achievements: {1}".format(evalOnce(getPlayersInSlot(slot, Team.1)).survivalStreak, evalOnce(getPlayersInSlot(slot, Team.1)).totalMedals, evalOnce(getPlayersInSlot(slot, Team.1)).survivalScore), alignLeftString("[{0}] {1}".format(evalOnce(getPlayersInSlot(slot, Team.1)), evalOnce(getPlayersInSlot(slot, Team.1)).scoreboardChallenges)), HudPosition.LEFT, scoreboardPosition(slot), Color.LIME_GREEN if evalOnce(getPlayersInSlot(slot, Team.1)).isAlive else Color.RED, evalOnce(Color.ORANGE), evalOnce(Color.WHITE), HudReeval.VISIBILITY_SORT_ORDER_STRING_AND_COLOR)
 
 #!define createPlayerAttributeText(player, text, sort_order) hudSubheader(player if (player.toggleScoreboard) else [], text, HudPosition.LEFT, lastOnScoreboardPosition() + sort_order, Color.ORANGE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
 
@@ -171,6 +171,8 @@ for hudIndex in range(0, len(array), 1): \
 wait(0.016) \
 array = [] \
 
+#!define nextAIBot [player for player in getPlayers(Team.1) if player.isAIBot][0]
+
 playervar playerIndex = 0
 playervar survivalScore = 0
 playervar survivalStreak = 0
@@ -179,6 +181,12 @@ playervar isAlive = true
 playervar timeJoined = 0
 playervar toggleScoreboard = true
 playervar scoreboardChallenges = ""
+playervar isAIBot = false
+
+globalvar scoreboardPlayerRef = []
+globalvar scoreboardTextID = []
+
+globalvar botBeingRemoved
 
 globalvar hudIndex = 0
 
@@ -208,12 +216,6 @@ def displayDisaster():
 
 rule "[player/main.opy] Hud":
     hudSubtext(localPlayer if localPlayer.toggleScoreboard else [], alignLeftString("▼ Scoreboard ▼"), HudPosition.LEFT, -7, Color.GREEN, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.DEFAULT)
-    createScoreboardText(0)
-    createScoreboardText(1)
-    createScoreboardText(2)
-    createScoreboardText(3)
-    createScoreboardText(4)
-    createScoreboardText(5)
     
     # Space
     hudSubheader(getAllPlayers(), " ", HudPosition.LEFT, lastOnScoreboardPosition() + 1, Color.ORANGE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
@@ -268,15 +270,54 @@ rule "[player/main.opy] Init":
     @Team 1
 
     eventPlayer.timeJoined = getTotalTimeElapsed()
+    
+    if eventPlayer.isDummy():
+        return
+
+    eventPlayer.startForcingName("¤{0}".format(random.choice(["NotABot", "AimBot", "Statescript", "Marbie", "Workshop", "Survivor", "PaintEater", "ReinInvader", "Wait", "Script"])))
+    if "{}".format(eventPlayer).strIndex("¤") != -1:
+        eventPlayer.isAIBot = true
 
     waitUntil(eventPlayer.hasSpawned(), 9999)
 
     setObjectiveDescription(eventPlayer, objectiveDescription, HudReeval.VISIBILITY_AND_STRING)
 
+rule "[player/main.opy] Update Objective Description":
+    @Event global
+
     while true:
         waitUntil(objectiveDescription != evalOnce(objectiveDescription), 9999)
-        setObjectiveDescription(eventPlayer, objectiveDescription, HudReeval.VISIBILITY_AND_STRING)
+        setObjectiveDescription(getPlayers(Team.1), objectiveDescription, HudReeval.VISIBILITY_AND_STRING)
         wait(0.016)
+
+rule "[player/main.opy] Joining Rules":
+    @Event playerJoined
+    @Team 1
+
+    wait(0.016)
+
+    # Create Scoreboard Hud Text if player is not an AI or dummy bot
+    if not eventPlayer.isAIBot and not eventPlayer.isDummy():
+        createScoreboardText(eventPlayer.getSlot())
+        allocate(scoreboardTextID, getLastCreatedText())
+        allocate(scoreboardPlayerRef, eventPlayer)
+    #
+    
+    # Make room for more players by removing any AI bots present
+    while getNumberOfPlayers(Team.1) == 6 and len([player for player in getPlayers(Team.1) if player.isAIBot]) > 0:
+        wait(0.016)
+
+        botBeingRemoved = nextAIBot
+
+        removeFromGame(botBeingRemoved)
+        waitUntil(not entityExists(botBeingRemoved), 9999)
+
+rule "[player/main.opy] Leaving Rules":
+    @Event playerLeft
+    @Team 1
+
+    # Remove scoreboard hud text
+    destroyHudText([ID for ID in scoreboardTextID if not entityExists(scoreboardPlayerRef[scoreboardTextID.index(ID)])])
 
 rule "[player/main.opy] Toggle Scoreboard":
     @Event eachPlayer
