@@ -78,8 +78,8 @@ enum disasters:
     KAME = [abilityIconString(Hero.MOIRA, Button.ULTIMATE), "Kamehameha", disasterId.KAME, 10, true, [], 1],
     FLOOD = [iconString(Icon.BOLT), "Flood", disasterId.FLOOD, 30, false, [disasterId.ACID_RAIN, disasterId.GREEN_ZONE, disasterId.GET_DOWN, disasterId.ACID, disasterId.LAVA, disasterId.BLACK_HOLE, disasterId.BUTTON, disasterId.BLIZZARD, disasterId.FAKE_BP, disasterId.DEATH_TRAMPOLINE], 0],
     MYSTERY = [iconString(Icon.QUESTION_MARK), "Mystery Disaster", disasterId.MYSTERY, 30, false, [], true],
-    GET_DOWN = [iconString(Icon.ARROW_DOWN), "Get Down", disasterId.GET_DOWN, 10, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.ACID], 0],
-    DEATH_TRAMPOLINE = [iconString(Icon.HALO), "Death Trampoline", disasterId.DEATH_TRAMPOLINE, 15, false, [disasterId.ACID_RAIN, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.BOMBS, disasterId.BUTTON, disasterId.GREEN_ZONE, disasterId.BLACK_HOLE, disasterId.BLIZZARD], 0], # Not Implemented
+    GET_DOWN = [iconString(Icon.ARROW_DOWN), "Get Down", disasterId.GET_DOWN, 10, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GREEN_ZONE, disasterId.ACID, disasterId.DEATH_TRAMPOLINE], 0],
+    DEATH_TRAMPOLINE = [iconString(Icon.HALO), "Death Trampoline", disasterId.DEATH_TRAMPOLINE, 15, false, [disasterId.ACID_RAIN, disasterId.ACID, disasterId.FLOOD, disasterId.LAVA, disasterId.BOMBS, disasterId.BUTTON, disasterId.GREEN_ZONE, disasterId.BLACK_HOLE, disasterId.BLIZZARD, disasterId.GET_DOWN], 0], # Not Implemented
     GREEN_ZONE = [abilityIconString(Hero.RAMATTRA, Button.ABILITY_2), "Green Zone", disasterId.GREEN_ZONE, 20, false, [disasterId.ACID_RAIN, disasterId.FLOOD, disasterId.GET_DOWN, disasterId.BUTTON, disasterId.BLACK_HOLE, disasterId.DEATH_TRAMPOLINE], 0],
     MURDERERS = [abilityIconString(Hero.JUNKER_QUEEN, Button.SECONDARY_FIRE), "Murderers", disasterId.MURDERERS, 30, true, [], 1],
     NULL_SECTOR = [abilityIconString(Hero.BASTION, Button.ULTIMATE), "Null Sector", disasterId.NULL_SECTOR, 30, true, [disasterId.TALON], 2],
