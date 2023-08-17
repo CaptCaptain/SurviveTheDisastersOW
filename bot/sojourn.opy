@@ -10,8 +10,6 @@ rule "[bot/sojourn.opy]: Behavior":
 
     wait(1)
 
-    eventPlayer.setUltCharge(100)
-
     while true:
         botWaitUntilReady()
         if entityExists(eventPlayer.BOT_PLAYER):
@@ -19,5 +17,6 @@ rule "[bot/sojourn.opy]: Behavior":
             EXECUTE_DEFENSE_ABILITY_1()
             EXECUTE_OFFENSE_ABILITY_2()
             EXECUTE_ULTIMATE_ABILITY()
+            eventPlayer.setUltCharge(100)
                 
         waitThrottle(Wait.IGNORE_CONDITION)

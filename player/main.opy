@@ -274,9 +274,10 @@ rule "[player/main.opy] Init":
     if eventPlayer.isDummy():
         return
 
-    eventPlayer.startForcingName("¤{0}".format(random.choice(["NotABot", "AimBot", "Statescript", "Marbie", "Workshop", "Survivor", "PaintEater", "ReinInvader", "Wait", "Script"])))
+    eventPlayer.startForcingName("¤")
     if "{}".format(eventPlayer).strIndex("¤") != -1:
         eventPlayer.isAIBot = true
+        eventPlayer.startForcingName("")
 
     waitUntil(eventPlayer.hasSpawned(), 9999)
 
