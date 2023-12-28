@@ -6,8 +6,8 @@ rule "[bot/null_sector.opy]: Ramattra Behavior":
     @Team 2
     @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NULL_SECTOR))
 
-    eventPlayer.HEALTH_NORMAL = getNumberOfLivingPlayers(Team.1) * 250
-    eventPlayer.HEALTH_ARMOR = getNumberOfLivingPlayers(Team.1) * 250
+    eventPlayer.customHealthData = [getNumberOfLivingPlayers(Team.1) * 250, getNumberOfLivingPlayers(Team.1) * 250, 0, 100]
+
     eventPlayer.startScalingSize(1.5, false)
 
     wait(1)
@@ -78,8 +78,7 @@ rule "[bot/null_sector.opy]: Orisa Behavior":
     @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NULL_SECTOR))
 
     eventPlayer.startForcingName("OR13-A")
-    eventPlayer.HEALTH_NORMAL = 200
-    eventPlayer.HEALTH_ARMOR = 100
+    eventPlayer.customHealthData = [200, 100, 0, 100]
 
     wait(1)
     applyCustomHealth()
@@ -112,8 +111,7 @@ rule "[bot/null_sector.opy]: Bastion Behavior":
     @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NULL_SECTOR))
 
     eventPlayer.startForcingName("E-54")
-    eventPlayer.HEALTH_NORMAL = 100
-    eventPlayer.HEALTH_ARMOR = 200
+    eventPlayer.customHealthData = [100, 200, 0, 100]
 
     wait(1)
     applyCustomHealth()
@@ -141,7 +139,7 @@ rule "[bot/null_sector.opy]: Nulltrooper Behavior":
     @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.NULL_SECTOR))
 
     eventPlayer.startForcingName("Nulltrooper")
-    eventPlayer.HEALTH_NORMAL = 200
+    eventPlayer.customHealthData = [200, 0, 0, 100]
 
     wait(1)
     applyCustomHealth()

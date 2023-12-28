@@ -2,7 +2,7 @@
 
 #!define limitedMaxHealth(maxHealth) (300 / maxHealth)
 #!define limitedMaxHealthType(healthType) floor(eventPlayer.getMaxHealthOfType(healthType) * (limitedMaxHealth(eventPlayer.getMaxHealth())))
-#!define maxCustomHealth(player) (player.HEALTH_NORMAL + player.HEALTH_ARMOR + player.HEALTH_SHIELDS)
+#!define maxCustomHealth(player) (player.customHealthData[customHealthDataType.NORMAL] + player.customHealthData[customHealthDataType.ARMOR] + player.customHealthData[customHealthDataType.SHIELDS])
 
 rule "[player/tank.opy] Limit Tank Health to 300":
     @Event eachPlayer
@@ -15,12 +15,10 @@ rule "[player/tank.opy] Limit Tank Health to 300":
 
     wait(1.016 if not eventPlayer.isUsingUltimate() else 0.016, Wait.ABORT_WHEN_FALSE)
 
-    eventPlayer.HEALTH_NORMAL = limitedMaxHealthType(Health.NORMAL)
-    eventPlayer.HEALTH_ARMOR = limitedMaxHealthType(Health.ARMOR)
-    eventPlayer.HEALTH_SHIELDS = limitedMaxHealthType(Health.SHIELDS)
+    eventPlayer.customHealthData = [limitedMaxHealthType(Health.NORMAL), limitedMaxHealthType(Health.NORMAL), limitedMaxHealthType(Health.NORMAL), 100]
 
     if maxCustomHealth(eventPlayer) < 300:
-        eventPlayer.HEALTH_NORMAL += 300 - maxCustomHealth(eventPlayer)
+        eventPlayer.customHealthData[customHealthDataType.NORMAL] += 300 - maxCustomHealth(eventPlayer)
 
     applyCustomHealth()
 

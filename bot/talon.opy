@@ -6,7 +6,7 @@ rule "[bot/talon.opy]: Doomfist Behavior":
     @Team 2
     @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.TALON))
 
-    eventPlayer.HEALTH_NORMAL = getNumberOfLivingPlayers(Team.1) * 500
+    eventPlayer.customHealthData = [getNumberOfLivingPlayers(Team.1) * 500, 0, 0, 100]
     eventPlayer.startScalingSize(1.5, false)
 
     wait(1)
@@ -58,7 +58,7 @@ rule "[bot/talon.opy]: Trooper Behavior":
     @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.TALON))
 
     eventPlayer.startForcingName("Trooper")
-    eventPlayer.HEALTH_NORMAL = 150
+    eventPlayer.customHealthData = [150, 0, 0, 100]
 
     wait(1)
     applyCustomHealth()
@@ -78,7 +78,7 @@ rule "[bot/talon.opy]: Shotgunner Behavior":
     @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.TALON))
 
     eventPlayer.startForcingName("Shotgunner")
-    eventPlayer.HEALTH_NORMAL = 250
+    eventPlayer.customHealthData = [250, 0, 0, 100]
     eventPlayer.setMoveSpeed(50)
 
     wait(1)
