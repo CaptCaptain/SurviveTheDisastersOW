@@ -15,11 +15,12 @@ rule "[player/tank.opy] Limit Tank Health to 300":
 
     wait(1.016 if not eventPlayer.isUsingUltimate() else 0.016, Wait.ABORT_WHEN_FALSE)
 
-    eventPlayer.customHealthData = [limitedMaxHealthType(Health.NORMAL), limitedMaxHealthType(Health.NORMAL), limitedMaxHealthType(Health.NORMAL), 100]
+    eventPlayer.customHealthData = [limitedMaxHealthType(Health.NORMAL), limitedMaxHealthType(Health.ARMOR), limitedMaxHealthType(Health.SHIELDS), 100]
 
     if maxCustomHealth(eventPlayer) < 300:
         eventPlayer.customHealthData[customHealthDataType.NORMAL] += 300 - maxCustomHealth(eventPlayer)
 
+    clearCustomHealth()
     applyCustomHealth()
 
     waitUntil(eventPlayer.getCurrentHero() != evalOnce(eventPlayer.getCurrentHero()) or (eventPlayer.isInAlternateForm() and eventPlayer.getCurrentHero() == Hero.DVA), 9999)
