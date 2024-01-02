@@ -29,6 +29,7 @@ rule "[player/sombra.opy]: Sombra Init":
     waitUntil(all([player.getCurrentHero() != Hero.SOMBRA and player.getHeroOfDuplication() != Hero.SOMBRA for player in getPlayers(Team.1)]), 9999)
 
     destroyProgressBarHud(sombraMaxInvisTextId)
+    PLAYER_IGNORE = []
 
 rule "[player/sombra.opy]: Sombra Keep Out Of Invis":
     @Event eachPlayer
