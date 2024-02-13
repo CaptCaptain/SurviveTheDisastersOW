@@ -1,7 +1,7 @@
 #!mainFile "../main.opy"
 
-#!define limitedMaxHealth(maxHealth) (300 / maxHealth)
-#!define limitedMaxHealthType(healthType) floor(eventPlayer.getMaxHealthOfType(healthType) * (limitedMaxHealth(eventPlayer.getMaxHealth())))
+#!define limitedMaxHealth(maxHealth) (350 / maxHealth)
+#!define limitedMaxHealthType(healthType) round(eventPlayer.getMaxHealthOfType(healthType) * (limitedMaxHealth(eventPlayer.getMaxHealth())))
 #!define maxCustomHealth(player) (player.customHealthData[customHealthDataType.NORMAL] + player.customHealthData[customHealthDataType.ARMOR] + player.customHealthData[customHealthDataType.SHIELDS])
 
 rule "[player/tank.opy] Limit Tank Health to 300":
