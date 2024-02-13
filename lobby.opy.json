@@ -41,7 +41,7 @@
 		"allowPlayersInQueue": true,
 		"returnToLobby": "never",
 		"mapRotation": "afterGame",
-		"spectatorSlots": 12,
+		"spectatorSlots": 1,
 		"team1Slots": 6,
 		"team2Slots": 0
 	},
