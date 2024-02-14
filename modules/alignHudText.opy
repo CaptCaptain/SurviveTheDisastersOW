@@ -1,0 +1,3 @@
+#!define alignLeftString(str) "{0}                                                                                                                                                                ".format(str)
+
+#!define alignRightString(str) "                                                                                                                                                                {0}".format(str)

@@ -1,0 +1,8 @@
+#!define yAxis(zAxis) angleToDirection(horizontalAngleOfDirection(zAxis),verticalAngleOfDirection(zAxis) - 90)
+#!define xAxis(zAxis) crossProduct(zAxis, yAxis(zAxis))
+#!define WorldRender(eyePos, facingDirection, screenX, screenY) eyePos + 100 * (screenX*xAxis(facingDirection) + (screenY-0.2)*yAxis(facingDirection) + 3*facingDirection)
+#!define PlayerRender(player, screenX, screenY) WorldRender(player.getEyePosition(), player.getFacingDirection(), screenX, screenY)
+#!define onScreenText(visibleTo, header, positionX, positionY, scale, worldTextReeval, color, specVisibility) createInWorldText(visibleTo, header, updateEveryTick(PlayerRender(localPlayer, positionX, positionY)), scale, Clip.NONE, worldTextReeval, color, specVisibility)
+#!define onScreenTextCustomRender(visibleTo, header, eyePos, facingDirection, positionX, positionY, scale, worldTextReeval, color, specVisibility) createInWorldText(visibleTo, header, updateEveryTick(WorldRender(eyePos, facingDirection, positionX, positionY)), scale, Clip.NONE, worldTextReeval, color, specVisibility)
+#!define onScreenTextLimited(visibleTo, header, positionX, positionY, scale, worldTextReeval, color, specVisibility) createInWorldText(visibleTo, header, (PlayerRender(localPlayer, positionX, positionY)), scale, Clip.NONE, worldTextReeval, color, specVisibility)
+#!define onScreenTextLimitedCustomRender(visibleTo, header, eyePos, facingDirection, positionX, positionY, scale, worldTextReeval, color, specVisibility) createInWorldText(visibleTo, header, (WorldRender(eyePos, facingDirection, positionX, positionY)), scale, Clip.NONE, worldTextReeval, color, specVisibility)

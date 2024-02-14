@@ -41,17 +41,17 @@ globalvar WS_SETTING_LIFE_GRIP_LIMITED = createWorkshopSetting(bool, "Heroes", "
 
 globalvar WS_SETTING_LIMITED_STEALTH = createWorkshopSetting(bool, "Heroes", "Sombra: Limited Stealth", true, 4)
 
-#!include "../overpy-modules/src/customHealth.opy"
-#!include "../overpy-modules/src/fixedSmallMessages.opy"
-#!include "../overpy-modules/src/onScreenText.opy"
-#!include "../overpy-modules/src/restart.opy"
-#!include "../overpy-modules/src/rainbow.opy"
-#!include "../overpy-modules/src/alignHudText.opy"
+#!include "modules/customHealth.opy"
+#!include "modules/fixedSmallMessages.opy"
+#!include "modules/onScreenText.opy"
+#!include "modules/restart.opy"
+#!include "modules/rainbow.opy"
+#!include "modules/alignHudText.opy"
 
 globalvar WS_DIFFICULTY = 1
 
-#!include "../Bot-Playground/src/bot/controller.opy"
-#!include "../Bot-Playground/src/bot/heroes/all.opy"
+#!include "modules/bot/controller.opy"
+#!include "modules/bot/heroes/all.opy"
 
 globalvar globalIndex
 globalvar debugMode = false
