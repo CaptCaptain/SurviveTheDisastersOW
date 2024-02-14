@@ -224,7 +224,7 @@ rule "[player/main.opy] Hud":
     hudSubtext(localPlayer if localPlayer.toggleScoreboard else [], alignLeftString("▼ Notable Co-Op Changes ▼"), HudPosition.LEFT, lastOnScoreboardPosition() + 2, Color.ROSE, HudReeval.VISIBILITY_AND_SORT_ORDER, SpecVisibility.NEVER)
 
         # Limited Tank Health
-    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() in getTankHeroes() and evalOnce(WS_SETTING_LIMITED_TANK_HEALTH) else []), alignLeftString("| Tank Health Limited to 300"), 3)
+    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() in getTankHeroes() and evalOnce(WS_SETTING_LIMITED_TANK_HEALTH) else []), alignLeftString("| Tank Health Limited to 350"), 3)
 
         # Limited Stealth
     createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.SOMBRA and evalOnce(WS_SETTING_LIMITED_STEALTH) else []), alignLeftString("| Limited Duration on Stealth (Passive)"), 3)
