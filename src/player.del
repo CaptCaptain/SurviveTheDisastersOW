@@ -1,6 +1,6 @@
 import "main.ostw";
 
-class Timer {
+class TimerHud {
     public static Number GetMinutes(Number Seconds): RoundToInteger(Seconds / 60, Rounding.Down);
     public static String GetMinutesString(Number Minutes): (GetMinutes(Minutes) < 10 ? "0%s" : "%s").Replace("%s", <String>"{0}".Format([GetMinutes(Minutes)]));
     public static Number GetSeconds(Number Seconds): RoundToInteger(Seconds % 60, Rounding.Down);
@@ -74,5 +74,5 @@ rule: 'Dva Setup' Event.OngoingPlayer Team.Team1 Player.Dva
 
 rule: 'Load Global Hud Elements'
 {
-    Timer.CreateHUD();
+    TimerHud.CreateHUD();
 }
