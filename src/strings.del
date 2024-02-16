@@ -1,0 +1,8 @@
+import "main.ostw";
+
+class Strings {
+    public static String GameplayCategory: "Gameplay";
+    public static String MaxRoundOption: "Max Rounds"; 
+    public static String MaxBotsOption: "Max Bots";
+    public static String Difficulty: "Difficulty";
+}

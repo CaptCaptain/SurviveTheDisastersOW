@@ -1,1 +1,4 @@
 import "customGameSettings.json";
+
+import "strings.del";
+import "settings.del";

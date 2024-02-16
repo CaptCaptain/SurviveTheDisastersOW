@@ -1,0 +1,15 @@
+import "main.ostw";
+
+single struct Config {
+    public Number MaxRounds;
+    public Number MaxBots;
+    public Number Difficulty;
+}
+
+globalvar Config ConfigStore = {
+    MaxRounds: WorkshopSettingInteger(Strings.GameplayCategory, Strings.MaxRoundOption, 15, 5, 20, 1),
+
+    MaxBots: WorkshopSettingInteger(Strings.GameplayCategory, Strings.MaxBotsOption, 10, 5, 10, 2),
+
+    Difficulty: WorkshopSettingCombo("Gameplay", "Difficulty", 0, ["Adaptive", "Normal", "Hard", "Expert", "Legendary"], 3)
+};
