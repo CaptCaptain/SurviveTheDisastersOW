@@ -1,0 +1,49 @@
+import "main.ostw";
+
+# - Limits the maximum health of a player
+# - Intended to be used in player rules only
+void SetLimitedMaxHealth() "Set Limited Max Health" {
+    Number ScaledHealthPercentage: (MaxHealthLimit / MaxHealth(EventPlayer()));
+    Number ScaledHealth: RoundToInteger(MaxHealthOfType(EventPlayer(), HealthType.Health) * ScaledHealthPercentage, Rounding.Nearest);
+    Number ScaledArmor: RoundToInteger(MaxHealthOfType(EventPlayer(), HealthType.Armor) * ScaledHealthPercentage, Rounding.Nearest);
+    Number ScaledShields: RoundToInteger(MaxHealthOfType(EventPlayer(), HealthType.Shields) * ScaledHealthPercentage, Rounding.Nearest);
+
+    CustomHealthHandler.SendCustomHealthRequest(EventPlayer(), ScaledHealth, ScaledShields, ScaledArmor);
+}
+
+Number MaxHealthLimit: 350;
+Boolean HeroChanged: EventPlayer().Hero() != EvaluateOnce(EventPlayer().Hero());
+Boolean IsDva: EventPlayer().Hero() == Hero.Dva;
+Boolean ChangedForm: (EventPlayer().MaxHealth() != EvaluateOnce(EventPlayer().MaxHealth()) || EventPlayer().MaxHealth() > MaxHealthLimit);
+rule: 'Player Setup' Event.OngoingPlayer Team.Team1
+if (HeroChanged)
+if (HasSpawned(EventPlayer()))
+if (IsAlive())
+{
+    Boolean ResetRequestDone: IsTrueForAll(CustomHealthReseter.Tasks, !ArrayContains(ArrayElement(), EventPlayer()));
+    
+    CustomHealthReseter.SendHealthResetRequest(EventPlayer());
+    Wait(0.016);
+    WaitUntil(ResetRequestDone, 9999);
+
+    # Limit Tank Health
+    if (EventPlayer().MaxHealth() > MaxHealthLimit) {
+        SetLimitedMaxHealth();
+    }
+}
+
+rule: 'Dva Setup' Event.OngoingPlayer Team.Team1 Player.Dva
+{
+    WaitUntil(IsInAlternateForm(EventPlayer()) == true, 9999);
+
+    CustomHealthReseter.SendHealthResetRequest(EventPlayer()); 
+
+    WaitUntil(IsInAlternateForm(EventPlayer()) == false, 9999);
+    
+    Boolean ResetRequestDone: IsTrueForAll(CustomHealthReseter.Tasks, !ArrayContains(ArrayElement(), EventPlayer()));
+    WaitUntil(ResetRequestDone, 9999);
+    
+    SetLimitedMaxHealth();
+
+    Loop();
+}

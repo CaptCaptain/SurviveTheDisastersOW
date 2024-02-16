@@ -1,0 +1,182 @@
+# Utility methods and macros only for use by:
+# - CustomHealthHandler
+# - CustomHealthCleaner
+class CustomHealthUtils {
+    # Wait method that scales based on the server load of the game.
+    public static void WaitBasedOnLoad(in Any serverLoad, WaitBehavior behavior = WaitBehavior.IgnoreCondition) {
+        Wait(serverLoad / 255, behavior);
+    }
+}
+
+single struct CustomHealthRequest {
+    public Player Player;
+    public Number Health;
+    public Number Shields;
+    public Number Armor;
+}
+
+single struct CustomHealthResetTask {
+    public Player Player;
+}
+
+# Handles all operations related to reseting custom health for players.
+class CustomHealthReseter {
+    public static CustomHealthResetTask[] Tasks = [];
+
+    # Checks if a task is available.
+    public static Boolean TaskAvailable(): Tasks[0] != null;
+
+    # Sends a request to reset the health of a player.
+    # - **Player** *player*: The player to reset the health of.
+    public static void SendHealthResetRequest(in Player player) {
+        Tasks.ModAppend({Player: player});
+    }
+
+    # Starts a loop that waits for new tasks and parses them. Should be used in a rule.
+    public static void Start() {
+        CustomHealthResetTask Task: Tasks[0];
+
+        CustomHealthUtils.WaitBasedOnLoad(ServerLoad(), WaitBehavior.IgnoreCondition);
+        WaitUntil(TaskAvailable(), 9999);
+
+        RemoveAllHealthPoolsFromPlayer(Task.Player);
+
+        SetMaxHealth(Task.Player, 200);
+        Wait(0.016);
+        SetMaxHealth(Task.Player, 100);
+
+        StartHealOverTime(Player: Task.Player, Healer: null, Duration: 0.16, HealingPerSecond: 100 ^ 100);
+
+        Tasks.ModRemoveByValue(Tasks.First);
+
+        Loop();
+    }
+}
+
+# Handles all operations related to setting custom health for players.
+class CustomHealthHandler {
+    protected static CustomHealthRequest[] Requests = [];
+
+    # Checks if a task is available.
+    protected static Boolean TaskAvailable(): Requests[0] != null;
+
+    protected static Any AddTemporaryHealthPoolToPlayer(in Player player, HealthType healthType): AddHealthPoolToPlayer(Player: player, HealthType: healthType, MaxHealth: 1000, Recoverable: true, Reevaluation: true);
+
+    protected static void AddCustomHealthPoolToPlayer(in Player player, HealthType healthType, in Number maxHealth) {
+        SkipIf(maxHealth <= 0, 1);
+        AddHealthPoolToPlayer(Player: player, HealthType: healthType, MaxHealth: maxHealth, Recoverable: true, Reevaluation: false);
+    }
+
+    # Sets the custom health of a player.
+    # - **CustomHealthRequest** *request*: The request to use for setting max health.
+    protected static void SetCustomHealth(in CustomHealthRequest request) {
+        Player RequestPlayer: request.Player;
+        Number RequestHealth: request.Health;
+        Number RequestShields: request.Shields;
+        Number RequestArmor: request.Armor;
+        Boolean PlayerHasImmunity: RequestPlayer.Health() >= RequestPlayer.MaxHealth() || RequestPlayer.MaxHealth() == 1;
+        Boolean PlayerIsInSpawn: RequestPlayer.IsInSpawnRoom();
+        Vector PlayerSpawnPosition;
+
+        if (PlayerIsInSpawn) {
+            PlayerSpawnPosition = RequestPlayer.Position();
+
+            StartCamera(Player: RequestPlayer, EyePosition: EvaluateOnce(RequestPlayer.EyePosition()), LookAtPosition: EvaluateOnce(RequestPlayer.EyePosition()) + RequestPlayer.FacingDirection(), BlendSpeed: 0);
+
+            StartForcingPlayerPosition(Player: RequestPlayer, Position: RequestPlayer.Position() + (Up() * 100), Reevaluation: false);
+
+            WaitUntil(!PlayerIsInSpawn, 9999);
+        }
+
+        while (PlayerHasImmunity) {
+            SetStatus(Player: RequestPlayer, Assister: null, Status: Status.Unkillable, Duration: 1);
+
+            Damage(Player: RequestPlayer, Damager: null, Amount: 1000);
+
+            Wait(0.016);
+        }
+
+        SetStatus(Player: RequestPlayer, Assister: null, Status: Status.Unkillable, Duration: 1);
+
+        Damage(Player: RequestPlayer, Damager: null, Amount: 1000);
+
+        AddTemporaryHealthPoolToPlayer(RequestPlayer, HealthType.Health);
+        AddTemporaryHealthPoolToPlayer(RequestPlayer, HealthType.Shields);
+        AddTemporaryHealthPoolToPlayer(RequestPlayer, HealthType.Armor);
+
+        RemoveAllHealthPoolsFromPlayer(RequestPlayer);
+
+        AddCustomHealthPoolToPlayer(player: RequestPlayer, healthType: HealthType.Health, maxHealth: RequestHealth - 1);
+        AddCustomHealthPoolToPlayer(player: RequestPlayer, healthType: HealthType.Shields, maxHealth: RequestShields);
+        AddCustomHealthPoolToPlayer(player: RequestPlayer, healthType: HealthType.Armor, maxHealth: RequestArmor);
+
+        StartHealOverTime(Player: RequestPlayer, Healer: null, Duration: 0.16, HealingPerSecond: 100 ^ 100);
+
+        if (PlayerSpawnPosition) {
+            StartForcingPlayerPosition(Player: RequestPlayer, Position: RequestPlayer.Position() + (Down() * 100), Reevaluation: false);
+
+            Wait(0.032);
+
+            StopCamera(Player: RequestPlayer);
+
+            StopForcingPlayerPosition(Player: RequestPlayer);
+        }
+    }
+
+    # Checks if a custom health request is pending.
+    # - **Player** *player*: The player to check the request of.
+    public static Boolean RequestPending(Player player): IsTrueForAny(Requests, (<CustomHealthRequest>ArrayElement()).Player == player);
+
+    # Sends a request to change the health of a player.
+    # - **Player** *player*: The player to set the health of.
+    # - **Number** *health*: The amount of health to give the player.
+    # - **Number** *shields*: The amount of shields to give the player.
+    # - **Number** *armor*: The amount of armor to give the player.
+    public static void SendCustomHealthRequest(in Player player, in Number health, in Number shields, in Number armor) {
+        Requests.ModAppend({Player: player, Health: health, Shields: shields, Armor: armor});
+    }
+
+    # Sends a request to change the max health of a player.
+    # - **Player** *player*: The player to set the max health of.
+    # - **Number** *maxHealth*: The max health to set for the player.
+    public static void SendCustomMaxHealthRequest(in Player player, in Number maxHealth) {
+        Number maxHealthScalar: maxHealth / 100;
+        Number scaledHealth: MaxHealthOfType(player, HealthType.Health) * maxHealthScalar;
+        Number scaledShields: MaxHealthOfType(player, HealthType.Shields) * maxHealthScalar;
+        Number scaledArmor: MaxHealthOfType(player, HealthType.Armor) * maxHealthScalar;
+
+        Boolean ResetRequestDone: IsTrueForAll(CustomHealthReseter.Tasks, !ArrayContains(ArrayElement(), player));
+
+        CustomHealthReseter.SendHealthResetRequest(player);
+        Wait(0.016);
+        WaitUntil(ResetRequestDone, 9999);
+
+        Wait(0.016);
+
+        Requests.ModAppend({Player: player, Health: RoundToInteger(scaledHealth, Rounding.Nearest), Shields: RoundToInteger(scaledShields, Rounding.Nearest), Armor: RoundToInteger(scaledArmor, Rounding.Nearest)});
+    }
+
+    # Starts a loop that waits for new requests and parses them. Should be used in a rule.
+    public static void Start() {
+        CustomHealthRequest CurrentRequest: Requests[0];
+
+        CustomHealthUtils.WaitBasedOnLoad(ServerLoad(), WaitBehavior.IgnoreCondition);
+        WaitUntil(TaskAvailable(), 9999);
+
+        SetCustomHealth(CurrentRequest);
+
+        Requests.ModRemoveByValue(Requests.First);
+
+        Loop();
+    }
+}
+
+rule: 'Start Custom Health Handler' 
+{
+    CustomHealthHandler.Start();
+}
+
+rule: 'Start Custom Health Reseter' 
+{
+    CustomHealthReseter.Start();
+}

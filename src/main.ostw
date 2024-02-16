@@ -1,4 +1,6 @@
 import "customGameSettings.json";
 
+import "modules/customHealth.del";
+
 import "strings.del";
 import "settings.del";
