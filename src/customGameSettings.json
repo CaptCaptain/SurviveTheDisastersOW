@@ -1,0 +1,39 @@
+{
+	"Mode Name": "Survive the Disasters! -`ѧѦѧ´- ",
+	"Description": "Survive a series of disasters ranging from natural to artificial hazards!\n• 6 player PvE experience.\n• Encounter classic hazards such as Black Hole, or Rising Lava!\n• Friendly competition with other players for the highest survival streaks!\n• Earn achievements for completing certain actions.\n...and more!\n\nMode Page: https://workshop.codes/survive-disasters\nLearn with Workshop Creators at: https://workshop.codes/discord\n★ Always import code GWZB4 to play on the latest version, do not save settings.",
+	"Modes": {
+		"All": {
+			"Limit Roles": "Off",
+			"Hero Limit": "2 Per Team",
+			"Game Mode Start": "Manual",
+			"Tank Role Passive Health Bonus": "Always Enabled"
+		},
+		"Team Deathmatch": {
+			"Score To Win": 1,
+			"Disabled Maps": [
+				"Workshop Chamber",
+				"Workshop Expanse (Night)",
+				"Workshop Expanse",
+				"Workshop Green Screen",
+				"Workshop Island (Night)",
+				"Workshop Island"
+			]
+		}
+	},
+	"Lobby": {
+		"Allow Players Who Are In Queue": true,
+		"Return To Lobby": "Never",
+		"Map Rotation": "After A Game",
+		"Max Spectators": 1,
+		"Team Balancing": "After A Game",
+		"Max Team 1 Players": 6,
+		"Max Team 2 Players": 0
+	},
+	"Heroes": {
+		"Team 1": {
+			"Mercy": {
+				"Resurrect Cooldown Time": 50
+			}
+		}
+	}
+}
