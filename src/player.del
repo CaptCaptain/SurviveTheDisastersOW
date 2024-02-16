@@ -1,5 +1,27 @@
 import "main.ostw";
 
+class Timer {
+    public static Number GetMinutes(Number Seconds): RoundToInteger(Seconds / 60, Rounding.Down);
+    public static String GetMinutesString(Number Minutes): (GetMinutes(Minutes) < 10 ? "0%s" : "%s").Replace("%s", <String>"{0}".Format([GetMinutes(Minutes)]));
+    public static Number GetSeconds(Number Seconds): RoundToInteger(Seconds % 60, Rounding.Down);
+    public static String GetSecondsString(Number Seconds): (GetSeconds(Seconds) < 10 ? "0%s" : "%s").Replace("%s", <String>"{0}".Format([GetSeconds(Seconds)]));
+    public static void CreateHUD() {
+        CreateHudText(
+            VisibleTo: AllPlayers(),
+            Header: "{0}:{1}".Format([GetMinutesString(MatchTime()), GetSecondsString(MatchTime())]),
+            Subheader: "",
+            Text: "",
+            Location: Location.Top,
+            SortOrder: 1,
+            HeaderColor: Color.White,
+            SubheaderColor: Color.White,
+            TextColor: Color.White,
+            Reevaluation: HudTextRev.VisibleToAndString,
+            Spectators: Spectators.DefaultVisibility
+        );
+    }
+}
+
 # - Limits the maximum health of a player
 # - Intended to be used in player rules only
 void SetLimitedMaxHealth() "Set Limited Max Health" {
@@ -26,6 +48,8 @@ if (IsAlive())
     Wait(0.016);
     WaitUntil(ResetRequestDone, 9999);
 
+    DisableGameModeHud();
+
     # Limit Tank Health
     if (EventPlayer().MaxHealth() > MaxHealthLimit) {
         SetLimitedMaxHealth();
@@ -46,4 +70,9 @@ rule: 'Dva Setup' Event.OngoingPlayer Team.Team1 Player.Dva
     SetLimitedMaxHealth();
 
     Loop();
+}
+
+rule: 'Load Global Hud Elements'
+{
+    Timer.CreateHUD();
 }
