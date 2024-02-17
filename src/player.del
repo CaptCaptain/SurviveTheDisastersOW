@@ -6,6 +6,7 @@ class ObjectiveHud {
     public static void SetObjectiveText(String Text) {
         ObjectiveString = Text;
     }
+    
     public static void CreateHUD() {
         CreateHudText(
             VisibleTo: AllPlayers(),
@@ -42,18 +43,46 @@ class TimerHud {
     public static String GetMinutesString(Number Minutes): (GetMinutes(Minutes) < 10 ? "0%s" : "%s").Replace("%s", <String>"{0}".Format([GetMinutes(Minutes)]));
     public static Number GetSeconds(Number Seconds): RoundToInteger(Seconds % 60, Rounding.Down);
     public static String GetSecondsString(Number Seconds): (GetSeconds(Seconds) < 10 ? "0%s" : "%s").Replace("%s", <String>"{0}".Format([GetSeconds(Seconds)]));
+
+    public static String GetTimerString(): "{0}:{1}".Format([GetMinutesString(MatchTime()), GetSecondsString(MatchTime())]);
+    public static String CurrentTimerString;
+
+    public static Color DefaultTimerColor: Color.White;
+    public static Color EndingTimerColor: CustomColor(179, 19, 18, 255);
+    public static Color NoTimerColor: CustomColor(255, 255, 255, 0);
+
+    public static Color TimerColor = Color.White;
+
+    public static void main() {
+        WaitUntil(RoundToInteger(MatchTime()) != EvaluateOnce(RoundToInteger(MatchTime())), 1);
+
+        if (MatchTime() == 0) {
+            TimerColor = NoTimerColor;
+        } else if (MatchTime() <= 11) {
+            TimerColor = EndingTimerColor;
+        } else {
+            TimerColor = DefaultTimerColor;
+        }
+
+        CurrentTimerString = GetTimerString();
+
+        Wait(0.016);
+
+        Loop();
+    }
+
     public static void CreateHUD() {
         CreateHudText(
             VisibleTo: AllPlayers(),
-            Header: "{0}:{1}".Format([GetMinutesString(MatchTime()), GetSecondsString(MatchTime())]),
-            Subheader: "",
-            Text: "",
+            Header: CurrentTimerString,
+            Subheader: EvaluateOnce(""),
+            Text: EvaluateOnce(""),
             Location: Location.Top,
             SortOrder: 1,
-            HeaderColor: Color.White,
-            SubheaderColor: Color.White,
-            TextColor: Color.White,
-            Reevaluation: HudTextRev.VisibleToAndString,
+            HeaderColor: TimerColor,
+            SubheaderColor: EvaluateOnce(Color.White),
+            TextColor: EvaluateOnce(Color.White),
+            Reevaluation: HudTextRev.VisibleToStringAndColor,
             Spectators: Spectators.DefaultVisibility
         );
     }
@@ -113,4 +142,9 @@ rule: 'Load Global Hud Elements'
 {
     TimerHud.CreateHUD();
     ObjectiveHud.CreateHUD();
+}
+
+rule: 'TimerHud Main Method'
+{
+    TimerHud.main();
 }
