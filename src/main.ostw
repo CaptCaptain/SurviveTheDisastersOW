@@ -4,3 +4,4 @@ import "modules/customHealth.del";
 
 import "strings.del";
 import "settings.del";
+import "player.del";

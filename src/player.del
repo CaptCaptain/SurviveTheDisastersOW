@@ -1,5 +1,42 @@
 import "main.ostw";
 
+class ObjectiveHud {
+    public static String ObjectiveString = "Waiting for Players";
+
+    public static void SetObjectiveText(String Text) {
+        ObjectiveString = Text;
+    }
+    public static void CreateHUD() {
+        CreateHudText(
+            VisibleTo: AllPlayers(),
+            Header: "",
+            Subheader: "",
+            Text: "|  " + ObjectiveString + "  |",
+            Location: Location.Top,
+            SortOrder: -1,
+            HeaderColor: Color.White,
+            SubheaderColor: Color.White,
+            TextColor: Color.White,
+            Reevaluation: HudTextRev.VisibleToAndString,
+            Spectators: Spectators.DefaultVisibility
+        );
+        
+        CreateHudText(
+            VisibleTo: AllPlayers(),
+            Header: "",
+            Subheader: " ",
+            Text: "",
+            Location: Location.Top,
+            SortOrder: 0,
+            HeaderColor: Color.White,
+            SubheaderColor: Color.White,
+            TextColor: Color.White,
+            Reevaluation: HudTextRev.VisibleToAndString,
+            Spectators: Spectators.DefaultVisibility
+        );
+    }
+}
+
 class TimerHud {
     public static Number GetMinutes(Number Seconds): RoundToInteger(Seconds / 60, Rounding.Down);
     public static String GetMinutesString(Number Minutes): (GetMinutes(Minutes) < 10 ? "0%s" : "%s").Replace("%s", <String>"{0}".Format([GetMinutes(Minutes)]));
@@ -75,4 +112,5 @@ rule: 'Dva Setup' Event.OngoingPlayer Team.Team1 Player.Dva
 rule: 'Load Global Hud Elements'
 {
     TimerHud.CreateHUD();
+    ObjectiveHud.CreateHUD();
 }
