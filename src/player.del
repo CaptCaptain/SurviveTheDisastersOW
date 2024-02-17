@@ -102,38 +102,48 @@ void SetLimitedMaxHealth() "Set Limited Max Health" {
 Number MaxHealthLimit: 350;
 Boolean HeroChanged: EventPlayer().Hero() != EvaluateOnce(EventPlayer().Hero());
 Boolean IsDva: EventPlayer().Hero() == Hero.Dva;
-Boolean ChangedForm: (EventPlayer().MaxHealth() != EvaluateOnce(EventPlayer().MaxHealth()) || EventPlayer().MaxHealth() > MaxHealthLimit);
+Boolean ChangedForm: (IsInAlternateForm(EventPlayer()) != EvaluateOnce(IsInAlternateForm(EventPlayer())));
+Boolean ChangedHealth: (MaxHealthOfType(EventPlayer(), HealthType.Health) != EvaluateOnce(MaxHealthOfType(EventPlayer(), HealthType.Health)));
 rule: 'Player Setup' Event.OngoingPlayer Team.Team1
-if (HeroChanged)
-if (HasSpawned(EventPlayer()))
-if (IsAlive())
 {
-    Boolean ResetRequestDone: IsTrueForAll(CustomHealthReseter.Tasks, !ArrayContains(ArrayElement(), EventPlayer()));
-    
-    CustomHealthReseter.SendHealthResetRequest(EventPlayer());
-    Wait(0.016);
-    WaitUntil(ResetRequestDone, 9999);
+    WaitUntil(HasSpawned(), 9999);
 
     DisableGameModeHud();
 
-    # Limit Tank Health
-    if (EventPlayer().MaxHealth() > MaxHealthLimit) {
-        SetLimitedMaxHealth();
+    while (true) {
+        Boolean ResetRequestDone: IsTrueForAll(CustomHealthReseter.Tasks, !ArrayContains(ArrayElement(), EventPlayer()));
+    
+        CustomHealthReseter.SendHealthResetRequest(EventPlayer());
+        Wait(0.016);
+        WaitUntil(ResetRequestDone, 9999);
+
+        # Exclude Dva from the Default Max Health Code
+        if (IsDva) {
+            WaitUntil(HeroChanged, 9999);
+            continue;
+        }
+
+        # Limit Tank Health
+        if (ArrayContains(AllTankHeroes(), EventPlayer().Hero())) {
+            SetLimitedMaxHealth();
+        }
+
+        WaitUntil(HeroChanged, 9999);
     }
 }
 
 rule: 'Dva Setup' Event.OngoingPlayer Team.Team1 Player.Dva
 {
-    WaitUntil(IsInAlternateForm(EventPlayer()) == true, 9999);
-
-    CustomHealthReseter.SendHealthResetRequest(EventPlayer()); 
-
     WaitUntil(IsInAlternateForm(EventPlayer()) == false, 9999);
     
     Boolean ResetRequestDone: IsTrueForAll(CustomHealthReseter.Tasks, !ArrayContains(ArrayElement(), EventPlayer()));
     WaitUntil(ResetRequestDone, 9999);
     
     SetLimitedMaxHealth();
+
+    WaitUntil(IsInAlternateForm(EventPlayer()) == true, 9999);
+
+    CustomHealthReseter.SendHealthResetRequest(EventPlayer()); 
 
     Loop();
 }
