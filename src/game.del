@@ -38,9 +38,9 @@ class GameHandler {
 
         WaitUntil(MatchTime() == 0, 9999);
 
-        DeadPlayers = [];
-
         while (GameHandler.NumberOfRounds < ConfigStore.MaxRounds) {
+            DeadPlayers = [];
+
             ObjectiveHud.SetObjectiveText("Survive!");
 
             SetMatchTime(30);
