@@ -71,7 +71,7 @@ class ObjectiveHud {
             VisibleTo: AllPlayers(),
             Header: "",
             Subheader: "",
-            Text: "|  " + ObjectiveString + "  |",
+            Text: ObjectiveString,
             Location: Location.Top,
             SortOrder: -1,
             HeaderColor: Color.White,
