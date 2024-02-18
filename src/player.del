@@ -103,7 +103,7 @@ class TimerHud {
     public static Number GetSeconds(Number Seconds): RoundToInteger(Seconds % 60, Rounding.Down);
     public static String GetSecondsString(Number Seconds): (GetSeconds(Seconds) < 10 ? "0%s" : "%s").Replace("%s", <String>"{0}".Format([GetSeconds(Seconds)]));
 
-    public static String GetTimerString(): "{0}:{1}".Format([GetMinutesString(MatchTime()), GetSecondsString(MatchTime())]);
+    public static String GetTimerString(): MatchTime() > 60 ? "{0}:{1}".Format([GetMinutesString(MatchTime()), GetSecondsString(MatchTime())]) : "{0}".Format([RoundToInteger(MatchTime(), Rounding.Down)]);
     public static String CurrentTimerString;
 
     public static Color DefaultTimerColor: Color.White;
