@@ -54,9 +54,9 @@ class GameHandler {
             Respawn(AllDeadPlayers());
             Heal(AllPlayers(Team.Team1), null, 9999);
 
-            BigMessage(DeadPlayers, "{0} Wipeout!  {0}".Format([IconString(Icon.X)]));
+            BigMessage(DeadPlayers, "{0}  Wipeout!   {0}".Format([IconString(Icon.X)]));
 
-            BigMessage(AllLivingPlayers().Remove(AllPlayersDead), "{0} Survived!  {0}".Format([IconString(Icon.Checkmark)]));
+            BigMessage(AllLivingPlayers().Remove(AllPlayersDead), "{0}  Survived!   {0}".Format([IconString(Icon.Checkmark)]));
 
             GameHandler.NumberOfRounds += 1;
             DeadPlayers = [];
