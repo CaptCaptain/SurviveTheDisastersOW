@@ -1,0 +1,83 @@
+import "main.ostw";
+
+class GameHandler {
+    public static Number NumberOfRounds = 0;
+
+    public static Player[] DeadPlayers = [];
+    public static Boolean AllPlayersDead: DeadPlayers == AllPlayers(Team.Team1);
+
+    public static void StartTrackingPlayerDeaths() {
+        Boolean DeadPlayersChanged: AllDeadPlayers() != EvaluateOnce(AllDeadPlayers());
+
+        WaitUntil(DeadPlayersChanged, 9999);
+
+        DeadPlayers.ModAppend(AllDeadPlayers());
+
+        Loop();
+    }
+
+    public static void main() {
+        DisableCompletion();
+        DisableScoring();
+
+        WaitUntil(IsAssemblingHeroes(), 9999);
+
+        SetMatchTime(15);
+
+        WaitUntil(IsGameInProgress(), 9999);
+
+        DisableAnnouncer();
+
+        SetTeamScore(Team.Team2, 1);
+
+        SetMatchTime(45);
+
+        ObjectiveHud.SetObjectiveText("Break Time");
+
+        Wait(0.25);
+
+        WaitUntil(MatchTime() == 0, 9999);
+
+        DeadPlayers = [];
+
+        while (GameHandler.NumberOfRounds < ConfigStore.MaxRounds) {
+            ObjectiveHud.SetObjectiveText("Survive!");
+
+            SetMatchTime(30);
+
+            Wait(0.25);
+
+            WaitUntil(MatchTime() == 0 || AllPlayersDead, 9999);
+
+            Wait(1);
+
+            Respawn(DeadPlayers);
+            Heal(AllPlayers(Team.Team1), null, 9999);
+
+            BigMessage(DeadPlayers, "{0} Wipeout!  {0}".Format([IconString(Icon.X)]));
+
+            BigMessage(AllLivingPlayers().Remove(AllPlayersDead), "{0} Survived!  {0}".Format([IconString(Icon.Checkmark)]));
+
+            GameHandler.NumberOfRounds += 1;
+            DeadPlayers = [];
+
+            SetMatchTime(30);
+
+            ObjectiveHud.SetObjectiveText("Get Ready!");
+
+            Wait(0.25);
+
+            WaitUntil(MatchTime() == 0, 9999);
+        }
+    }
+}
+
+rule: 'Game Loop'
+{
+    GameHandler.main();
+}
+
+rule: 'Track Player Deaths'
+{
+    GameHandler.StartTrackingPlayerDeaths();
+}

@@ -1,5 +1,64 @@
 import "main.ostw";
 
+single struct ScoreboardListing {
+    public Player Player;
+    public Color HeaderColor;
+    public Number TextId;
+    public Number Score;
+    public Number Streak;
+    public Number Achievements;
+}
+
+class Scoreboard {
+    public static ScoreboardListing[] List = [];
+    
+    public static void CreateListing(in Player Player) {        
+        String Whitespace: "                                                                                                                                                                ";
+
+        CreateHudText(
+            VisibleTo: AllPlayers(),
+            Header: "{0}".Format([HeroIconString(HeroOf(Player))]),
+            Text: EvaluateOnce("{0}".Format([Player]) + Whitespace),
+            Subheader: "Score: {0} | Streak: {1} | Achievements: {2}".Format([
+                List[EvaluateOnce(SlotOf(Player))].Score,
+                List[EvaluateOnce(SlotOf(Player))].Streak,
+                List[EvaluateOnce(SlotOf(Player))].Achievements
+            ]),
+            SortOrder: 0,
+            HeaderColor: List[EvaluateOnce(SlotOf(Player))].HeaderColor,
+            SubheaderColor: EvaluateOnce(Color.Orange),
+            Reevaluation: HudTextRev.VisibleToStringAndColor
+        );
+
+        List[SlotOf(Player)] = {
+            Player: Player,
+            HeaderColor: Color.White,
+            TextId: LastTextID(),
+            Score: 0,
+            Streak: 0,
+            Achievements: 0
+        };
+    }
+
+    public static Boolean PlayerStateColor(ScoreboardListing Listing): HasSpawned(Listing.Player) ? IsAlive(Listing.Player) ? ArrayContains(GameHandler.DeadPlayers, Listing.Player) ? Color.Orange : Color.LimeGreen : Color.Red : Color.White;
+
+    public static void StartUpdatingPlayerState() {
+        Boolean PlayersChanged: AllPlayers(Team.Team1) != EvaluateOnce(AllPlayers(Team.Team1));
+        Boolean LivingPlayersChanged: AllLivingPlayers(Team.Team1) != EvaluateOnce(AllLivingPlayers(Team.Team1));
+        Boolean DeadPlayersChanged: AllDeadPlayers(Team.Team1) != EvaluateOnce(AllDeadPlayers(Team.Team1));
+
+        WaitUntil(PlayersChanged || LivingPlayersChanged || DeadPlayersChanged, 2);
+
+        List = <ScoreboardListing[]>MappedArray(List, <ScoreboardListing>{
+            Player: (<ScoreboardListing>ArrayElement()).Player,
+            HeaderColor: PlayerStateColor(<ScoreboardListing>ArrayElement()),
+            TextId: (<ScoreboardListing>ArrayElement()).TextId
+        });
+
+        Loop();
+    }
+}
+
 class ObjectiveHud {
     public static String ObjectiveString = "Waiting for Players";
 
@@ -148,6 +207,11 @@ rule: 'Dva Setup' Event.OngoingPlayer Team.Team1 Player.Dva
     Loop();
 }
 
+rule: 'Player Joining' Event.OnPlayerJoin Team.Team1
+{
+    Scoreboard.CreateListing(EventPlayer());
+}
+
 rule: 'Load Global Hud Elements'
 {
     TimerHud.CreateHUD();
@@ -157,4 +221,9 @@ rule: 'Load Global Hud Elements'
 rule: 'TimerHud Main Method'
 {
     TimerHud.main();
+}
+
+rule: 'Update Scoreboard Player State'
+{
+    Scoreboard.StartUpdatingPlayerState();
 }
