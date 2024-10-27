@@ -55,6 +55,7 @@ enum disasterId:
     INTI_WARRIORS,
     THIS_ENDS,
     FROGGERS,
+    WAYFINDERS,
 
     #Bosses
     GALACTIC_SIGMA,
@@ -109,6 +110,7 @@ enum disasters:
     INTI_WARRIORS = [abilityIconString(Hero.ILLARI, Button.ULTIMATE), "Sun Warriors", disasterId.INTI_WARRIORS, 30, true, [], 1],
     THIS_ENDS = [abilityIconString(Hero.SOJOURN, Button.ULTIMATE), "This Ends.. Now!", disasterId.THIS_ENDS, 30, true, [], 1],
     FROGGERS = [abilityIconString(Hero.LUCIO, Button.ULTIMATE), "FROG DJs", disasterId.FROGGERS, 30, true, [], 1],
+    WAYFINDERS = [abilityIconString(Hero.VENTURE, Button.ULTIMATE), "Wayfinders", disasterId.WAYFINDERS, 30, true, [], 1],
 
     # Bosses
     GALACTIC_SIGMA = [abilityIconString(Hero.SIGMA, Button.ULTIMATE), "Galactic Emperor", disasterId.GALACTIC_SIGMA, 60, true, [], 1],

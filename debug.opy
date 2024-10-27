@@ -143,6 +143,9 @@ def displayDebugDisasterName():
         case disasters.FROGGERS[disasterData.ID]:
             displayDebugDisaster(disasters.FROGGERS)
             break
+        case disasters.WAYFINDERS[disasterData.ID]:
+            displayDebugDisaster(disasters.WAYFINDERS)
+            break
         default:
             displayDebugDisaster([iconString(Icon.QUESTION_MARK), "No Data"])
             break

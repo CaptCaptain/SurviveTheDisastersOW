@@ -213,6 +213,7 @@ def createDialogueEffects():
 #!include "events/inti_warriors.opy"
 #!include "events/this_ends.opy"
 #!include "events/froggers.opy"
+#!include "events/wayfinders.opy"
 #!include "events/bosses/galactic_sigma.opy"
 #!include "events/bosses/zeus.opy"
 #!include "events/bosses/orisa.opy"
@@ -366,6 +367,9 @@ def queueDisaster():
             break
         case disasters.FROGGERS[disasterData.ID]:
             addDisaster(disasters.FROGGERS)
+            break
+        case disasters.WAYFINDERS[disasterData.ID]:
+            addDisaster(disasters.WAYFINDERS)
             break
 
 def selectDisaster():

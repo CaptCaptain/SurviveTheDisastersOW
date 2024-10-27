@@ -144,6 +144,9 @@ for globalIndex in range(0, len(activeDisasters), 1):\
         case disasters.FROGGERS[disasterData.ID]:\
             appendDisasterString(disasters.FROGGERS, disasterLastEntryMacro)\
             break\
+        case disasters.WAYFINDERS[disasterData.ID]:\
+            appendDisasterString(disasters.WAYFINDERS, disasterLastEntryMacro)\
+            break\
 
 #!define getOnScreenTextEyePosition(player) (player.onScreenTextEyePosition if player.onScreenTextEyePosition else player.getEyePosition())
 

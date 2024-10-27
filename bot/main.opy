@@ -43,6 +43,7 @@ allocatePlayerEffect(player)\
 #!include "bot/inti_warrior.opy"
 #!include "bot/sojourn.opy"
 #!include "bot/frogger.opy"
+#!include "bot/wayfinder.opy"
 #!include "bot/bosses/galactic_sigma.opy"
 #!include "bot/bosses/seer_mercy.opy"
 #!include "bot/bosses/infinite_admiral.opy"
