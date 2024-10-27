@@ -34,7 +34,7 @@ enum Medals:
     NO_BP = [iconString(Icon.ASTERISK), "Too Good to Be True", MedalSounds.BAD[medalSoundData.ID]],
     BOSS_HUNTER = [iconString(Icon.SKULL), "Boss Hunter", MedalSounds.GOOD[medalSoundData.ID]],
     HACKED_BONUS = [abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE), "Hacked Challenge", MedalSounds.GOOD[medalSoundData.ID]],
-    HARDCORE_BONUS = [abilityIconString(Hero.MCCREE, Button.ULTIMATE), "Hardcore Challenge", MedalSounds.GOOD[medalSoundData.ID]]
+    HARDCORE_BONUS = [abilityIconString(Hero.CASSIDY, Button.ULTIMATE), "Hardcore Challenge", MedalSounds.GOOD[medalSoundData.ID]]
 
 #!define queueMedal(player, medal) \
     if player.hasSpawned():\

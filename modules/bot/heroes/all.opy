@@ -164,7 +164,7 @@ def PRESS_ABILITY_CONFIRM():
     eventPlayer.BOT_PRIMARY_FIRE_ENABLED = false
 
 def EXECUTE_ULTIMATE_DEFLECT():
-    if any([(eventPlayer.BOT_PLAYER.getCurrentHero() == hero or eventPlayer.BOT_PLAYER.getHeroOfDuplication() == hero) and eventPlayer.BOT_PLAYER.getUltCharge() == 0 for hero in [Hero.ZARYA, Hero.TRACER, Hero.MEI, Hero.HANZO, Hero.ROADHOG, Hero.REAPER, Hero.PHARAH, Hero.SOLDIER, Hero.TORBJORN, Hero.MCCREE, Hero.BASTION]]):
+    if any([(eventPlayer.BOT_PLAYER.getCurrentHero() == hero or eventPlayer.BOT_PLAYER.getHeroOfDuplication() == hero) and eventPlayer.BOT_PLAYER.getUltCharge() == 0 for hero in [Hero.ZARYA, Hero.TRACER, Hero.MEI, Hero.HANZO, Hero.ROADHOG, Hero.REAPER, Hero.PHARAH, Hero.SOLDIER, Hero.TORBJORN, Hero.CASSIDY, Hero.BASTION]]):
         eventPlayer.startForcingButton(eventPlayer.DEFLECT_BUTTON)
     else:
         eventPlayer.stopForcingButton(eventPlayer.DEFLECT_BUTTON)

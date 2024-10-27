@@ -2,7 +2,7 @@
 
 rule "[bot/crusaders.opy]: Behavior":
     @Event eachPlayer
-    @Hero mccree
+    @Hero cassidy
     @Team 2
     @Condition hasDisasterTag(eventPlayer, getDisasterId(disasters.COWBOY))
 

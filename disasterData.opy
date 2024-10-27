@@ -102,7 +102,7 @@ enum disasters:
     NUCLEAR_BOMB = ["{}".format(abilityIconString(Hero.DVA, Button.ULTIMATE)), "Nuclear Bomb", disasterId.NUCLEAR_BOMB, 10, true, [disasterId.DEATH_TRAMPOLINE], 1],
     CRUSADERS = [abilityIconString(Hero.REINHARDT, Button.SECONDARY_FIRE), "Crusaders", disasterId.CRUSADERS, 30, true, [], 1],
     FLYING_BASTION = [abilityIconString(Hero.BASTION, Button.ABILITY_1), "Flying Bastion", disasterId.FLYING_BASTION, 30, true, [], 1],
-    COWBOY = [abilityIconString(Hero.MCCREE, Button.ULTIMATE), "Cowboy", disasterId.COWBOY, 30, true, [], 1],
+    COWBOY = [abilityIconString(Hero.CASSIDY, Button.ULTIMATE), "Cowboy", disasterId.COWBOY, 30, true, [], 1],
     JUNKERS = [abilityIconString(Hero.ROADHOG, Button.ULTIMATE), "Junkers", disasterId.JUNKERS, 30, true, [], 2],
     CLIMATOLOGIST = [abilityIconString(Hero.MEI, Button.ULTIMATE), "Climatologist", disasterId.CLIMATOLOGIST, 30, true, [], 1],
     LIFE_GRIP = [abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_2), "Life Grip", disasterId.LIFE_GRIP, 30, true, [], 1],
