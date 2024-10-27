@@ -226,9 +226,6 @@ rule "[player/main.opy] Hud":
         # Limited Tank Health
     createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() in getTankHeroes() and evalOnce(WS_SETTING_LIMITED_TANK_HEALTH) else []), alignLeftString("| Tank Health Limited to 350"), 3)
 
-        # Limited Stealth
-    createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.SOMBRA and evalOnce(WS_SETTING_LIMITED_STEALTH) else []), alignLeftString("| Limited Duration on Stealth (Passive)"), 3)
-
         # Limited Lifegrip
     createPlayerAttributeText((localPlayer if localPlayer.getCurrentHero() == Hero.LIFEWEAVER and evalOnce(WS_SETTING_LIFE_GRIP_LIMITED) else []), alignLeftString("| {0} Life Grip / {1} Petal Platform limited\n| during certain disasters".format(abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_2), abilityIconString(Hero.LIFEWEAVER, Button.ABILITY_1))), 4)
 
