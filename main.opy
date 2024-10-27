@@ -35,11 +35,9 @@ createWorkshopSetting(bool, "General", "Enable Music", true, 1)
 #!define WS_SETTING_ANTI_CRASH_DELAY \
 [1, 2, 3][createWorkshopSetting(enum["Prioritize Server Stability", "Balanced", "Prioritize Server Performance"], "General", "Anti-Crash Priority", 0, 3)]
 
-globalvar WS_SETTING_LIMITED_TANK_HEALTH = createWorkshopSetting(bool, "Heroes", "Tank Role: Limited Health", true, 3)
+globalvar WS_SETTING_LIMITED_TANK_HEALTH = createWorkshopSetting(bool, "Heroes", "Tank Role Limited Health", true, 3)
 
-globalvar WS_SETTING_LIFE_GRIP_LIMITED = createWorkshopSetting(bool, "Heroes", "Lifeweaver: Life Grip / Petal Platform Protection", true, 4)
-
-globalvar WS_SETTING_LIMITED_STEALTH = createWorkshopSetting(bool, "Heroes", "Sombra: Limited Stealth", true, 4)
+globalvar WS_SETTING_LIFE_GRIP_LIMITED = createWorkshopSetting(bool, "Heroes", "Lifeweaver Life Grip / Petal Platform Protection", true, 4)
 
 #!include "modules/customHealth.opy"
 #!include "modules/fixedSmallMessages.opy"
@@ -79,7 +77,7 @@ playervar SHOP_ACCESSIBILITY_ACTIVE = []
 
 enum shopChallengeOptions:
     HACKED = [0, "Hacked", "Cannot use any abilities (1.25x PTS)", abilityIconString(Hero.SOMBRA, Button.SECONDARY_FIRE)],
-    HARDCORE = [1, "Hardcore", "Increased damage taken (1.1x PTS)", abilityIconString(Hero.MCCREE, Button.ULTIMATE)],
+    HARDCORE = [1, "Hardcore", "Increased damage taken (1.1x PTS)", abilityIconString(Hero.CASSIDY, Button.ULTIMATE)],
     PACIFIST = [2, "Pacifist", "Cannot use weapon (1.25x PTS)", iconString(Icon.HEART)]
 
 enum shopChallengeData:
