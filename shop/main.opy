@@ -23,19 +23,19 @@ allocateShopEffect()\
 createInWorldText(getAllPlayers(), text if distance(evalOnce(position), localPlayer.getPosition()) < 15 else "〔{0}〕".format(icon), evalOnce(position) + evalOnce(Vector.UP * 2.25), 1, Clip.NONE, WorldTextReeval.VISIBILITY_AND_STRING, color, SpecVisibility.DEFAULT)\
 allocateShopText()\
 \
-createBeam(getAllPlayers(), Beam.GOOD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers(), Beam.BAD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
 allocateShopEffect()\
 \
-createBeam(getAllPlayers(), Beam.GOOD, evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers(), Beam.BAD, evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
 allocateShopEffect()\
 \
-createBeam(getAllPlayers(), Beam.GOOD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers(), Beam.BAD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 3), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
 allocateShopEffect()\
 \
-createBeam(getAllPlayers(), Beam.GOOD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 2), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 2), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers(), Beam.BAD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 2), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + evalOnce(Vector.UP * 2), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
 allocateShopEffect()\
 \
-createBeam(getAllPlayers(), Beam.GOOD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
+createBeam(getAllPlayers(), Beam.BAD, evalOnce(position) + (worldVector(Vector.LEFT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), evalOnce(position) + (worldVector(Vector.RIGHT, localPlayer, Transform.ROTATION) * 3) + (Vector.DOWN * 1), color, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)\
 allocateShopEffect()\
 \
 
